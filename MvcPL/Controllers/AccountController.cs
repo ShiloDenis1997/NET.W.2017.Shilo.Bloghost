@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Drawing.Imaging;
 using System.Globalization;
 using System.Linq;
@@ -16,7 +17,12 @@ namespace MvcPL.Controllers
 {
     public class AccountController : Controller
     {
-        BlogHostModel db = new BlogHostModel();
+        DbContext context;
+
+        public AccountController(DbContext context)
+        {
+            this.context = context;
+        }
 
         [HttpGet]
         public ActionResult Login(string returnUrl)
@@ -73,7 +79,7 @@ namespace MvcPL.Controllers
                 return View(viewModel);
             }
 
-            var anyUser = db.Users.FirstOrDefault(u => u.Login.Equals(viewModel.Login) 
+            var anyUser = context.Set<User>().FirstOrDefault(u => u.Login.Equals(viewModel.Login) 
                 || u.Email.Equals(viewModel.Email));
             if (anyUser != null)
             {

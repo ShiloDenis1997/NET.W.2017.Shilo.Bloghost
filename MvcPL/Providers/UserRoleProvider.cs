@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Web.Security;
 using ORM;
 
@@ -9,12 +9,13 @@ namespace MvcPL.Providers
 {
     public class UserRoleProvider : RoleProvider
     {
-        BlogHostModel db = new BlogHostModel();
+        private DbContext context = (DbContext)System.Web.Mvc.DependencyResolver
+            .Current.GetService(typeof(DbContext));
 
         public override string[] GetRolesForUser(string email)
         {
             string[] roles = {};
-            User user = db.Users.FirstOrDefault(u => u.Email.Equals(email));
+            User user = context.Set<User>().FirstOrDefault(u => u.Email.Equals(email));
 
             if (user == null)
                 return roles;
@@ -28,7 +29,7 @@ namespace MvcPL.Providers
 
         public override bool IsUserInRole(string email, string roleName)
         {
-            User user = db.Users.FirstOrDefault(u => u.Email.Equals(email));
+            User user = context.Set<User>().FirstOrDefault(u => u.Email.Equals(email));
             if (user != null && user.Role.Rolename.Equals(roleName))
             {
                 return true;

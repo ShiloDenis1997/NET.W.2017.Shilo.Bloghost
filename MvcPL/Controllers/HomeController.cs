@@ -13,9 +13,6 @@ namespace MvcPL.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
-            BlogHostModel db = new BlogHostModel();
-            User user = db.Users.FirstOrDefault();
-            ViewBag.User = user;
             return View();
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Helpers;
 using System.Web.Security;
@@ -8,7 +9,8 @@ namespace MvcPL.Providers
 {
     public class UserMembershipProvider : MembershipProvider
     {
-        BlogHostModel db = new BlogHostModel();
+        private DbContext context = (DbContext)System.Web.Mvc.DependencyResolver
+            .Current.GetService(typeof(DbContext));
 
         public MembershipUser CreateUser(string login, string firstname,
             string secondname, string thirdname, string email, string password)
@@ -31,22 +33,22 @@ namespace MvcPL.Providers
                 DateRegistered = DateTime.Now,
             };
 
-            Role role = db.Roles.FirstOrDefault(r => r.Rolename.Equals("User"));
+            Role role = context.Set<Role>().FirstOrDefault(r => r.Rolename.Equals("User"));
 
             if (role != null)
             {
                 user.RoleId = role.id;
             }
 
-            db.Users.Add(user);
-            db.SaveChanges();
+            context.Set<User>().Add(user);
+            context.SaveChanges();
             membershipUser = GetUser(email, false);
             return membershipUser;
         }
 
         public override MembershipUser GetUser(string email, bool userIsOnline)
         {
-            var user = db.Users.FirstOrDefault(u => u.Email.Equals(email));
+            var user = context.Set<User>().FirstOrDefault(u => u.Email.Equals(email));
             if (user == null)
                 return null;
             return new MembershipUser("UserMembershipProvider", user.Login, null, 
@@ -58,7 +60,7 @@ namespace MvcPL.Providers
 
         public override bool ValidateUser(string email, string password)
         {
-            User user = db.Users.FirstOrDefault(u => u.Email.Equals(email));
+            User user = context.Set<User>().FirstOrDefault(u => u.Email.Equals(email));
             if (user != null && Crypto.VerifyHashedPassword(user.Password, password))
             {
                 return true;
