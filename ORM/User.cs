@@ -6,16 +6,16 @@ namespace ORM
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Users
+    public partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Users()
+        public User()
         {
-            Blogs = new HashSet<Blogs>();
-            Comments = new HashSet<Comments>();
-            Articles = new HashSet<Articles>();
-            Blogs1 = new HashSet<Blogs>();
-            Comments1 = new HashSet<Comments>();
+            Blogs = new HashSet<Blog>();
+            Comments = new HashSet<Comment>();
+            Articles = new HashSet<Article>();
+            Blogs1 = new HashSet<Blog>();
+            Comments1 = new HashSet<Comment>();
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -47,20 +47,20 @@ namespace ORM
         public int RoleId { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Blogs> Blogs { get; set; }
+        public virtual ICollection<Blog> Blogs { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Comments> Comments { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
 
-        public virtual Roles Roles { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Articles> Articles { get; set; }
+        public virtual Role Role { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Blogs> Blogs1 { get; set; }
+        public virtual ICollection<Article> Articles { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Comments> Comments1 { get; set; }
+        public virtual ICollection<Blog> Blogs1 { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Comment> Comments1 { get; set; }
     }
 }

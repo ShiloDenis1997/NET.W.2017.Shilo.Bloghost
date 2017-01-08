@@ -12,7 +12,7 @@ namespace MvcPL.Controllers
         public ActionResult Index()
         {
             BlogHostModel db = new BlogHostModel();
-            Users user = db.Users.FirstOrDefault();
+            User user = db.Users.FirstOrDefault();
             ViewBag.User = user;
             return View();
         }

@@ -6,14 +6,14 @@ namespace ORM
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Articles
+    public partial class Article
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Articles()
+        public Article()
         {
-            ArticleTags = new HashSet<ArticleTags>();
-            Comments = new HashSet<Comments>();
-            Users = new HashSet<Users>();
+            ArticleTags = new HashSet<ArticleTag>();
+            Comments = new HashSet<Comment>();
+            Users = new HashSet<User>();
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -33,15 +33,15 @@ namespace ORM
 
         public int BlogId { get; set; }
 
-        public virtual Blogs Blogs { get; set; }
+        public virtual Blog Blog { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ArticleTags> ArticleTags { get; set; }
+        public virtual ICollection<ArticleTag> ArticleTags { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Comments> Comments { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Users> Users { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 }

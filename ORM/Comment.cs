@@ -6,34 +6,34 @@ namespace ORM
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Blogs
+    public partial class Comment
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Blogs()
+        public Comment()
         {
-            Articles = new HashSet<Articles>();
-            Users1 = new HashSet<Users>();
+            Users = new HashSet<User>();
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
 
+        [Column(TypeName = "text")]
         [Required]
-        [StringLength(255)]
-        public string Name { get; set; }
+        public string Content { get; set; }
 
         public int Rating { get; set; }
 
-        public DateTime DateStarted { get; set; }
+        public DateTime DateAdded { get; set; }
 
         public int UserId { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Articles> Articles { get; set; }
+        public int ArticleId { get; set; }
 
-        public virtual Users Users { get; set; }
+        public virtual Article Article { get; set; }
+
+        public virtual User User { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Users> Users1 { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 }

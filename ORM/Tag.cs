@@ -6,12 +6,12 @@ namespace ORM
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Roles
+    public partial class Tag
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Roles()
+        public Tag()
         {
-            Users = new HashSet<Users>();
+            ArticleTags = new HashSet<ArticleTag>();
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -19,9 +19,9 @@ namespace ORM
 
         [Required]
         [StringLength(30)]
-        public string Rolename { get; set; }
+        public string Name { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Users> Users { get; set; }
+        public virtual ICollection<ArticleTag> ArticleTags { get; set; }
     }
 }

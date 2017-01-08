@@ -6,7 +6,7 @@ namespace ORM
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class ArticleTags
+    public partial class ArticleTag
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
@@ -15,8 +15,8 @@ namespace ORM
 
         public int TagId { get; set; }
 
-        public virtual Articles Articles { get; set; }
+        public virtual Article Article { get; set; }
 
-        public virtual Tags Tags { get; set; }
+        public virtual Tag Tag { get; set; }
     }
 }

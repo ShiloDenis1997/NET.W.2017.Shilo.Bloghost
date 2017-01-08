@@ -12,79 +12,74 @@ namespace ORM
         {
         }
 
-        public virtual DbSet<Articles> Articles { get; set; }
-        public virtual DbSet<ArticleTags> ArticleTags { get; set; }
-        public virtual DbSet<Blogs> Blogs { get; set; }
-        public virtual DbSet<Comments> Comments { get; set; }
-        public virtual DbSet<Roles> Roles { get; set; }
-        public virtual DbSet<Tags> Tags { get; set; }
-        public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<Article> Articles { get; set; }
+        public virtual DbSet<ArticleTag> ArticleTags { get; set; }
+        public virtual DbSet<Blog> Blogs { get; set; }
+        public virtual DbSet<Comment> Comments { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<Tag> Tags { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Articles>()
+            modelBuilder.Entity<Article>()
                 .Property(e => e.Content)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Articles>()
+            modelBuilder.Entity<Article>()
                 .HasMany(e => e.ArticleTags)
-                .WithRequired(e => e.Articles)
-                .HasForeignKey(e => e.ArticleId)
+                .WithRequired(e => e.Article)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Articles>()
+            modelBuilder.Entity<Article>()
                 .HasMany(e => e.Comments)
-                .WithRequired(e => e.Articles)
-                .HasForeignKey(e => e.ArticleId)
+                .WithRequired(e => e.Article)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Blogs>()
+            modelBuilder.Entity<Blog>()
                 .HasMany(e => e.Articles)
-                .WithRequired(e => e.Blogs)
-                .HasForeignKey(e => e.BlogId)
+                .WithRequired(e => e.Blog)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Comments>()
+            modelBuilder.Entity<Comment>()
                 .Property(e => e.Content)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Roles>()
+            modelBuilder.Entity<Role>()
                 .HasMany(e => e.Users)
-                .WithRequired(e => e.Roles)
-                .HasForeignKey(e => e.RoleId)
+                .WithRequired(e => e.Role)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Tags>()
+            modelBuilder.Entity<Tag>()
                 .HasMany(e => e.ArticleTags)
-                .WithRequired(e => e.Tags)
-                .HasForeignKey(e => e.TagId)
+                .WithRequired(e => e.Tag)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Users>()
+            modelBuilder.Entity<User>()
                 .HasMany(e => e.Blogs)
-                .WithRequired(e => e.Users)
+                .WithRequired(e => e.User)
                 .HasForeignKey(e => e.UserId)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Users>()
+            modelBuilder.Entity<User>()
                 .HasMany(e => e.Comments)
-                .WithRequired(e => e.Users)
+                .WithRequired(e => e.User)
                 .HasForeignKey(e => e.UserId)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Users>()
+            modelBuilder.Entity<User>()
                 .HasMany(e => e.Articles)
                 .WithMany(e => e.Users)
                 .Map(m => m.ToTable("ArticleLikes").MapLeftKey("UserId").MapRightKey("ArticleId"));
 
-            modelBuilder.Entity<Users>()
+            modelBuilder.Entity<User>()
                 .HasMany(e => e.Blogs1)
-                .WithMany(e => e.Users1)
+                .WithMany(e => e.Users)
                 .Map(m => m.ToTable("BlogLikes").MapLeftKey("UserId").MapRightKey("BlogId"));
 
-            modelBuilder.Entity<Users>()
+            modelBuilder.Entity<User>()
                 .HasMany(e => e.Comments1)
-                .WithMany(e => e.Users1)
+                .WithMany(e => e.Users)
                 .Map(m => m.ToTable("CommentLikes").MapLeftKey("UserId").MapRightKey("CommentId"));
         }
     }
