@@ -7,8 +7,10 @@ using ORM;
 
 namespace MvcPL.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
+        [AllowAnonymous]
         public ActionResult Index()
         {
             BlogHostModel db = new BlogHostModel();
@@ -17,6 +19,7 @@ namespace MvcPL.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -24,6 +27,7 @@ namespace MvcPL.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Administrator")]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
