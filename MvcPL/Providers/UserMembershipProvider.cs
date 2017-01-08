@@ -2,23 +2,73 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Security;
+using ORM;
 
 namespace MvcPL.Providers
 {
     public class UserMembershipProvider : MembershipProvider
     {
-        //public MembershipUser CreateUser(string email)
-        public override MembershipUser GetUser(string username, bool userIsOnline)
+        BlogHostModel db = new BlogHostModel();
+
+        public MembershipUser CreateUser(string login, string firstname,
+            string secondname, string thirdname, string email, string password)
         {
-            throw new NotImplementedException();
+            MembershipUser membershipUser = GetUser(email, false);
+            
+            if (membershipUser != null)
+            {
+                return null;
+            }
+
+            User user = new User
+            {
+                Login = login,
+                Firstname = firstname,
+                Secondname = secondname,
+                Thirdname = thirdname,
+                Email = email,
+                Password = Crypto.HashPassword(password),
+                DateRegistered = DateTime.Now,
+            };
+
+            Role role = db.Roles.FirstOrDefault(r => r.Rolename.Equals("User"));
+
+            if (role != null)
+            {
+                user.RoleId = role.id;
+            }
+
+            db.Users.Add(user);
+            db.SaveChanges();
+            membershipUser = GetUser(email, false);
+            return membershipUser;
         }
 
-        public override bool ValidateUser(string username, string password)
+        public override MembershipUser GetUser(string email, bool userIsOnline)
         {
-            throw new NotImplementedException();
+            var user = db.Users.FirstOrDefault(u => u.Email.Equals(email));
+            if (user == null)
+                return null;
+            return new MembershipUser("UserMembershipProvider", user.Login, null, 
+                user.Email, null, null, false, false, user.DateRegistered, 
+                DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, 
+                DateTime.MinValue
+                );
         }
-        public override bool DeleteUser(string username, bool deleteAllRelatedData)
+
+        public override bool ValidateUser(string email, string password)
+        {
+            User user = db.Users.FirstOrDefault(u => u.Email.Equals(email));
+            if (user != null && Crypto.VerifyHashedPassword(user.Password, password))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public override bool DeleteUser(string email, bool deleteAllRelatedData)
         {
             throw new NotImplementedException();
         }
