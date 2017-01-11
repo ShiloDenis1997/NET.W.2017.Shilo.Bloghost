@@ -47,8 +47,8 @@ namespace ORM
 
             modelBuilder.Entity<Role>()
                 .HasMany(e => e.Users)
-                .WithRequired(e => e.Role)
-                .WillCascadeOnDelete(false);
+                .WithMany(e => e.Roles)
+                .Map(m => m.ToTable("UserRoles").MapLeftKey("RoleId").MapRightKey("UserId"));
 
             modelBuilder.Entity<Tag>()
                 .HasMany(e => e.ArticleTags)

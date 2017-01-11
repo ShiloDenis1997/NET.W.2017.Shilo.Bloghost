@@ -20,9 +20,9 @@ namespace MvcPL.Providers
             if (user == null)
                 return roles;
 
-            Role role = user.Role;
-            if (role != null)
-                return roles = new [] {role.Rolename};
+            var userRoles = user.Roles;
+            if (userRoles.Count != 0)
+                return roles = userRoles.Select(role => role.Rolename).ToArray();
 
             return roles;
         }
@@ -30,7 +30,7 @@ namespace MvcPL.Providers
         public override bool IsUserInRole(string email, string roleName)
         {
             User user = context.Set<User>().FirstOrDefault(u => u.Email.Equals(email));
-            if (user != null && user.Role.Rolename.Equals(roleName))
+            if (user != null && user.Roles.Count(role => role.Rolename.Equals(roleName)) != 0)
             {
                 return true;
             }

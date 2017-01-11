@@ -16,6 +16,7 @@ namespace ORM
             Articles = new HashSet<Article>();
             Blogs1 = new HashSet<Blog>();
             Comments1 = new HashSet<Comment>();
+            Roles = new HashSet<Role>();
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -44,15 +45,11 @@ namespace ORM
         [StringLength(255)]
         public string Email { get; set; }
 
-        public int RoleId { get; set; }
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Blog> Blogs { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
-
-        public virtual Role Role { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Article> Articles { get; set; }
@@ -62,5 +59,8 @@ namespace ORM
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments1 { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Role> Roles { get; set; }
     }
 }

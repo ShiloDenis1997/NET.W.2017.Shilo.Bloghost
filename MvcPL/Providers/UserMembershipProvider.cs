@@ -37,7 +37,7 @@ namespace MvcPL.Providers
 
             if (role != null)
             {
-                user.RoleId = role.id;
+                user.Roles.Add(role);
             }
 
             context.Set<User>().Add(user);
