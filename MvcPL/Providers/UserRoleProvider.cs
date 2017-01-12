@@ -9,7 +9,7 @@ namespace MvcPL.Providers
 {
     public class UserRoleProvider : RoleProvider
     {
-        private DbContext context = (DbContext)System.Web.Mvc.DependencyResolver
+        private DbContext context => (DbContext)System.Web.Mvc.DependencyResolver
             .Current.GetService(typeof(DbContext));
 
         public override string[] GetRolesForUser(string email)

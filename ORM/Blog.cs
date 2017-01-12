@@ -14,8 +14,7 @@ namespace ORM
             Articles = new HashSet<Article>();
             Users = new HashSet<User>();
         }
-
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        
         public int id { get; set; }
 
         [Required]

@@ -13,8 +13,7 @@ namespace ORM
         {
             ArticleTags = new HashSet<ArticleTag>();
         }
-
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        
         public int id { get; set; }
 
         [Required]

@@ -14,7 +14,7 @@ namespace DependencyResolver
     {
         public static void ConfigurateResolver(this IKernel kernel)
         {
-            kernel.Bind<DbContext>().To<BlogHostModel>();
+            kernel.Bind<DbContext>().To<BlogHostModel>().InRequestScope();
         }
     }
 }

@@ -15,8 +15,7 @@ namespace ORM
             Comments = new HashSet<Comment>();
             Users = new HashSet<User>();
         }
-
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        
         public int id { get; set; }
 
         [Required]

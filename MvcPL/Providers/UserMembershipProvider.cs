@@ -9,7 +9,7 @@ namespace MvcPL.Providers
 {
     public class UserMembershipProvider : MembershipProvider
     {
-        private DbContext context = (DbContext)System.Web.Mvc.DependencyResolver
+        private DbContext context => (DbContext)System.Web.Mvc.DependencyResolver
             .Current.GetService(typeof(DbContext));
 
         public MembershipUser CreateUser(string login, string firstname,

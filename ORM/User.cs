@@ -18,8 +18,7 @@ namespace ORM
             Comments1 = new HashSet<Comment>();
             Roles = new HashSet<Role>();
         }
-
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        
         public int id { get; set; }
 
         [Required]
