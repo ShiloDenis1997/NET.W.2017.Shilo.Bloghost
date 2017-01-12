@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LoggerInterfaces
+namespace Logger.Interfaces
 {
     /// <summary>
-    /// Provides most popular methods of loggers
+    /// Provides most used methods of loggers
     /// </summary>
     public interface ILogger
     {
