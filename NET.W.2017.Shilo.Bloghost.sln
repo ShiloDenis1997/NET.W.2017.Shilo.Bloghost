@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ORM", "ORM\ORM.csproj", "{0
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyResolver", "DependencyResolver\DependencyResolver.csproj", "{46A4FF9A-EF70-4901-83CA-CE9BE2F33FC2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerInterfaces", "LoggerInterfaces\LoggerInterfaces.csproj", "{5C43959D-8739-48AD-9E74-7DFA40D09C10}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{46A4FF9A-EF70-4901-83CA-CE9BE2F33FC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46A4FF9A-EF70-4901-83CA-CE9BE2F33FC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46A4FF9A-EF70-4901-83CA-CE9BE2F33FC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C43959D-8739-48AD-9E74-7DFA40D09C10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C43959D-8739-48AD-9E74-7DFA40D09C10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C43959D-8739-48AD-9E74-7DFA40D09C10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C43959D-8739-48AD-9E74-7DFA40D09C10}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
