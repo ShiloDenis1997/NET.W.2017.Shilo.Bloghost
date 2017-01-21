@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logger.Interfaces", "Logger
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logger.Concrete", "Logger.Concrete\Logger.Concrete.csproj", "{A0F88CAD-E81A-4266-A42A-CD621D3AE4CE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL.Interfaces", "DAL.Interfaces\DAL.Interfaces.csproj", "{6B3B647A-37B2-432B-AF5D-5247F294A310}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{A0F88CAD-E81A-4266-A42A-CD621D3AE4CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0F88CAD-E81A-4266-A42A-CD621D3AE4CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0F88CAD-E81A-4266-A42A-CD621D3AE4CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B3B647A-37B2-432B-AF5D-5247F294A310}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B3B647A-37B2-432B-AF5D-5247F294A310}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B3B647A-37B2-432B-AF5D-5247F294A310}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B3B647A-37B2-432B-AF5D-5247F294A310}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
