@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL.Interfaces.DTO;
 
-namespace DAL.Interfaces
+namespace DAL.Interfaces.Repository
 {
     public interface IRepository<TEntity> where TEntity : IEntity
     {

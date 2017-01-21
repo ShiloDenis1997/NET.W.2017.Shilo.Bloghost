@@ -14,6 +14,9 @@ namespace DAL.Interfaces.DTO
         public string Secondname { get; set; }
         public string Thirdname { get; set; }
         public string Password { get; set; }
+        public string Email { get; set; }
         public DateTime DateRegistered { get; set; }
+
+        public ICollection<string> Roles { get; set; }
     }
 }
