@@ -14,7 +14,7 @@ namespace ORM
             Articles = new HashSet<Article>();
             Users = new HashSet<User>();
         }
-        
+
         public int id { get; set; }
 
         [Required]

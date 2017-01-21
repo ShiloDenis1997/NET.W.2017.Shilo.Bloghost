@@ -13,7 +13,7 @@ namespace ORM
         {
             ArticleTags = new HashSet<ArticleTag>();
         }
-        
+
         public int id { get; set; }
 
         [Required]

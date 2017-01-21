@@ -14,9 +14,11 @@ namespace ORM
             Blogs = new HashSet<Blog>();
             Comments = new HashSet<Comment>();
             Articles = new HashSet<Article>();
+            Blogs1 = new HashSet<Blog>();
+            Comments1 = new HashSet<Comment>();
             Roles = new HashSet<Role>();
         }
-        
+
         public int id { get; set; }
 
         [Required]
@@ -50,6 +52,12 @@ namespace ORM
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Article> Articles { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Blog> Blogs1 { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Comment> Comments1 { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Role> Roles { get; set; }

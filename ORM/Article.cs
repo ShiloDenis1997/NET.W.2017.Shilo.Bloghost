@@ -15,7 +15,7 @@ namespace ORM
             Comments = new HashSet<Comment>();
             Users = new HashSet<User>();
         }
-        
+
         public int id { get; set; }
 
         [Required]

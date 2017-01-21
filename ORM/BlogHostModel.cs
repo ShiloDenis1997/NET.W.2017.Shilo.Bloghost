@@ -8,7 +8,7 @@ namespace ORM
     public partial class BlogHostModel : DbContext
     {
         public BlogHostModel()
-            : base("name=BlogHostModel")
+            : base("name=BloghostModel")
         {
         }
 

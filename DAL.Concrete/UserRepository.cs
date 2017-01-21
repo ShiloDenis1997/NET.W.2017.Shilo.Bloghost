@@ -45,12 +45,30 @@ namespace DAL.Concrete
 
         public DalUser GetByPredicate(Expression<Func<DalUser, bool>> f)
         {
-            throw new NotImplementedException();
+            var expressionModifier = new DalUserExpressionModifier();
+            var ormPredicate = expressionModifier.Modify(f);
+            User user = context.Set<User>().First((Expression<Func<User,bool>>)ormPredicate);
+            return user?.ToDalUser();
         }
 
         public void Update(DalUser entity)
         {
             throw new NotImplementedException();
+        }
+
+        private class DalUserExpressionModifier : ExpressionVisitor
+        {
+            public Expression Modify(Expression expression)
+            {
+                return Visit(expression);
+            }
+
+            protected override Expression VisitParameter(ParameterExpression node)
+            {
+                if (node.Type == typeof(DalUser))
+                    return Expression.Parameter(typeof(User));
+                return base.VisitParameter(node);
+            }
         }
     }
 }

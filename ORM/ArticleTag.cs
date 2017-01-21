@@ -8,6 +8,7 @@ namespace ORM
 
     public partial class ArticleTag
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
 
         public int ArticleId { get; set; }

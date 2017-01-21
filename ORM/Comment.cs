@@ -13,7 +13,7 @@ namespace ORM
         {
             Users = new HashSet<User>();
         }
-        
+
         public int id { get; set; }
 
         [Column(TypeName = "text")]
