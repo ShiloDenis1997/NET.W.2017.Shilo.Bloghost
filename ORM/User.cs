@@ -19,7 +19,7 @@ namespace ORM
             Roles = new HashSet<Role>();
         }
 
-        public int id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [StringLength(30)]

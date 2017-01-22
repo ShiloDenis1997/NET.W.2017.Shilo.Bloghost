@@ -14,7 +14,7 @@ namespace DAL.Concrete.Mappers
         {
             return new User
             {
-                id = user.Id,
+                Id = user.Id,
                 Login = user.Login,
                 Firstname = user.Firstname,
                 Secondname = user.Secondname,
@@ -29,7 +29,7 @@ namespace DAL.Concrete.Mappers
         {
             return new DalUser
             {
-                Id = user.id,
+                Id = user.Id,
                 Login = user.Login,
                 Firstname = user.Firstname,
                 Secondname = user.Secondname,

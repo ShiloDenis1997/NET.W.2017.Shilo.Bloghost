@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.Concrete.Mappers;
@@ -28,7 +29,7 @@ namespace DAL.Concrete
 
         public void Delete(DalUser user)
         {
-            User ormUser = context.Set<User>().Single(u => u.id == user.Id);
+            User ormUser = context.Set<User>().Single(u => u.Id == user.Id);
             context.Set<User>().Remove(ormUser);
         }
 
@@ -39,14 +40,14 @@ namespace DAL.Concrete
 
         public DalUser GetById(int key)
         {
-            User ormUser = context.Set<User>().FirstOrDefault(user => user.id == key);
+            User ormUser = context.Set<User>().FirstOrDefault(user => user.Id == key);
             return ormUser?.ToDalUser();
         }
 
         public DalUser GetByPredicate(Expression<Func<DalUser, bool>> f)
         {
-            var expressionModifier = new DalUserExpressionModifier();
-            var ormPredicate = expressionModifier.Modify(f);
+            var expressionModifier = new PredicateVisitor();
+            var ormPredicate = expressionModifier.ModifyPredicate<User>(f);
             User user = context.Set<User>().First((Expression<Func<User,bool>>)ormPredicate);
             return user?.ToDalUser();
         }
@@ -54,21 +55,6 @@ namespace DAL.Concrete
         public void Update(DalUser entity)
         {
             throw new NotImplementedException();
-        }
-
-        private class DalUserExpressionModifier : ExpressionVisitor
-        {
-            public Expression Modify(Expression expression)
-            {
-                return Visit(expression);
-            }
-
-            protected override Expression VisitParameter(ParameterExpression node)
-            {
-                if (node.Type == typeof(DalUser))
-                    return Expression.Parameter(typeof(User));
-                return base.VisitParameter(node);
-            }
         }
     }
 }

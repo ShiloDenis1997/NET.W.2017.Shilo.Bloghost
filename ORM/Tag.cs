@@ -14,7 +14,7 @@ namespace ORM
             ArticleTags = new HashSet<ArticleTag>();
         }
 
-        public int id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [StringLength(30)]
