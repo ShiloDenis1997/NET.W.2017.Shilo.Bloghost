@@ -1,0 +1,15 @@
+﻿@model IEnumerable<MvcPL.Models.BlogViewModel>
+
+@{
+    ViewBag.Title = "Blogs";
+}
+
+<h2>Blogs</h2>
+<ul class="list-unstyled">
+    @foreach (var blog in Model)
+    {
+        <li>
+            @{ Html.RenderPartial("_BlogPartial", blog); }
+        </li>
+    }
+</ul>

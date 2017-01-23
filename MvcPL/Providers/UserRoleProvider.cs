@@ -3,34 +3,30 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Security;
+using BLL.Interfaces.Services;
 using ORM;
 
 namespace MvcPL.Providers
 {
     public class UserRoleProvider : RoleProvider
     {
-        private DbContext context => (DbContext)System.Web.Mvc.DependencyResolver
-            .Current.GetService(typeof(DbContext));
+        private IUserService userService => (IUserService)System.Web.Mvc.DependencyResolver
+            .Current.GetService(typeof(IUserService));
 
         public override string[] GetRolesForUser(string email)
         {
             string[] roles = {};
-            User user = context.Set<User>().FirstOrDefault(u => u.Email.Equals(email));
+            var user = userService.GetByPredicate(u => u.Email.Equals(email));
 
             if (user == null)
                 return roles;
-
-            var userRoles = user.Roles;
-            if (userRoles.Count != 0)
-                return roles = userRoles.Select(role => role.Rolename).ToArray();
-
-            return roles;
+            return user.Roles.ToArray();
         }
 
         public override bool IsUserInRole(string email, string roleName)
         {
-            User user = context.Set<User>().FirstOrDefault(u => u.Email.Equals(email));
-            if (user != null && user.Roles.Count(role => role.Rolename.Equals(roleName)) != 0)
+            var user = userService.GetByPredicate(u => u.Email.Equals(email));
+            if (user != null && user.Roles.Count(role => role.Equals(roleName)) != 0)
             {
                 return true;
             }

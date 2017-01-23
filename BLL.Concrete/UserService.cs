@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using BLL.Concrete.Mappers;
@@ -8,6 +9,7 @@ using BLL.Interfaces.Entities;
 using BLL.Interfaces.Services;
 using DAL.Interfaces.DTO;
 using DAL.Interfaces.Repository;
+using ExpressionTreeVisitor;
 
 namespace BLL.Concrete
 {
@@ -38,7 +40,7 @@ namespace BLL.Concrete
             => repository.GetAll().Select(user => user.ToUserEntity());
 
         public UserEntity GetUserEntity(int id)
-            => repository.GetById(id).ToUserEntity();
+            => repository.GetById(id)?.ToUserEntity();
 
         public void UpdateUser(UserEntity user)
         {
@@ -52,6 +54,14 @@ namespace BLL.Concrete
             }
             
             unitOfWork.Commit();
+        }
+
+        public UserEntity GetByPredicate(Expression<Func<UserEntity, bool>> predicate)
+        {
+            var predicateModifier = new PredicateVisitor();
+            var dalPredicate = (Expression<Func<DalUser, bool>>) 
+                    predicateModifier.ModifyPredicate<DalUser>(predicate);
+            return repository.GetByPredicate(dalPredicate)?.ToUserEntity();
         }
     }
 }

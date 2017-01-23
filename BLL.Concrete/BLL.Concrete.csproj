@@ -53,6 +53,10 @@
       <Project>{6B3B647A-37B2-432B-AF5D-5247F294A310}</Project>
       <Name>DAL.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ExpressionTreeVisitor\ExpressionTreeVisitor.csproj">
+      <Project>{81923D66-A5B8-4EE3-9582-AB9000C19548}</Project>
+      <Name>ExpressionTreeVisitor</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

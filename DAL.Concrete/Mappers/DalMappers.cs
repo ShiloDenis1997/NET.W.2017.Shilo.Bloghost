@@ -21,7 +21,7 @@ namespace DAL.Concrete.Mappers
                 Thirdname = user.Thirdname,
                 Email = user.Email,
                 Password = user.Password,
-                DateRegistered = user.DateRegistered
+                DateRegistered = user.DateRegistered,
             };
         }
 

@@ -1,0 +1,11 @@
+﻿@model MvcPL.Models.BlogViewModel
+    
+<div>
+    <div>@Model.Name</div>
+    <div>Started at @Model.DateStarted.Date by 
+        @Html.ActionLink(Model.UserName, "Index", "Blogs",new RouteValueDictionary
+        {
+            {"userId", Model.Id }
+        }, null) </div>
+    <div>Rating: @Model.Rating</div>
+</div>

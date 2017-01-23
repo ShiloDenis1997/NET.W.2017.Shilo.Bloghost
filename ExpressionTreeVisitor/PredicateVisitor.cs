@@ -5,7 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
 
-namespace DAL.Concrete
+namespace ExpressionTreeVisitor
 {
     public class PredicateVisitor : ExpressionVisitor
     {

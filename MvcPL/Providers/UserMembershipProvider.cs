@@ -3,14 +3,15 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web.Helpers;
 using System.Web.Security;
-using ORM;
+using BLL.Interfaces.Services;
+using BLL.Interfaces.Entities;
 
 namespace MvcPL.Providers
 {
     public class UserMembershipProvider : MembershipProvider
     {
-        private DbContext context => (DbContext)System.Web.Mvc.DependencyResolver
-            .Current.GetService(typeof(DbContext));
+        private IUserService userService => (IUserService) System.Web.Mvc.DependencyResolver
+            .Current.GetService(typeof(IUserService));
 
         public MembershipUser CreateUser(string login, string firstname,
             string secondname, string thirdname, string email, string password)
@@ -22,7 +23,7 @@ namespace MvcPL.Providers
                 return null;
             }
 
-            User user = new User
+            UserEntity user = new UserEntity
             {
                 Login = login,
                 Firstname = firstname,
@@ -31,24 +32,17 @@ namespace MvcPL.Providers
                 Email = email,
                 Password = Crypto.HashPassword(password),
                 DateRegistered = DateTime.Now,
+                Roles = new []{"User"}
             };
 
-            Role role = context.Set<Role>().FirstOrDefault(r => r.Rolename.Equals("User"));
-
-            if (role != null)
-            {
-                user.Roles.Add(role);
-            }
-
-            context.Set<User>().Add(user);
-            context.SaveChanges();
+            userService.CreateUser(user);
             membershipUser = GetUser(email, false);
             return membershipUser;
         }
 
         public override MembershipUser GetUser(string email, bool userIsOnline)
         {
-            var user = context.Set<User>().FirstOrDefault(u => u.Email.Equals(email));
+            var user = userService.GetByPredicate(u => u.Email.Equals(email));
             if (user == null)
                 return null;
             return new MembershipUser("UserMembershipProvider", user.Login, null, 
@@ -60,7 +54,7 @@ namespace MvcPL.Providers
 
         public override bool ValidateUser(string email, string password)
         {
-            User user = context.Set<User>().FirstOrDefault(u => u.Email.Equals(email));
+            UserEntity user = userService.GetByPredicate(u => u.Email.Equals(email));
             if (user != null && Crypto.VerifyHashedPassword(user.Password, password))
             {
                 return true;

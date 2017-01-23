@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using DAL.Concrete.Mappers;
 using DAL.Interfaces.DTO;
 using DAL.Interfaces.Repository;
+using ExpressionTreeVisitor;
 using ORM;
 
 namespace DAL.Concrete
@@ -24,6 +25,9 @@ namespace DAL.Concrete
 
         public void Create(DalUser user)
         {
+            var ormUser = user.ToOrmUser();
+            ormUser.Roles = user.Roles.Select(rolename => context.Set<Role>()
+                .First(role => role.Rolename == rolename)).ToArray();
             context.Set<User>().Add(user.ToOrmUser());
         }
 
@@ -48,14 +52,14 @@ namespace DAL.Concrete
         {
             var expressionModifier = new PredicateVisitor();
             var ormPredicate = expressionModifier.ModifyPredicate<User>(f);
-            User user = context.Set<User>().First((Expression<Func<User,bool>>)ormPredicate);
+            User user = context.Set<User>().FirstOrDefault((Expression<Func<User,bool>>)ormPredicate);
             return user?.ToDalUser();
         }
 
         public void Update(DalUser dalUser)
         {
             var ormUser = dalUser.ToOrmUser();
-            User user = context.Set<User>().First(u => u.Id == ormUser.Id);
+            User user = context.Set<User>().FirstOrDefault(u => u.Id == ormUser.Id);
             if (user == null)
                 throw new ArgumentException($"User with id {dalUser.Id} does not exist");
             user.Roles = dalUser.Roles.Select(roleName => context.Set<Role>()

@@ -77,6 +77,10 @@
       <Project>{6b3b647a-37b2-432b-af5d-5247f294a310}</Project>
       <Name>DAL.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ExpressionTreeVisitor\ExpressionTreeVisitor.csproj">
+      <Project>{81923D66-A5B8-4EE3-9582-AB9000C19548}</Project>
+      <Name>ExpressionTreeVisitor</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ORM\ORM.csproj">
       <Project>{0B026F94-C1DA-4112-9D43-0FCD943A9143}</Project>
       <Name>ORM</Name>
