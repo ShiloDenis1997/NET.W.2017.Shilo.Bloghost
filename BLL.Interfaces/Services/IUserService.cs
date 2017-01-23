@@ -7,7 +7,7 @@ using BLL.Interfaces.Entities;
 
 namespace BLL.Interfaces.Services
 {
-    interface IService
+    public interface IUserService
     {
         UserEntity GetUserEntity(int id);
         IEnumerable<UserEntity> GetAllUserEntities();
