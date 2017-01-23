@@ -52,9 +52,21 @@ namespace DAL.Concrete
             return user?.ToDalUser();
         }
 
-        public void Update(DalUser entity)
+        public void Update(DalUser dalUser)
         {
-            throw new NotImplementedException();
+            var ormUser = dalUser.ToOrmUser();
+            User user = context.Set<User>().First(u => u.Id == ormUser.Id);
+            if (user == null)
+                throw new ArgumentException($"User with id {dalUser.Id} does not exist");
+            user.Roles = dalUser.Roles.Select(roleName => context.Set<Role>()
+                .FirstOrDefault(role => role.Rolename.Equals(roleName))).ToArray();
+            user.DateRegistered = dalUser.DateRegistered;
+            user.Login = dalUser.Login;
+            user.Email = dalUser.Email;
+            user.Firstname = dalUser.Firstname;
+            user.Password = dalUser.Password;
+            user.Secondname = dalUser.Secondname;
+            user.Thirdname = dalUser.Thirdname;
         }
     }
 }
