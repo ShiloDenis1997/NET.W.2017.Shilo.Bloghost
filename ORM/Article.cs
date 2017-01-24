@@ -21,8 +21,7 @@ namespace ORM
         [Required]
         [StringLength(255)]
         public string Name { get; set; }
-
-        [Column(TypeName = "text")]
+        
         [Required]
         public string Content { get; set; }
 

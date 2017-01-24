@@ -1,7 +1,16 @@
-﻿@model dynamic
+﻿@model IEnumerable<MvcPL.Models.ArticleViewModel>
 
 @{
-    ViewBag.Title = "Articles"
+    ViewBag.Title = "Articles";
 }
 
 <h1>@ViewBag.Title</h1>
+
+<ul class="list-unstyled">
+@foreach (var article in Model)
+{
+    <li>
+        @{Html.RenderPartial("_ArticlePartial", article);}
+    </li>
+}
+ </ul>

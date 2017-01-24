@@ -36,7 +36,7 @@ namespace MvcPL.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Administrator")]
+        [AllowAnonymous]
         public ActionResult Contact()
         {
             logger.Warn("Contact action of Home controller started");

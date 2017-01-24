@@ -15,8 +15,7 @@ namespace ORM
         }
 
         public int Id { get; set; }
-
-        [Column(TypeName = "text")]
+        
         [Required]
         public string Content { get; set; }
 

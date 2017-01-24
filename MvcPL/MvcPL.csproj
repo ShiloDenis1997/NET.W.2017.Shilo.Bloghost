@@ -158,6 +158,7 @@
     </Compile>
     <Compile Include="Infrastructure\CaptchaImage.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
+    <Compile Include="Models\ArticleViewModel.cs" />
     <Compile Include="Models\BlogViewModel.cs" />
     <Compile Include="Models\LogInViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
@@ -217,6 +218,7 @@
     <Content Include="Views\Blogs\Index.cshtml" />
     <Content Include="Views\Shared\_BlogPartial.cshtml" />
     <Content Include="Views\Articles\Index.cshtml" />
+    <Content Include="Views\Shared\_ArticlePartial.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
