@@ -62,6 +62,7 @@ namespace DAL.Concrete
             ormBlog.DateStarted = dalBlog.DateStarted;
             ormBlog.Name = dalBlog.Name;
             ormBlog.Rating = dalBlog.Rating;
+            ormBlog.UserId = dalBlog.UserId;
         }
     }
 }
