@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace DAL.Interfaces.DTO
 {
-    public class DalBlog
+    public class DalBlog : IEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public int Rating { get; set; }
         public DateTime DateStarted { get; set; }
         public int UserId { get; set; }
-        public string UserName { get; set; }
     }
 }

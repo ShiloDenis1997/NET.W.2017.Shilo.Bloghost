@@ -40,5 +40,29 @@ namespace DAL.Concrete.Mappers
                 Roles = user.Roles.Select(role=>role.Rolename).ToArray(),
             };
         }
+
+        public static Blog ToOrmBlog(this DalBlog blog)
+        {
+            return new Blog
+            {
+                Id = blog.Id,
+                UserId = blog.UserId,
+                Rating = blog.Rating,
+                DateStarted = blog.DateStarted,
+                Name = blog.Name,
+            };
+        }
+
+        public static DalBlog ToDalBlog(this Blog blog)
+        {
+            return new DalBlog
+            {
+                Id = blog.Id,
+                Name = blog.Name,
+                Rating = blog.Rating,
+                UserId = blog.UserId,
+                DateStarted = blog.DateStarted,
+            };
+        }
     }
 }

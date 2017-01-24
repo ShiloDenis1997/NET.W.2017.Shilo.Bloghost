@@ -52,7 +52,8 @@ namespace DAL.Concrete
         {
             var expressionModifier = new PredicateVisitor();
             var ormPredicate = expressionModifier.ModifyPredicate<User>(f);
-            User user = context.Set<User>().FirstOrDefault((Expression<Func<User,bool>>)ormPredicate);
+            User user = context.Set<User>().FirstOrDefault
+                ((Expression<Func<User,bool>>)ormPredicate);
             return user?.ToDalUser();
         }
 
