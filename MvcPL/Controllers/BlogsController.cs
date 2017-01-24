@@ -4,6 +4,8 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using BLL.Interfaces.Entities;
+using BLL.Interfaces.Services;
 using MvcPL.Models;
 using ORM;
 
@@ -11,19 +13,24 @@ namespace MvcPL.Controllers
 {
     public class BlogsController : Controller
     {
-        private DbContext context;
+        private IBlogService blogService;
+        private IUserService userService;
 
-        public BlogsController(DbContext context)
+        public BlogsController
+            (IBlogService blogService, IUserService userService)
         {
-            this.context = context;
+            this.blogService = blogService;
+            this.userService = userService;
         }
 
         // GET: Blogs
         public ActionResult Index(int? userId)
         {
-            IEnumerable<Blog> blogs = context.Set<Blog>().Include(blog => blog.User);
+            IEnumerable<BlogEntity> blogs =
+                blogService.GetAllBlogEntities();
+
             if (userId != null)
-                blogs = blogs.Where(user => user.Id == userId);
+                blogs = blogs.Where(blog => blog.UserId == userId);
 
             return View(blogs.Select(blog => new BlogViewModel
             {
@@ -31,9 +38,9 @@ namespace MvcPL.Controllers
                 DateStarted = blog.DateStarted,
                 Name = blog.Name,
                 UserId = blog.UserId,
-                UserName = blog.User.Login,
+                UserName = userService.GetUserEntity(blog.UserId).Login,
                 Rating = blog.Rating,
-            }));
+            }).ToArray());
         }
     }
 }

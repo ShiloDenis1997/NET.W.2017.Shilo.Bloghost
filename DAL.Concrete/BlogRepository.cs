@@ -35,7 +35,7 @@ namespace DAL.Concrete
 
         public IEnumerable<DalBlog> GetAll()
         {
-            return context.Set<Blog>().Select(blog => blog.ToDalBlog());
+            return context.Set<Blog>().ToArray().Select(blog => blog.ToDalBlog());
         }
 
         public DalBlog GetById(int id)

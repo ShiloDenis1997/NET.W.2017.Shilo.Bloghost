@@ -5,7 +5,7 @@
     <div>Started at @Model.DateStarted.Date by 
         @Html.ActionLink(Model.UserName, "Index", "Blogs",new RouteValueDictionary
         {
-            {"userId", Model.Id }
+            {"userId", Model.UserId }
         }, null) </div>
     <div>Rating: @Model.Rating</div>
 </div>

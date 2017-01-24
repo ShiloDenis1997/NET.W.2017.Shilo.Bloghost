@@ -35,7 +35,7 @@ namespace MvcPL.Controllers
                     Name = article.Name,
                     Rating = article.Rating,
                 }
-            ));
+            ).ToArray());
         }
     }
 }
