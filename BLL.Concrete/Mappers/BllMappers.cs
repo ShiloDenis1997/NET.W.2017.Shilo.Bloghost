@@ -59,5 +59,29 @@ namespace BLL.Concrete.Mappers
                 Rolename = role.Rolename
             };
         }
+
+        public static BlogEntity ToBlogEntity(this DalBlog blog)
+        {
+            return new BlogEntity
+            {
+                Id = blog.Id,
+                Name = blog.Name,
+                Rating = blog.Rating,
+                UserId = blog.UserId,
+                DateStarted = blog.DateStarted
+            };
+        }
+
+        public static DalBlog ToDalBlog(this BlogEntity blog)
+        {
+            return new DalBlog
+            {
+                Id = blog.Id,
+                Name = blog.Name,
+                Rating = blog.Rating,
+                UserId = blog.UserId,
+                DateStarted = blog.DateStarted
+            };
+        }
     }
 }
