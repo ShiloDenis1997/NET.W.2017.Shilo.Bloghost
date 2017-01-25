@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using NLog;
-using ORM;
 using ILogger = Logger.Interfaces.ILogger;
 using Logger.Concrete;
 
