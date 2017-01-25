@@ -16,7 +16,8 @@ namespace MvcPL.Providers
         public override string[] GetRolesForUser(string email)
         {
             string[] roles = {};
-            var user = userService.GetByPredicate(u => u.Email.Equals(email));
+            var user = userService.GetUsersByPredicate(u => u.Email.Equals(email), 1)
+                        .FirstOrDefault();
 
             if (user == null)
                 return roles;
@@ -25,7 +26,8 @@ namespace MvcPL.Providers
 
         public override bool IsUserInRole(string email, string roleName)
         {
-            var user = userService.GetByPredicate(u => u.Email.Equals(email));
+            var user = userService.GetUsersByPredicate(u => u.Email.Equals(email), 1)
+                        .FirstOrDefault();
             if (user != null && user.Roles.Count(role => role.Equals(roleName)) != 0)
             {
                 return true;

@@ -16,9 +16,9 @@ namespace BLL.Concrete
     public class BlogService : IBlogService
     {
         private IUnitOfWork unitOfWork;
-        private IRepository<DalBlog> blogRepository;
+        private IBlogRepository blogRepository;
 
-        public BlogService(IUnitOfWork uow, IRepository<DalBlog> repo)
+        public BlogService(IUnitOfWork uow, IBlogRepository repo)
         {
             unitOfWork = uow;
             blogRepository = repo;
@@ -35,28 +35,60 @@ namespace BLL.Concrete
             blogRepository.Delete(blog.ToDalBlog());
             unitOfWork.Commit();
         }
-
-        public IEnumerable<BlogEntity> GetAllBlogEntities()
-            => blogRepository.GetAll().Select(blog => blog.ToBlogEntity());
+        
 
         public BlogEntity GetBlogEntity(int id)
             => blogRepository.GetById(id).ToBlogEntity();
-
-        public BlogEntity GetByPredicate
-            (Expression<Func<BlogEntity, bool>> predicate)
-        {
-            var expressionModifier = new PredicateVisitor();
-            var dalPredicate = expressionModifier
-                .ModifyPredicate<DalBlog>(predicate);
-            return blogRepository.GetByPredicate
-                ((Expression<Func<DalBlog, bool>>) dalPredicate)
-                    .ToBlogEntity();
-        }
 
         public void UpdateBlog(BlogEntity blog)
         {
             blogRepository.Update(blog.ToDalBlog());
             unitOfWork.Commit();
+        }
+
+        public IEnumerable<BlogEntity> GetBlogEntities
+            (int takeCount, int skipCount = 0, 
+            Expression<Func<BlogEntity, int>> orderSelector = null)
+        {
+            var expressionModifier = new ExpressionModifier();
+            var ormOrderSelector = orderSelector == null
+                ? null
+                : expressionModifier.Modify<DalBlog>(orderSelector);
+            return blogRepository.GetEntities(takeCount, skipCount,
+                (Expression<Func<DalBlog, int>>)ormOrderSelector)
+                .Select(blog => blog.ToBlogEntity());
+        }
+
+        public IEnumerable<BlogEntity> GetBlogsByPredicate
+            (Expression<Func<BlogEntity, bool>> predicate, int takeCount,
+            int skipCount = 0, Expression<Func<BlogEntity, int>> orderSelector = null)
+        {
+            var expressionModifier = new ExpressionModifier();
+            var dalPredicate = expressionModifier
+                .Modify<DalBlog>(predicate);
+            var ormOrderSelector = orderSelector == null 
+                ? null 
+                : expressionModifier.Modify<DalBlog>(orderSelector);
+            return blogRepository.GetEntitiesByPredicate
+                ((Expression<Func<DalBlog, bool>>)dalPredicate,
+                takeCount, skipCount, (Expression<Func<DalBlog, int>>)ormOrderSelector)
+                .Select(blog => blog.ToBlogEntity());
+        }
+
+        public IEnumerable<BlogEntity> GetBlogsByCreationDate
+            (int takeCount, int skipCount = 0, bool ascending = true)
+        {
+            return blogRepository.GetBlogsByCreationDate(takeCount, skipCount, ascending)
+                .Select(blog => blog.ToBlogEntity());
+        }
+
+        public BlogEntity GetByPredicate(Expression<Func<BlogEntity, bool>> predicate)
+        {
+            var expressionModifier = new ExpressionModifier();
+            var dalPredicate = expressionModifier
+                .Modify<DalBlog>(predicate);
+            return blogRepository.GetByPredicate(
+                (Expression<Func<DalBlog, bool>>)dalPredicate).ToBlogEntity();
         }
     }
 }

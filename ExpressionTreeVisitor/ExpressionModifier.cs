@@ -7,13 +7,13 @@ using System.Web;
 
 namespace ExpressionTreeVisitor
 {
-    public class PredicateVisitor : ExpressionVisitor
+    public class ExpressionModifier : ExpressionVisitor
     {
         private ParameterExpression parameter;
 
-        public Expression ModifyPredicate<RType>(Expression expression)
+        public Expression Modify<TTo>(Expression expression)
         {
-            parameter = Expression.Parameter(typeof(RType));
+            parameter = Expression.Parameter(typeof(TTo));
             return Visit(expression);
         }
 

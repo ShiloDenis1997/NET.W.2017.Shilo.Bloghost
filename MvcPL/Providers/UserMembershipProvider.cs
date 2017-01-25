@@ -42,7 +42,8 @@ namespace MvcPL.Providers
 
         public override MembershipUser GetUser(string email, bool userIsOnline)
         {
-            var user = userService.GetByPredicate(u => u.Email.Equals(email));
+            var user = userService.GetUsersByPredicate(u => u.Email.Equals(email), 1)
+                        .FirstOrDefault();
             if (user == null)
                 return null;
             return new MembershipUser("UserMembershipProvider", user.Login, null, 
@@ -54,7 +55,8 @@ namespace MvcPL.Providers
 
         public override bool ValidateUser(string email, string password)
         {
-            UserEntity user = userService.GetByPredicate(u => u.Email.Equals(email));
+            UserEntity user = userService.GetUsersByPredicate(u => u.Email.Equals(email), 1)
+                                .FirstOrDefault();
             if (user != null && Crypto.VerifyHashedPassword(user.Password, password))
             {
                 return true;

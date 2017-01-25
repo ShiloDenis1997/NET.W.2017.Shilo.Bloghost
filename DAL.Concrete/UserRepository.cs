@@ -37,11 +37,6 @@ namespace DAL.Concrete
             context.Set<User>().Remove(ormUser);
         }
 
-        public IEnumerable<DalUser> GetAll()
-        {
-            return context.Set<User>().Select(user => user.ToDalUser());
-        }
-
         public DalUser GetById(int key)
         {
             User ormUser = context.Set<User>().FirstOrDefault(user => user.Id == key);
@@ -50,11 +45,39 @@ namespace DAL.Concrete
 
         public DalUser GetByPredicate(Expression<Func<DalUser, bool>> f)
         {
-            var expressionModifier = new PredicateVisitor();
-            var ormPredicate = expressionModifier.ModifyPredicate<User>(f);
-            User user = context.Set<User>().FirstOrDefault
-                ((Expression<Func<User,bool>>)ormPredicate);
-            return user?.ToDalUser();
+            var expressionModifier = new ExpressionModifier();
+            var ormPredicate = expressionModifier.Modify<User>(f);
+            return context.Set<User>().FirstOrDefault
+                ((Expression<Func<User, bool>>) ormPredicate).ToDalUser();
+        }
+
+        public IEnumerable<DalUser> GetEntities(int takeCount, int skipCount = 0,
+            Expression<Func<DalUser, int>> orderSelector = null)
+        {
+            if (orderSelector == null)
+                orderSelector = user => user.Id;
+            var expressionModifier = new ExpressionModifier();
+            var ormOrderSelector = expressionModifier.Modify<User>(orderSelector);
+            return context.Set<User>().OrderBy(
+                (Expression<Func<User, int>>)ormOrderSelector)
+                .Skip(skipCount).Take(takeCount)
+                .ToArray().Select(user => user.ToDalUser());
+        }
+
+        public IEnumerable<DalUser> GetEntitiesByPredicate
+            (Expression<Func<DalUser, bool>> f, int takeCount, int skipCount = 0,
+            Expression<Func<DalUser, int>> orderSelector = null )
+        {
+            if (orderSelector == null)
+                orderSelector = user => user.Id;
+            var expressionModifier = new ExpressionModifier();
+            var ormPredicate = expressionModifier.Modify<User>(f);
+            var ormOrderSelector = expressionModifier.Modify<User>(orderSelector);
+            IEnumerable<User> users = context.Set<User>().Where
+                ((Expression<Func<User, bool>>)ormPredicate).OrderBy
+                ((Expression<Func<User, int>>)ormOrderSelector)
+                .Skip(skipCount).Take(takeCount);
+            return users.Select(user => user.ToDalUser());
         }
 
         public void Update(DalUser dalUser)

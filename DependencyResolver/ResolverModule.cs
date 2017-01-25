@@ -29,7 +29,7 @@ namespace DependencyResolver
             kernel.Bind<IUserService>().To<UserService>().InRequestScope();
             kernel.Bind<IRepository<DalUser>>().To<UserRepository>().InRequestScope();
             kernel.Bind<IUnitOfWork>().To<UnitOfWork>();
-            kernel.Bind<IRepository<DalBlog>>().To<BlogRepository>();
+            kernel.Bind<IBlogRepository>().To<BlogRepository>();
             kernel.Bind<IBlogService>().To<BlogService>();
         }
     }

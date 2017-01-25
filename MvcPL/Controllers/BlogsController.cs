@@ -26,11 +26,18 @@ namespace MvcPL.Controllers
         // GET: Blogs
         public ActionResult Index(int? userId)
         {
-            IEnumerable<BlogEntity> blogs =
-                blogService.GetAllBlogEntities();
+            IEnumerable<BlogEntity> blogs;
 
             if (userId != null)
-                blogs = blogs.Where(blog => blog.UserId == userId);
+            {
+                blogs = blogService.GetBlogsByPredicate
+                            (blog => blog.UserId == userId, 100)
+                            .OrderByDescending(blog => blog.DateStarted);
+            }
+            else
+            {
+                blogs = blogService.GetBlogsByCreationDate(100, 0, false);
+            }
 
             return View(blogs.Select(blog => new BlogViewModel
             {

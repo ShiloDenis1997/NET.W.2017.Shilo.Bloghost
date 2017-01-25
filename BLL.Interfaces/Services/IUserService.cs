@@ -11,8 +11,10 @@ namespace BLL.Interfaces.Services
     public interface IUserService
     {
         UserEntity GetUserEntity(int id);
-        IEnumerable<UserEntity> GetAllUserEntities();
-        UserEntity GetByPredicate(Expression<Func<UserEntity, bool>> predicate);
+        IEnumerable<UserEntity> GetUserEntities(int takeCount, int skipCount = 0);
+        IEnumerable<UserEntity> GetUsersByPredicate
+            (Expression<Func<UserEntity, bool>> predicate, 
+                    int takeCount, int skipCount = 0);
         void CreateUser(UserEntity user);
         void DeleteUser(UserEntity user);
         void UpdateUser(UserEntity user);

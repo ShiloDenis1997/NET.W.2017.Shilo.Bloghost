@@ -13,7 +13,7 @@ using ORM;
 
 namespace DAL.Concrete
 {
-    public class BlogRepository : IRepository<DalBlog>
+    public class BlogRepository : IBlogRepository
     {
         private DbContext context;
 
@@ -33,9 +33,16 @@ namespace DAL.Concrete
             context.Set<Blog>().Remove(ormBlog);
         }
 
-        public IEnumerable<DalBlog> GetAll()
+        public IEnumerable<DalBlog> GetBlogsByCreationDate
+            (int takeCount, int skipCount = 0, bool ascending = false)
         {
-            return context.Set<Blog>().ToArray().Select(blog => blog.ToDalBlog());
+            if (ascending)
+                return context.Set<Blog>().OrderBy(blog => blog.DateStarted)
+                    .Skip(skipCount).Take(takeCount).ToArray()
+                    .Select(blog => blog.ToDalBlog());
+            return context.Set<Blog>().OrderByDescending(blog => blog.DateStarted)
+                .Skip(skipCount).Take(takeCount).ToArray()
+                .Select(blog => blog.ToDalBlog());
         }
 
         public DalBlog GetById(int id)
@@ -46,10 +53,38 @@ namespace DAL.Concrete
 
         public DalBlog GetByPredicate(Expression<Func<DalBlog, bool>> f)
         {
-            var expressionModifier = new PredicateVisitor();
-            var ormExpression = expressionModifier.ModifyPredicate<Blog>(f);
+            var expressionModifier = new ExpressionModifier();
+            var ormExpression = expressionModifier.Modify<Blog>(f);
             return context.Set<Blog>().FirstOrDefault
-                ((Expression<Func<Blog, bool>>)ormExpression).ToDalBlog();
+                ((Expression<Func<Blog, bool>>)ormExpression)?.ToDalBlog();
+        }
+
+        public IEnumerable<DalBlog> GetEntities(int takeCount, int skipCount = 0,
+            Expression<Func<DalBlog, int>> orderSelector = null)
+        {
+            if (orderSelector == null)
+                orderSelector = blog => blog.Id;
+            var expressionModifier = new ExpressionModifier();
+            var ormOrderSelector = expressionModifier.Modify<Blog>(orderSelector);
+            return context.Set<Blog>().OrderBy(
+                (Expression<Func<Blog, int>>)ormOrderSelector)
+                .Skip(skipCount).Take(takeCount)
+                .ToArray().Select(blog => blog.ToDalBlog());
+        }
+
+        public IEnumerable<DalBlog> GetEntitiesByPredicate
+            (Expression<Func<DalBlog, bool>> f, int takeCount, int skipCount = 0,
+            Expression<Func<DalBlog, int>> orderSelector = null)
+        {
+            if (orderSelector == null)
+                orderSelector = blog => blog.Id;
+            var expressionModifier = new ExpressionModifier();
+            var ormExpression = expressionModifier.Modify<Blog>(f);
+            var ormOrderSelector = expressionModifier.Modify<Blog>(orderSelector);
+            return context.Set<Blog>().Where
+                ((Expression<Func<Blog, bool>>)ormExpression).OrderBy
+                ((Expression<Func<Blog, int>>)ormOrderSelector)
+                .Skip(skipCount).Take(takeCount).ToArray().Select(b => b.ToDalBlog());
         }
 
         public void Update(DalBlog dalBlog)

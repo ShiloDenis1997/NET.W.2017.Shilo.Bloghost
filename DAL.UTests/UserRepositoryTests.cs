@@ -23,10 +23,10 @@ namespace DAL.UTests
         public void ExpressionModifierExecutionTest()
         {
             //arrange
-            var modifier = new PredicateVisitor();
+            var modifier = new ExpressionModifier();
             Expression<Func<DalUser, bool>> dalExpression = user => user.Id == 5;
             Expression<Func<User, bool>> ormExpression =
-                    (Expression<Func<User, bool>>)modifier.ModifyPredicate<User>(dalExpression);
+                    (Expression<Func<User, bool>>)modifier.Modify<User>(dalExpression);
             User[] ormUsers =
             {
                 new User {Id=3},

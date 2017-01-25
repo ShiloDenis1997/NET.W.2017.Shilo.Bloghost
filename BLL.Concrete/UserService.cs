@@ -36,8 +36,10 @@ namespace BLL.Concrete
             unitOfWork.Commit();
         }
 
-        public IEnumerable<UserEntity> GetAllUserEntities()
-            => repository.GetAll().Select(user => user.ToUserEntity());
+        public IEnumerable<UserEntity> GetUserEntities
+            (int takeCount, int skipCount = 0)
+            => repository.GetEntities(takeCount, skipCount)
+                .Select(user => user.ToUserEntity());
 
         public UserEntity GetUserEntity(int id)
             => repository.GetById(id)?.ToUserEntity();
@@ -55,13 +57,16 @@ namespace BLL.Concrete
             
             unitOfWork.Commit();
         }
-
-        public UserEntity GetByPredicate(Expression<Func<UserEntity, bool>> predicate)
+        
+        public IEnumerable<UserEntity> GetUsersByPredicate
+            (Expression<Func<UserEntity, bool>> predicate, 
+                    int takeCount, int skipCount = 0)
         {
-            var predicateModifier = new PredicateVisitor();
-            var dalPredicate = (Expression<Func<DalUser, bool>>) 
-                    predicateModifier.ModifyPredicate<DalUser>(predicate);
-            return repository.GetByPredicate(dalPredicate)?.ToUserEntity();
+            var predicateModifier = new ExpressionModifier();
+            var dalPredicate = (Expression<Func<DalUser, bool>>)
+                    predicateModifier.Modify<DalUser>(predicate);
+            return repository.GetEntitiesByPredicate(dalPredicate, takeCount, skipCount)
+                .Select(user => user.ToUserEntity());
         }
     }
 }

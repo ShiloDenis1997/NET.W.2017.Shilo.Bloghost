@@ -11,8 +11,20 @@ namespace BLL.Interfaces.Services
     public interface IBlogService
     {
         BlogEntity GetBlogEntity(int id);
-        IEnumerable<BlogEntity> GetAllBlogEntities();
+
+        IEnumerable<BlogEntity> GetBlogEntities(int takeCount, int skipCount = 0,
+            Expression<Func<BlogEntity, int>> orderSelector = null);
+
+        IEnumerable<BlogEntity> GetBlogsByPredicate
+        (Expression<Func<BlogEntity, bool>> predicate,
+            int takeCount, int skipCount = 0, 
+            Expression<Func<BlogEntity, int>> orderSelector = null);
+
+        IEnumerable<BlogEntity> GetBlogsByCreationDate
+            (int takeCount, int skipCount = 0, bool ascending = true);
+
         BlogEntity GetByPredicate(Expression<Func<BlogEntity, bool>> predicate);
+
         void CreateBlog(BlogEntity blog);
         void DeleteBlog(BlogEntity blog);
         void UpdateBlog(BlogEntity blog);
