@@ -11,5 +11,8 @@ namespace DAL.Interfaces.Repository
     {
         IEnumerable<DalArticle> GetArticlesByCreationDate
             (int takeCount, int skipCount = 0, bool ascending = false);
+
+        IEnumerable<DalArticle> GetArticlesByUser
+            (int userId, bool dateOrder = false);
     }
 }
