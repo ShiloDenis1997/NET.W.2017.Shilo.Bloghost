@@ -12,7 +12,7 @@ namespace DAL.Interfaces.Repository
     {
         IEnumerable<TEntity> GetEntities(int takeCount, int skipCount = 0,
             Expression<Func<TEntity, int>> orderSelector = null);
-        TEntity GetById(int key);
+        TEntity GetById(int id);
         IEnumerable<TEntity> GetEntitiesByPredicate
             (Expression<Func<TEntity, bool>> f, int takeCount, int skipCount = 0,
             Expression<Func<TEntity, int>> orderSelector = null);

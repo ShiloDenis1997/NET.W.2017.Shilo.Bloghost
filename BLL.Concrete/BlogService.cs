@@ -76,7 +76,7 @@ namespace BLL.Concrete
         }
 
         public IEnumerable<BlogEntity> GetBlogsByCreationDate
-            (int takeCount, int skipCount = 0, bool ascending = true)
+            (int takeCount, int skipCount = 0, bool ascending = false)
         {
             return blogRepository.GetBlogsByCreationDate(takeCount, skipCount, ascending)
                 .Select(blog => blog.ToBlogEntity());

@@ -21,7 +21,7 @@ namespace BLL.Interfaces.Services
             Expression<Func<BlogEntity, int>> orderSelector = null);
 
         IEnumerable<BlogEntity> GetBlogsByCreationDate
-            (int takeCount, int skipCount = 0, bool ascending = true);
+            (int takeCount, int skipCount = 0, bool ascending = false);
 
         BlogEntity GetByPredicate(Expression<Func<BlogEntity, bool>> predicate);
 

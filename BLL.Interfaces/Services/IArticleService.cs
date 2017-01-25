@@ -21,9 +21,9 @@ namespace BLL.Interfaces.Services
             Expression<Func<ArticleEntity, int>> orderSelector = null);
 
         IEnumerable<ArticleEntity> GetArticlesByCreationDate
-            (int takeCount, int skipCount = 0, bool ascending = true);
+            (int takeCount, int skipCount = 0, bool ascending = false);
 
-        BlogEntity GetByPredicate(Expression<Func<ArticleEntity, bool>> predicate);
+        ArticleEntity GetByPredicate(Expression<Func<ArticleEntity, bool>> predicate);
 
         void CreateArticle(ArticleEntity article);
         void DeleteArticle(ArticleEntity article);

@@ -37,9 +37,9 @@ namespace DAL.Concrete
             context.Set<User>().Remove(ormUser);
         }
 
-        public DalUser GetById(int key)
+        public DalUser GetById(int id)
         {
-            User ormUser = context.Set<User>().FirstOrDefault(user => user.Id == key);
+            User ormUser = context.Set<User>().FirstOrDefault(user => user.Id == id);
             return ormUser?.ToDalUser();
         }
 
