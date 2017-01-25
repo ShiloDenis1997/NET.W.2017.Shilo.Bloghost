@@ -83,5 +83,33 @@ namespace BLL.Concrete.Mappers
                 DateStarted = blog.DateStarted
             };
         }
+
+        public static DalArticle ToDalArticle(this ArticleEntity article)
+        {
+            return new DalArticle
+            {
+                Id = article.Id,
+                Name = article.Name,
+                Rating = article.Rating,
+                UserId = article.UserId,
+                DateAdded = article.DateAdded,
+                BlogId = article.BlogId,
+                Content = article.Content,
+            };
+        }
+
+        public static ArticleEntity ToArticleEntity(this DalArticle article)
+        {
+            return new ArticleEntity
+            {
+                Id = article.Id,
+                Name = article.Name,
+                Rating = article.Rating,
+                UserId = article.UserId,
+                DateAdded = article.DateAdded,
+                BlogId = article.BlogId,
+                Content = article.Content,
+            };
+        }
     }
 }
