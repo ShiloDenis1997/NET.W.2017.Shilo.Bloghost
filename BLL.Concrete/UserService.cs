@@ -37,9 +37,17 @@ namespace BLL.Concrete
         }
 
         public IEnumerable<UserEntity> GetUserEntities
-            (int takeCount, int skipCount = 0)
-            => repository.GetEntities(takeCount, skipCount)
+        (int takeCount, int skipCount = 0,
+            Expression<Func<UserEntity, int>> orderSelector = null)
+        {
+            var expressionModifier = new ExpressionModifier();
+            var dalSelector = orderSelector == null
+                ? null
+                :(Expression<Func<DalUser, int>>)
+                expressionModifier.Modify<DalUser>(orderSelector);
+            return repository.GetEntities(takeCount, skipCount, dalSelector)
                 .Select(user => user.ToUserEntity());
+        }
 
         public UserEntity GetUserEntity(int id)
             => repository.GetById(id)?.ToUserEntity();
@@ -60,13 +68,25 @@ namespace BLL.Concrete
         
         public IEnumerable<UserEntity> GetUsersByPredicate
             (Expression<Func<UserEntity, bool>> predicate, 
-                    int takeCount, int skipCount = 0)
+                    int takeCount, int skipCount = 0,
+                    Expression<Func<UserEntity, int>> orderSelector = null)
+        {
+            var expressionModifier = new ExpressionModifier();
+            var dalPredicate = (Expression<Func<DalUser, bool>>)
+                expressionModifier.Modify<DalUser>(predicate);
+            var dalOrderSelector = (Expression<Func<DalUser, int>>)
+                expressionModifier.Modify<DalUser>(predicate);
+            return repository.GetEntitiesByPredicate(dalPredicate, takeCount, skipCount)
+                .Select(user => user.ToUserEntity());
+        }
+
+        public UserEntity GetUserByPredicate
+            (Expression<Func<UserEntity, bool>> predicate)
         {
             var predicateModifier = new ExpressionModifier();
             var dalPredicate = (Expression<Func<DalUser, bool>>)
                     predicateModifier.Modify<DalUser>(predicate);
-            return repository.GetEntitiesByPredicate(dalPredicate, takeCount, skipCount)
-                .Select(user => user.ToUserEntity());
+            return repository.GetByPredicate(dalPredicate)?.ToUserEntity();
         }
     }
 }

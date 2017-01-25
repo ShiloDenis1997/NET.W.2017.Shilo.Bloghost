@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Security;
+using BLL.Interfaces.Services;
 using MvcPL.Infrastructure;
 using MvcPL.Models;
 using MvcPL.Providers;
@@ -17,11 +18,11 @@ namespace MvcPL.Controllers
 {
     public class AccountController : Controller
     {
-        DbContext context;
+        private IUserService userService;
 
-        public AccountController(DbContext context)
+        public AccountController(IUserService userService)
         {
-            this.context = context;
+            this.userService = userService;
         }
 
         [HttpGet]
@@ -39,7 +40,8 @@ namespace MvcPL.Controllers
             {
                 if (Membership.ValidateUser(viewModel.Email, viewModel.Password))
                 {
-                    FormsAuthentication.SetAuthCookie(viewModel.Email, viewModel.RememberMe);
+                    FormsAuthentication.SetAuthCookie
+                        (viewModel.Email, viewModel.RememberMe);
                     if (Url.IsLocalUrl(returnUrl))
                     {
                         return Redirect(returnUrl);
@@ -79,7 +81,8 @@ namespace MvcPL.Controllers
                 return View(viewModel);
             }
 
-            var anyUser = context.Set<User>().FirstOrDefault(u => u.Login.Equals(viewModel.Login) 
+            var anyUser = userService.GetUserByPredicate
+                (u => u.Login.Equals(viewModel.Login) 
                 || u.Email.Equals(viewModel.Email));
             if (anyUser != null)
             {

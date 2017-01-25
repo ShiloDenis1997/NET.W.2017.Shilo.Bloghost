@@ -48,7 +48,7 @@ namespace DAL.Concrete
             var expressionModifier = new ExpressionModifier();
             var ormPredicate = expressionModifier.Modify<User>(f);
             return context.Set<User>().FirstOrDefault
-                ((Expression<Func<User, bool>>) ormPredicate).ToDalUser();
+                ((Expression<Func<User, bool>>) ormPredicate)?.ToDalUser();
         }
 
         public IEnumerable<DalUser> GetEntities(int takeCount, int skipCount = 0,

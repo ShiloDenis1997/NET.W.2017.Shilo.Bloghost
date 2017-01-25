@@ -10,8 +10,8 @@ namespace MvcPL.Providers
 {
     public class UserMembershipProvider : MembershipProvider
     {
-        private IUserService userService => (IUserService) System.Web.Mvc.DependencyResolver
-            .Current.GetService(typeof(IUserService));
+        private IUserService userService => (IUserService) 
+            System.Web.Mvc.DependencyResolver.Current.GetService(typeof(IUserService));
 
         public MembershipUser CreateUser(string login, string firstname,
             string secondname, string thirdname, string email, string password)
@@ -42,8 +42,7 @@ namespace MvcPL.Providers
 
         public override MembershipUser GetUser(string email, bool userIsOnline)
         {
-            var user = userService.GetUsersByPredicate(u => u.Email.Equals(email), 1)
-                        .FirstOrDefault();
+            var user = userService.GetUserByPredicate(u => u.Email.Equals(email));
             if (user == null)
                 return null;
             return new MembershipUser("UserMembershipProvider", user.Login, null, 
@@ -55,8 +54,9 @@ namespace MvcPL.Providers
 
         public override bool ValidateUser(string email, string password)
         {
-            UserEntity user = userService.GetUsersByPredicate(u => u.Email.Equals(email), 1)
-                                .FirstOrDefault();
+            UserEntity user = 
+                userService.GetUserByPredicate(u => u.Email.Equals(email));
+                                
             if (user != null && Crypto.VerifyHashedPassword(user.Password, password))
             {
                 return true;

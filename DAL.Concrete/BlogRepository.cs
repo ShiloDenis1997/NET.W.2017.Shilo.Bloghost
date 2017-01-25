@@ -48,7 +48,7 @@ namespace DAL.Concrete
         public DalBlog GetById(int id)
         {
             return context.Set<Blog>()
-                .FirstOrDefault(blog => blog.Id == id).ToDalBlog();
+                .FirstOrDefault(blog => blog.Id == id)?.ToDalBlog();
         }
 
         public DalBlog GetByPredicate(Expression<Func<DalBlog, bool>> f)
