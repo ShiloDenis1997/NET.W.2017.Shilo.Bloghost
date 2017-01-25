@@ -31,6 +31,7 @@ namespace DependencyResolver
             kernel.Bind<IUnitOfWork>().To<UnitOfWork>();
             kernel.Bind<IBlogRepository>().To<BlogRepository>();
             kernel.Bind<IBlogService>().To<BlogService>();
+            kernel.Bind<IArticleRepository>().To<ArticleRepository>();
         }
     }
 }

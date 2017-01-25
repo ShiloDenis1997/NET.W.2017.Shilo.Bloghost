@@ -64,5 +64,32 @@ namespace DAL.Concrete.Mappers
                 DateStarted = blog.DateStarted,
             };
         }
+
+        public static Article ToOrmArticle(this DalArticle article)
+        {
+            return new Article
+            {
+                BlogId = article.BlogId,
+                Content = article.Content,
+                DateAdded = article.DateAdded,
+                Id = article.Id,
+                Name = article.Name,
+                Rating = article.Rating,
+            };
+        }
+
+        public static DalArticle ToDalArticle(this Article article)
+        {
+            return new DalArticle
+            {
+                Id = article.Id,
+                BlogId = article.BlogId,
+                Name = article.Name,
+                Rating = article.Rating,
+                UserId = article.Blog.UserId,
+                DateAdded = article.DateAdded,
+                Content = article.Content
+            };
+        }
     }
 }

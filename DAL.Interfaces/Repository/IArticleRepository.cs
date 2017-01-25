@@ -13,6 +13,6 @@ namespace DAL.Interfaces.Repository
             (int takeCount, int skipCount = 0, bool ascending = false);
 
         IEnumerable<DalArticle> GetArticlesByUser
-            (int userId, bool dateOrder = false);
+            (int userId, int takeCount, int skipCount = 0, bool dateOrder = false);
     }
 }
