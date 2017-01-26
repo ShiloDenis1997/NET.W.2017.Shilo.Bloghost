@@ -33,5 +33,37 @@ namespace MvcPL.Infrastructure.Mappers
                 UserName = userName,
             };
         }
+
+        public static ArticleViewModel ToMvcArticle
+            (this ArticleEntity article, string blogName = null, string authorName = null)
+        {
+            return new ArticleViewModel
+            {
+                Id = article.Id,
+                Name = article.Name,
+                Rating = article.Rating,
+                DateAdded = article.DateAdded,
+                BlogId = article.BlogId,
+                Content = article.Content,
+                AuthorId = article.UserId,
+                AuthorName = authorName,
+                BlogName = blogName,
+            };
+        }
+
+        public static ArticleEntity ToBllArticle
+            (this ArticleViewModel article)
+        {
+            return new ArticleEntity
+            {
+                Id = article.Id,
+                Name = article.Name,
+                Rating = article.Rating ?? 0,
+                UserId = article.AuthorId ?? 0,
+                BlogId = article.BlogId,
+                DateAdded = article.DateAdded,
+                Content = article.Content,
+            };
+        }
     }
 }

@@ -4,4 +4,8 @@
     <h3>@Model.Name</h3>
     <div>@Model.Content</div>
     <div>Created at @Model.DateAdded.Date by @Model.AuthorName</div>
+    <div>Rating: @Model.Rating 
+    @Html.ActionLink("Edit", "Edit", "Articles", new { id = Model.Id }, new { }) |
+    @Html.ActionLink("Details", "Details", "Articles", new { id = Model.Id }, new { }) |
+    @Html.ActionLink("Delete", "Delete", "Articles", new { id = Model.Id }, new { })</div>
 </div>
