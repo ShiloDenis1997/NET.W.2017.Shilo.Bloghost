@@ -8,7 +8,7 @@ namespace ORM
     public partial class BlogHostModel : DbContext
     {
         public BlogHostModel()
-            : base("name=BloghostModel")
+            : base("name=BlogHostModel")
         {
         }
 
@@ -23,10 +23,6 @@ namespace ORM
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Article>()
-                .Property(e => e.Content)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Article>()
                 .HasMany(e => e.ArticleTags)
                 .WithRequired(e => e.Article)
                 .WillCascadeOnDelete(false);
@@ -40,10 +36,6 @@ namespace ORM
                 .HasMany(e => e.Articles)
                 .WithRequired(e => e.Blog)
                 .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Comment>()
-                .Property(e => e.Content)
-                .IsUnicode(false);
 
             modelBuilder.Entity<Role>()
                 .HasMany(e => e.Users)
@@ -66,11 +58,6 @@ namespace ORM
                 .WithRequired(e => e.User)
                 .HasForeignKey(e => e.UserId)
                 .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<User>()
-                .HasMany(e => e.Articles)
-                .WithMany(e => e.Users)
-                .Map(m => m.ToTable("ArticleLikes").MapLeftKey("UserId").MapRightKey("ArticleId"));
 
             modelBuilder.Entity<User>()
                 .HasMany(e => e.Blogs1)

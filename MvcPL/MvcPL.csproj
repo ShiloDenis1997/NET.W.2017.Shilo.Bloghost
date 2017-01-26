@@ -159,6 +159,7 @@
     <Compile Include="Infrastructure\CaptchaImage.cs" />
     <Compile Include="Infrastructure\Mappers\MvcMapper.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
+    <Compile Include="Controllers\ArticlesEditController.cs" />
     <Compile Include="Models\ArticleViewModel.cs" />
     <Compile Include="Models\BlogViewModel.cs" />
     <Compile Include="Models\LogInViewModel.cs" />
@@ -224,6 +225,11 @@
     <Content Include="Views\Blogs\Delete.cshtml" />
     <Content Include="Views\Blogs\Details.cshtml" />
     <Content Include="Views\Blogs\Edit.cshtml" />
+    <Content Include="Views\ArticlesEdit\Create.cshtml" />
+    <Content Include="Views\ArticlesEdit\Delete.cshtml" />
+    <Content Include="Views\ArticlesEdit\Details.cshtml" />
+    <Content Include="Views\ArticlesEdit\Edit.cshtml" />
+    <Content Include="Views\ArticlesEdit\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

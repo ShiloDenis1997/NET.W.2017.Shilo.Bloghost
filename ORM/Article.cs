@@ -13,7 +13,6 @@ namespace ORM
         {
             ArticleTags = new HashSet<ArticleTag>();
             Comments = new HashSet<Comment>();
-            Users = new HashSet<User>();
         }
 
         public int Id { get; set; }
@@ -21,7 +20,7 @@ namespace ORM
         [Required]
         [StringLength(255)]
         public string Name { get; set; }
-        
+
         [Required]
         public string Content { get; set; }
 
@@ -38,8 +37,5 @@ namespace ORM
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Users { get; set; }
     }
 }
