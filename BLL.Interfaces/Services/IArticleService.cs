@@ -20,6 +20,9 @@ namespace BLL.Interfaces.Services
             int takeCount, int skipCount = 0,
             Expression<Func<ArticleEntity, int>> orderSelector = null);
 
+        IEnumerable<ArticleEntity> GetArticlesByUser(
+            int userId, int takeCount, int skipCount = 0, bool ascending = false);
+
         IEnumerable<ArticleEntity> GetArticlesByCreationDate
             (int takeCount, int skipCount = 0, bool ascending = false);
 

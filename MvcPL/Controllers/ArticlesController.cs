@@ -18,6 +18,8 @@ namespace MvcPL.Controllers
         private IUserService userService;
         private IBlogService blogService;
 
+        private const int PageArticlesCount = 100;
+
         public ArticlesController
             (IArticleService articleService, IUserService userService,
                 IBlogService blogService)
@@ -28,10 +30,24 @@ namespace MvcPL.Controllers
         }
 
         // GET: Articles
-        public ActionResult Index()
+        public ActionResult Index(int? userId, int? blogId)
         {
-            IEnumerable<ArticleEntity> articles = articleService
-                .GetArticlesByCreationDate(100);
+            IEnumerable<ArticleEntity> articles;
+            if (blogId != null)
+            {
+                articles = articleService.GetArticlesByPredicate(
+                    article => article.BlogId == blogId.Value, PageArticlesCount);
+            }
+            else if (userId != null)
+            {
+                articles = articleService.GetArticlesByUser
+                    (userId.Value, PageArticlesCount);
+            }
+            else
+            {
+                articles = articleService.GetArticleEntities(PageArticlesCount);
+            }
+
             return View(articles.Select(
                 article =>
                 {
@@ -66,7 +82,7 @@ namespace MvcPL.Controllers
                 user => user.Email.Equals(User.Identity.Name));
             ViewBag.BlogId = new SelectList
                 (blogService.GetBlogsByPredicate
-                    (blog => blog.UserId == currentUser.Id, 100), "Id", "Name");
+                    (blog => blog.UserId == currentUser.Id, PageArticlesCount), "Id", "Name");
             return View();
         }
 
@@ -86,7 +102,7 @@ namespace MvcPL.Controllers
             }
 
             ViewBag.BlogId = new SelectList
-                (blogService.GetBlogEntities(100), "Id", "Name", article.BlogId);
+                (blogService.GetBlogEntities(PageArticlesCount), "Id", "Name", article.BlogId);
             return View(article);
         }
 
@@ -107,7 +123,7 @@ namespace MvcPL.Controllers
                 user => user.Email.Equals(User.Identity.Name));
             ViewBag.BlogId = new SelectList
                 (blogService.GetBlogsByPredicate
-                    (blog => blog.UserId == currentUser.Id, 100), "Id", "Name");
+                    (blog => blog.UserId == currentUser.Id, PageArticlesCount), "Id", "Name");
             return View(article.ToMvcArticle());
         }
 
@@ -128,7 +144,7 @@ namespace MvcPL.Controllers
                 user => user.Email.Equals(User.Identity.Name));
             ViewBag.BlogId = new SelectList
                 (blogService.GetBlogsByPredicate
-                    (blog => blog.UserId == currentUser.Id, 100), "Id", "Name");
+                    (blog => blog.UserId == currentUser.Id, PageArticlesCount), "Id", "Name");
             return View(article);
         }
 

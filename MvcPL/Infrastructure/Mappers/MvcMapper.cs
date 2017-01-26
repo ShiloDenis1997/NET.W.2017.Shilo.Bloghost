@@ -45,8 +45,8 @@ namespace MvcPL.Infrastructure.Mappers
                 DateAdded = article.DateAdded,
                 BlogId = article.BlogId,
                 Content = article.Content,
-                AuthorId = article.UserId,
-                AuthorName = authorName,
+                UserId = article.UserId,
+                UserName = authorName,
                 BlogName = blogName,
             };
         }
@@ -59,7 +59,7 @@ namespace MvcPL.Infrastructure.Mappers
                 Id = article.Id,
                 Name = article.Name,
                 Rating = article.Rating ?? 0,
-                UserId = article.AuthorId ?? 0,
+                UserId = article.UserId ?? 0,
                 BlogId = article.BlogId,
                 DateAdded = article.DateAdded,
                 Content = article.Content,

@@ -3,7 +3,11 @@
 <div>
     <h3>@Model.Name</h3>
     <div>@Model.Content</div>
-    <div>Created at @Model.DateAdded.Date by @Model.AuthorName</div>
+    <div>Created at @Model.DateAdded by 
+    @Html.ActionLink(Model.UserName, "Index", "Articles", new RouteValueDictionary
+        {
+            {"userId", Model.UserId }
+        }, null)</div>
     <div>Rating: @Model.Rating 
     @Html.ActionLink("Edit", "Edit", "Articles", new { id = Model.Id }, new { }) |
     @Html.ActionLink("Details", "Details", "Articles", new { id = Model.Id }, new { }) |

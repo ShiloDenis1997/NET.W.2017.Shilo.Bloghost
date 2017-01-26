@@ -86,5 +86,13 @@ namespace BLL.Concrete
             articleRepository.Update(article.ToDalArticle());
             unitOfWork.Commit();
         }
+
+        public IEnumerable<ArticleEntity> GetArticlesByUser
+            (int userId, int takeCount, int skipCount = 0, bool ascending = false)
+        {
+            return articleRepository.GetArticlesByUser
+                (userId, takeCount, skipCount, ascending)
+                .Select(article => article.ToArticleEntity());
+        }
     }
 }

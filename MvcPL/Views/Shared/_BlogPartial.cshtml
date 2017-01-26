@@ -3,13 +3,13 @@
 <div>
     <h3>@Model.Name</h3>
     <div>Started at @Model.DateStarted by 
-        @Html.ActionLink(Model.UserName, "Index", "Blogs",new RouteValueDictionary
+        @Html.ActionLink(Model.UserName, "Index", "Blogs",new
         {
-            {"userId", Model.UserId }
+            userId = Model.UserId
         }, null) </div>
     <div>Rating: @Model.Rating 
         @Html.ActionLink("Edit", "Edit", "Blogs", new { id = Model.Id }, new {}) |
-        @Html.ActionLink("Details", "Details", "Blogs", new { id = Model.Id }, new {}) |
+        @Html.ActionLink("Articles", "Index", "Articles", new { blogId = Model.Id }, new {}) |
         @Html.ActionLink("Delete", "Delete", "Blogs", new { id = Model.Id }, new {})
     </div>
 </div>

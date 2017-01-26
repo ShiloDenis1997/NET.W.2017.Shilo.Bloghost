@@ -47,9 +47,9 @@ namespace DAL.Concrete
         }
 
         public IEnumerable<DalArticle> GetArticlesByUser
-            (int userId, int takeCount, int skipCount = 0, bool dateOrder = false)
+            (int userId, int takeCount, int skipCount = 0, bool ascending = false)
         {
-            if (dateOrder)
+            if (ascending)
                 return context.Set<Article>()
                     .Where(article => article.Blog.UserId == userId)
                     .OrderBy(article => article.DateAdded)
