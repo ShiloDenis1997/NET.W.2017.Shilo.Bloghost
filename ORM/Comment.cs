@@ -11,7 +11,7 @@ namespace ORM
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Comment()
         {
-            Users = new HashSet<User>();
+            LikedUsers = new HashSet<User>();
         }
 
         public int Id { get; set; }
@@ -32,6 +32,6 @@ namespace ORM
         public virtual User User { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<User> LikedUsers { get; set; }
     }
 }

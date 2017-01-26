@@ -60,18 +60,18 @@ namespace ORM
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.Articles)
-                .WithMany(e => e.Users)
+                .HasMany(e => e.ArticlesLikes)
+                .WithMany(e => e.LikedUsers)
                 .Map(m => m.ToTable("ArticleLikes").MapLeftKey("UserId").MapRightKey("ArticleId"));
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.Blogs1)
-                .WithMany(e => e.Users)
+                .HasMany(e => e.BlogsLikes)
+                .WithMany(e => e.LikedUsers)
                 .Map(m => m.ToTable("BlogLikes").MapLeftKey("UserId").MapRightKey("BlogId"));
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.Comments1)
-                .WithMany(e => e.Users)
+                .HasMany(e => e.CommentsLikes)
+                .WithMany(e => e.LikedUsers)
                 .Map(m => m.ToTable("CommentLikes").MapLeftKey("UserId").MapRightKey("CommentId"));
         }
     }
