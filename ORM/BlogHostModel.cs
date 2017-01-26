@@ -60,6 +60,11 @@ namespace ORM
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<User>()
+                .HasMany(e => e.Articles)
+                .WithMany(e => e.Users)
+                .Map(m => m.ToTable("ArticleLikes").MapLeftKey("UserId").MapRightKey("ArticleId"));
+
+            modelBuilder.Entity<User>()
                 .HasMany(e => e.Blogs1)
                 .WithMany(e => e.Users)
                 .Map(m => m.ToTable("BlogLikes").MapLeftKey("UserId").MapRightKey("BlogId"));
