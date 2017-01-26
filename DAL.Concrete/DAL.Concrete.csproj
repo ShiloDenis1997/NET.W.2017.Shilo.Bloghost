@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="ArticleRepository.cs" />
     <Compile Include="BlogRepository.cs" />
+    <Compile Include="CommentRepository.cs" />
     <Compile Include="Mappers\DalMappers.cs" />
     <Compile Include="UnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

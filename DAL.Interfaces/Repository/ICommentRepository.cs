@@ -8,9 +8,10 @@ using DAL.Interfaces.DTO;
 
 namespace DAL.Interfaces.Repository
 {
-    public interface ICommentsRepository : IRepository<DalComment>
+    public interface ICommentRepository : IRepository<DalComment>
     {
         IEnumerable<DalComment> GetCommentsByCreationDate
-            (int takeCount, int skipCount = 0, bool ascending = false);
+            (int articleId, int takeCount, 
+            int skipCount = 0, bool ascending = false);
     }
 }
