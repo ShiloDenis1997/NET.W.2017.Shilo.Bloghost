@@ -33,6 +33,8 @@ namespace DependencyResolver
             kernel.Bind<IBlogService>().To<BlogService>();
             kernel.Bind<IArticleRepository>().To<ArticleRepository>();
             kernel.Bind<IArticleService>().To<ArticleService>();
+            kernel.Bind<ICommentRepository>().To<CommentRepository>();
+            kernel.Bind<ICommentService>().To<CommentService>();
         }
     }
 }
