@@ -46,16 +46,16 @@ namespace BLL.Concrete
                     :(Expression<Func<DalArticle, int>>) expressionModifier
                             .Modify<DalArticle>(orderSelector);
             return articleRepository.GetEntities(takeCount, skipCount, dalOrderSelector)
-                    .Select(article => article.ToArticleEntity());
+                    .Select(article => article.ToBllArticle());
         }
 
         public ArticleEntity GetArticleEntity(int id)
-            => articleRepository.GetById(id).ToArticleEntity();
+            => articleRepository.GetById(id).ToBllArticle();
 
         public IEnumerable<ArticleEntity> GetArticlesByCreationDate
             (int takeCount, int skipCount = 0, bool ascending = false)
             => articleRepository.GetArticlesByCreationDate(takeCount, skipCount, ascending)
-                .Select(article => article.ToArticleEntity());
+                .Select(article => article.ToBllArticle());
 
         public IEnumerable<ArticleEntity> GetArticlesByPredicate
             (Expression<Func<ArticleEntity, bool>> predicate, int takeCount, 
@@ -70,7 +70,7 @@ namespace BLL.Concrete
                             .Modify<DalArticle>(orderSelector);
             return articleRepository.GetEntitiesByPredicate(dalPredicate,
                     takeCount, skipCount, dalOrderSelector)
-                .Select(article => article.ToArticleEntity());
+                .Select(article => article.ToBllArticle());
         }
 
         public ArticleEntity GetByPredicate(Expression<Func<ArticleEntity, bool>> predicate)
@@ -78,7 +78,7 @@ namespace BLL.Concrete
             var expressionModifier = new ExpressionModifier();
             var dalPredicate = (Expression<Func<DalArticle, bool>>)
                 expressionModifier.Modify<DalArticle>(predicate);
-            return articleRepository.GetByPredicate(dalPredicate).ToArticleEntity();
+            return articleRepository.GetByPredicate(dalPredicate).ToBllArticle();
         }
 
         public void UpdateArticle(ArticleEntity article)
@@ -92,7 +92,7 @@ namespace BLL.Concrete
         {
             return articleRepository.GetArticlesByUser
                 (userId, takeCount, skipCount, ascending)
-                .Select(article => article.ToArticleEntity());
+                .Select(article => article.ToBllArticle());
         }
     }
 }

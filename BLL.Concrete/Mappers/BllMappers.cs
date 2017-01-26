@@ -98,7 +98,7 @@ namespace BLL.Concrete.Mappers
             };
         }
 
-        public static ArticleEntity ToArticleEntity(this DalArticle article)
+        public static ArticleEntity ToBllArticle(this DalArticle article)
         {
             return new ArticleEntity
             {
@@ -109,6 +109,32 @@ namespace BLL.Concrete.Mappers
                 DateAdded = article.DateAdded,
                 BlogId = article.BlogId,
                 Content = article.Content,
+            };
+        }
+
+        public static CommentEntity ToBllComment(this DalComment comment)
+        {
+            return new CommentEntity
+            {
+                Id = comment.Id,
+                Rating = comment.Rating,
+                UserId = comment.UserId,
+                Content = comment.Content,
+                DateAdded = comment.DateAdded,
+                ArticleId = comment.ArticleId,
+            };
+        }
+
+        public static DalComment ToDalComment(this CommentEntity comment)
+        {
+            return new DalComment
+            {
+                Id = comment.Id,
+                Rating = comment.Rating,
+                UserId = comment.UserId,
+                Content = comment.Content,
+                DateAdded = comment.DateAdded,
+                ArticleId = comment.ArticleId,
             };
         }
     }
