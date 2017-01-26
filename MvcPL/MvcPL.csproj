@@ -157,6 +157,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\CaptchaImage.cs" />
+    <Compile Include="Infrastructure\Mappers\MvcMapper.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
     <Compile Include="Models\ArticleViewModel.cs" />
     <Compile Include="Models\BlogViewModel.cs" />
@@ -219,6 +220,10 @@
     <Content Include="Views\Shared\_BlogPartial.cshtml" />
     <Content Include="Views\Articles\Index.cshtml" />
     <Content Include="Views\Shared\_ArticlePartial.cshtml" />
+    <Content Include="Views\Blogs\Create.cshtml" />
+    <Content Include="Views\Blogs\Delete.cshtml" />
+    <Content Include="Views\Blogs\Details.cshtml" />
+    <Content Include="Views\Blogs\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

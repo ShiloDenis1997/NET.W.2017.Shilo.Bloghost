@@ -98,6 +98,7 @@ namespace DAL.Concrete
             ormBlog.Name = dalBlog.Name;
             ormBlog.Rating = dalBlog.Rating;
             ormBlog.UserId = dalBlog.UserId;
+            context.Entry(ormBlog).State = EntityState.Modified;
         }
     }
 }

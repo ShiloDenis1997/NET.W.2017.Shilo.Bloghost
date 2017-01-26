@@ -82,19 +82,19 @@ namespace DAL.Concrete
 
         public void Update(DalUser dalUser)
         {
-            var ormUser = dalUser.ToOrmUser();
-            User user = context.Set<User>().FirstOrDefault(u => u.Id == ormUser.Id);
-            if (user == null)
+            User ormUser = context.Set<User>().FirstOrDefault(u => u.Id == dalUser.Id);
+            if (ormUser == null)
                 throw new ArgumentException($"User with id {dalUser.Id} does not exist");
-            user.Roles = dalUser.Roles.Select(roleName => context.Set<Role>()
+            ormUser.Roles = dalUser.Roles.Select(roleName => context.Set<Role>()
                 .FirstOrDefault(role => role.Rolename.Equals(roleName))).ToArray();
-            user.DateRegistered = dalUser.DateRegistered;
-            user.Login = dalUser.Login;
-            user.Email = dalUser.Email;
-            user.Firstname = dalUser.Firstname;
-            user.Password = dalUser.Password;
-            user.Secondname = dalUser.Secondname;
-            user.Thirdname = dalUser.Thirdname;
+            ormUser.DateRegistered = dalUser.DateRegistered;
+            ormUser.Login = dalUser.Login;
+            ormUser.Email = dalUser.Email;
+            ormUser.Firstname = dalUser.Firstname;
+            ormUser.Password = dalUser.Password;
+            ormUser.Secondname = dalUser.Secondname;
+            ormUser.Thirdname = dalUser.Thirdname;
+            context.Entry(ormUser).State = EntityState.Modified;
         }
     }
 }

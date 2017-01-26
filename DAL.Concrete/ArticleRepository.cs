@@ -116,6 +116,7 @@ namespace DAL.Concrete
             ormArticle.DateAdded = dalArticle.DateAdded;
             ormArticle.Name = dalArticle.Name;
             ormArticle.Rating = dalArticle.Rating;
+            context.Entry(ormArticle).State = EntityState.Modified;
         }
     }
 }
