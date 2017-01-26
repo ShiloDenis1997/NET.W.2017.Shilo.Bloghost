@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Web.ApplicationServices;
 using System.Web.Mvc;
 using BLL.Interfaces.Entities;
 using BLL.Interfaces.Services;
@@ -70,9 +71,9 @@ namespace MvcPL.Controllers
         }
 
         // GET: Blogs/Create
+        [Authorize(Roles = "User")]
         public ActionResult Create()
         {
-            ViewBag.UserId = new SelectList(userService.GetUserEntities(50), "Id", "Login");
             return View();
         }
 
@@ -81,15 +82,20 @@ namespace MvcPL.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Rating,DateStarted,UserId")] BlogViewModel blog)
+        [Authorize(Roles = "User")]
+        public ActionResult Create(BlogViewModel blog)
         {
             if (ModelState.IsValid)
             {
-                blogService.CreateBlog(blog.ToBllBlog());
+                var user = userService.GetUserByPredicate
+                    (u => u.Email.Equals(User.Identity.Name));
+                var bllBlog = blog.ToBllBlog();
+                bllBlog.UserId = user.Id;
+                bllBlog.DateStarted = DateTime.Now;
+                blogService.CreateBlog(bllBlog);
                 return RedirectToAction("Index");
             }
-
-            ViewBag.UserId = new SelectList(userService.GetUserEntities(50), "Id", "Login");
+            
             return View(blog);
         }
 
@@ -105,9 +111,7 @@ namespace MvcPL.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.UserId = new SelectList(userService.GetUserEntities(50), "Id", "Login");
-            var user = userService.GetUserEntity(blog.UserId);
-            var viewBlog = blog.ToMvcBlog(user.Login);
+            var viewBlog = blog.ToMvcBlog(null);
             return View(viewBlog);
         }
 
@@ -116,14 +120,13 @@ namespace MvcPL.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Rating,DateStarted,UserId")] BlogViewModel blog)
+        public ActionResult Edit(BlogViewModel blog)
         {
             if (ModelState.IsValid)
             {
                 blogService.UpdateBlog(blog.ToBllBlog());
                 return RedirectToAction("Index");
             }
-            ViewBag.UserId = new SelectList(userService.GetUserEntities(50), "Id", "Login");
             return View(blog);
         }
 

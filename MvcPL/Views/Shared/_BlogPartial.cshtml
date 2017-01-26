@@ -2,7 +2,7 @@
     
 <div>
     <h3>@Model.Name</h3>
-    <div>Started at @Model.DateStarted.Date by 
+    <div>Started at @Model.DateStarted by 
         @Html.ActionLink(Model.UserName, "Index", "Blogs",new RouteValueDictionary
         {
             {"userId", Model.UserId }

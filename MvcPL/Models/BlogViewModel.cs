@@ -12,6 +12,6 @@ namespace MvcPL.Models
         public DateTime DateStarted { get; set; }
         public string UserName { get; set; }
         public int UserId { get; set; }
-        public int Rating { get; set; }
+        public int? Rating { get; set; }
     }
 }

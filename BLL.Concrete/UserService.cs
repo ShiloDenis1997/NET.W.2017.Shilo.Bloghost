@@ -75,7 +75,7 @@ namespace BLL.Concrete
             var dalPredicate = (Expression<Func<DalUser, bool>>)
                 expressionModifier.Modify<DalUser>(predicate);
             var dalOrderSelector = (Expression<Func<DalUser, int>>)
-                expressionModifier.Modify<DalUser>(predicate);
+                expressionModifier.Modify<DalUser>(orderSelector);
             return repository.GetEntitiesByPredicate(dalPredicate, takeCount, skipCount)
                 .Select(user => user.ToUserEntity());
         }

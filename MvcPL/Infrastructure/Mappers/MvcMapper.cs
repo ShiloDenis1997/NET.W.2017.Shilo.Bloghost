@@ -15,7 +15,7 @@ namespace MvcPL.Infrastructure.Mappers
             {
                 Id = blog.Id,
                 Name = blog.Name,
-                Rating = blog.Rating,
+                Rating = blog.Rating ?? 0,
                 UserId = blog.UserId,
                 DateStarted = blog.DateStarted,
             };

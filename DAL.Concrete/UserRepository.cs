@@ -28,7 +28,7 @@ namespace DAL.Concrete
             var ormUser = user.ToOrmUser();
             ormUser.Roles = user.Roles.Select(rolename => context.Set<Role>()
                 .First(role => role.Rolename == rolename)).ToArray();
-            context.Set<User>().Add(user.ToOrmUser());
+            context.Set<User>().Add(ormUser);
         }
 
         public void Delete(DalUser user)
