@@ -91,5 +91,31 @@ namespace DAL.Concrete.Mappers
                 Content = article.Content
             };
         }
+
+        public static DalComment ToDalComment(this Comment comment)
+        {
+            return new DalComment
+            {
+                Id = comment.Id,
+                Rating = comment.Rating,
+                UserId = comment.UserId,
+                Content = comment.Content,
+                DateAdded = comment.DateAdded,
+                ArticleId = comment.ArticleId,
+            };
+        }
+
+        public static Comment ToOrmComment(this DalComment comment)
+        {
+            return new Comment
+            {
+                Id = comment.Id,
+                Rating = comment.Rating,
+                UserId = comment.UserId,
+                Content = comment.Content,
+                DateAdded = comment.DateAdded,
+                ArticleId = comment.ArticleId,
+            };
+        }
     }
 }
