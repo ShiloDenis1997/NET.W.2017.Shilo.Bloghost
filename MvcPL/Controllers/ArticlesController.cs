@@ -45,7 +45,7 @@ namespace MvcPL.Controllers
             }
             else
             {
-                articles = articleService.GetArticleEntities(PageArticlesCount);
+                articles = articleService.GetArticlesByCreationDate(PageArticlesCount);
             }
 
             return View(articles.Select(
@@ -160,8 +160,8 @@ namespace MvcPL.Controllers
             {
                 return HttpNotFound();
             }
-            BlogEntity blog = blogService.GetBlogEntity(id.Value);
-            UserEntity user = userService.GetUserEntity(id.Value);
+            BlogEntity blog = blogService.GetBlogEntity(article.BlogId);
+            UserEntity user = userService.GetUserEntity(article.UserId);
             return View(article.ToMvcArticle(blog.Name, user.Login));
         }
 

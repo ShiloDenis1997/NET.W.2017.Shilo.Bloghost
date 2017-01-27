@@ -24,7 +24,13 @@ namespace DAL.Concrete
 
         public void Create(DalArticle article)
         {
-            context.Set<Article>().Add(article.ToOrmArticle());
+            var ormArticle = article.ToOrmArticle();
+            IEnumerable<Tag> tags =
+                article.Tags.Where(tag => !string.IsNullOrWhiteSpace(tag))
+                .Select(tag => context.Set<Tag>().FirstOrDefault(t => t.Name.Equals(tag)) 
+                                ?? context.Set<Tag>().Add(new Tag {Name = tag}));
+            ormArticle.Tags = tags.ToArray();
+            context.Set<Article>().Add(ormArticle);
         }
 
         public void Delete(DalArticle article)

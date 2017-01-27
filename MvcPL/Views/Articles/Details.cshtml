@@ -55,6 +55,12 @@
         <dd>
             @Html.DisplayFor(model => model.UserName)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Tags)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Tags)
+        </dd>
     </dl>
 </div>
 @{ Html.RenderAction("Comments", "Comments", new {articleId = Model.Id}); }

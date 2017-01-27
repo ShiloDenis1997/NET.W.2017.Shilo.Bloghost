@@ -2,6 +2,11 @@
     
 <div>
     <h3>@Model.Name</h3>
+    <div>Tags:
+    @foreach (var tag in Model.Tags)
+    {
+        <span>@tag </span>
+    }</div>
     <div>@Model.Content</div>
     <div>Created at @Model.DateAdded by 
     @Html.ActionLink(Model.UserName, "Index", "Articles", new RouteValueDictionary

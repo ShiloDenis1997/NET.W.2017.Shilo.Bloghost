@@ -16,5 +16,7 @@ namespace MvcPL.Models
         public int? UserId { get; set; }
         public string BlogName { get; set; }
         public string UserName { get; set; }
+
+        public string[] Tags { get; set; }
     }
 }

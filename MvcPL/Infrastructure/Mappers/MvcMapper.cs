@@ -48,6 +48,7 @@ namespace MvcPL.Infrastructure.Mappers
                 UserId = article.UserId,
                 UserName = authorName,
                 BlogName = blogName,
+                Tags = article.Tags.ToArray(),
             };
         }
 
@@ -63,6 +64,7 @@ namespace MvcPL.Infrastructure.Mappers
                 BlogId = article.BlogId,
                 DateAdded = article.DateAdded,
                 Content = article.Content,
+                Tags = article.Tags,
             };
         }
 
