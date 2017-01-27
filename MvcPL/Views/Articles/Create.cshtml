@@ -45,6 +45,7 @@
             {
                 @Html.EditorFor(model => model.Tags[i], new {htmlAttributes = new {@class = "form-control"}})
                 @Html.ValidationMessageFor(model => model.Tags[i], "", new {@class = "text-danger"})
+                <br/>
             }
             </div>
         </div>
