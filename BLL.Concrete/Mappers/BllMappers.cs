@@ -95,6 +95,7 @@ namespace BLL.Concrete.Mappers
                 DateAdded = article.DateAdded,
                 BlogId = article.BlogId,
                 Content = article.Content,
+                Tags = article.Tags,
             };
         }
 
@@ -109,6 +110,7 @@ namespace BLL.Concrete.Mappers
                 DateAdded = article.DateAdded,
                 BlogId = article.BlogId,
                 Content = article.Content,
+                Tags = article.Tags,
             };
         }
 

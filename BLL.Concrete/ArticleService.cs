@@ -18,7 +18,8 @@ namespace BLL.Concrete
         private IUnitOfWork unitOfWork;
         private IArticleRepository articleRepository;
 
-        public ArticleService(IUnitOfWork unitOfWork, IArticleRepository articleRepository)
+        public ArticleService
+            (IUnitOfWork unitOfWork, IArticleRepository articleRepository)
         {
             this.unitOfWork = unitOfWork;
             this.articleRepository = articleRepository;
