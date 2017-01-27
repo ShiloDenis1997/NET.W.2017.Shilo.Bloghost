@@ -60,13 +60,15 @@ namespace DAL.Concrete
             if (ormTag == null)
                 return null;
             if (ascending)
-                return context.Set<Article>().Where(article => article.Tags.Contains(ormTag))
+                return context.Set<Article>()
+                    .Where(article => article.Tags.Any(t => t.Id == ormTag.Id))
                     .OrderBy(article => article.DateAdded)
                     .Skip(skipCount).Take(takeCount).ToArray()
                     .Select(article => article.ToDalArticle());
             else
             {
-                return context.Set<Article>().Where(article => article.Tags.Contains(ormTag))
+                return context.Set<Article>()
+                    .Where(article => article.Tags.Any(t => t.Id == ormTag.Id))
                     .OrderByDescending(article => article.DateAdded)
                     .Skip(skipCount).Take(takeCount).ToArray()
                     .Select(article => article.ToDalArticle());

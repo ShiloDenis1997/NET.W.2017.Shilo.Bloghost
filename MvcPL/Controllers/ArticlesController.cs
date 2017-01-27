@@ -30,7 +30,7 @@ namespace MvcPL.Controllers
         }
 
         // GET: Articles
-        public ActionResult Index(int? userId, int? blogId)
+        public ActionResult Index(int? userId, int? blogId, string tag)
         {
             IEnumerable<ArticleEntity> articles;
             if (blogId != null)
@@ -42,6 +42,11 @@ namespace MvcPL.Controllers
             {
                 articles = articleService.GetArticlesByUser
                     (userId.Value, PageArticlesCount);
+            }
+            else if (tag != null)
+            {
+                articles = articleService.GetArticlesByTag
+                    (tag, PageArticlesCount);
             }
             else
             {

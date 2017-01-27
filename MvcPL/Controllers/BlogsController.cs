@@ -18,6 +18,8 @@ namespace MvcPL.Controllers
         private IBlogService blogService;
         private IUserService userService;
 
+        private const int PageBlogsCount = 100;
+
         public BlogsController
             (IBlogService blogService, IUserService userService)
         {
@@ -33,12 +35,12 @@ namespace MvcPL.Controllers
             if (userId != null)
             {
                 blogs = blogService.GetBlogsByPredicate
-                            (blog => blog.UserId == userId, 100)
+                            (blog => blog.UserId == userId, PageBlogsCount)
                             .OrderByDescending(blog => blog.DateStarted);
             }
             else
             {
-                blogs = blogService.GetBlogsByCreationDate(100, 0, false);
+                blogs = blogService.GetBlogsByCreationDate(PageBlogsCount);
             }
 
             return View(blogs.Select(blog => new BlogViewModel
