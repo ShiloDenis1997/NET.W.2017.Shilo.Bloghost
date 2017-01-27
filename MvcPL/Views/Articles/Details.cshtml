@@ -57,6 +57,7 @@
         </dd>
     </dl>
 </div>
+@{ Html.RenderAction("Comments", "Comments", new {articleId = Model.Id}); }
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")

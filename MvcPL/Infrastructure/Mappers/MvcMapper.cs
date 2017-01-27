@@ -65,5 +65,34 @@ namespace MvcPL.Infrastructure.Mappers
                 Content = article.Content,
             };
         }
+
+        public static CommentEntity ToBllComment
+            (this CommentViewModel comment)
+        {
+            return new CommentEntity
+            {
+                Id = comment.Id,
+                Rating = comment.Rating ?? 0,
+                UserId = comment.UserId,
+                Content = comment.Content,
+                DateAdded = comment.DateAdded,
+                ArticleId = comment.ArticleId,
+            };
+        }
+
+        public static CommentViewModel ToMvcComment
+            (this CommentEntity comment, string userName = null)
+        {
+            return new CommentViewModel
+            {
+                Id = comment.Id,
+                Rating = comment.Rating,
+                UserId = comment.UserId,
+                Content = comment.Content,
+                DateAdded = comment.DateAdded,
+                ArticleId = comment.ArticleId,
+                UserName = userName,
+            };
+        }
     }
 }

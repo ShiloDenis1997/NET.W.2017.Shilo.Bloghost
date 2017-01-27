@@ -60,13 +60,13 @@ namespace DAL.Concrete
                 return context.Set<Comment>()
                     .Where(comment => comment.ArticleId == articleId)
                     .OrderBy(comment => comment.DateAdded)
-                    .Skip(skipCount).Take(takeCount)
+                    .Skip(skipCount).Take(takeCount).ToList()
                     .Select(comment => comment.ToDalComment());
             else
                 return context.Set<Comment>()
                     .Where(comment => comment.ArticleId == articleId)
                     .OrderByDescending(comment => comment.DateAdded)
-                    .Skip(skipCount).Take(takeCount)
+                    .Skip(skipCount).Take(takeCount).ToList()
                     .Select(comment => comment.ToDalComment());
         }
 

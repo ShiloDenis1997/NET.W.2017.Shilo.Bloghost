@@ -1,0 +1,24 @@
+﻿@model IEnumerable<MvcPL.Models.CommentViewModel>
+
+@{
+    Layout = null;
+}
+
+<h3>Comments</h3>
+@using (Ajax.BeginForm("AddComment", new AjaxOptions
+{
+    UpdateTargetId = "comments",
+    InsertionMode = InsertionMode.InsertBefore
+}))
+{
+    @Html.TextArea("Content", new { rows = 5, cols = 50, @class = "comment_area" })
+    @Html.Hidden("ArticleId", (int)ViewBag.ArticleId)
+    <br />
+    <input class="btn_border pull-right" type="submit" value="Add Comment" />
+}
+<div id="comments" class="container">
+    @foreach (var comment in Model)
+    {
+        Html.RenderPartial("_CommentPartial", comment);
+    }
+</div>
