@@ -52,7 +52,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Article.cs" />
-    <Compile Include="ArticleTag.cs" />
     <Compile Include="Blog.cs" />
     <Compile Include="BlogHostModel.cs" />
     <Compile Include="Comment.cs" />

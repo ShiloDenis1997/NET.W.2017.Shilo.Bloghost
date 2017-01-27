@@ -13,7 +13,6 @@ namespace ORM
         }
 
         public virtual DbSet<Article> Articles { get; set; }
-        public virtual DbSet<ArticleTag> ArticleTags { get; set; }
         public virtual DbSet<Blog> Blogs { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
@@ -23,14 +22,14 @@ namespace ORM
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Article>()
-                .HasMany(e => e.ArticleTags)
+                .HasMany(e => e.Comments)
                 .WithRequired(e => e.Article)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Article>()
-                .HasMany(e => e.Comments)
-                .WithRequired(e => e.Article)
-                .WillCascadeOnDelete(false);
+                .HasMany(e => e.Tags)
+                .WithMany(e => e.Articles)
+                .Map(m => m.ToTable("ArticleTags").MapLeftKey("ArticleId").MapRightKey("TagId"));
 
             modelBuilder.Entity<Blog>()
                 .HasMany(e => e.Articles)
@@ -41,11 +40,6 @@ namespace ORM
                 .HasMany(e => e.Users)
                 .WithMany(e => e.Roles)
                 .Map(m => m.ToTable("UserRoles").MapLeftKey("RoleId").MapRightKey("UserId"));
-
-            modelBuilder.Entity<Tag>()
-                .HasMany(e => e.ArticleTags)
-                .WithRequired(e => e.Tag)
-                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<User>()
                 .HasMany(e => e.Blogs)

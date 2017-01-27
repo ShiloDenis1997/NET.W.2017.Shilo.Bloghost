@@ -11,7 +11,7 @@ namespace ORM
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tag()
         {
-            ArticleTags = new HashSet<ArticleTag>();
+            Articles = new HashSet<Article>();
         }
 
         public int Id { get; set; }
@@ -21,6 +21,6 @@ namespace ORM
         public string Name { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ArticleTag> ArticleTags { get; set; }
+        public virtual ICollection<Article> Articles { get; set; }
     }
 }
