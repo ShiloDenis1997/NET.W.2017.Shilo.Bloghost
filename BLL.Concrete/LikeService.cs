@@ -5,21 +5,26 @@ using System.Text;
 using System.Threading.Tasks;
 using BLL.Interfaces.Services;
 using DAL.Interfaces.Managers;
+using DAL.Interfaces.Repository;
 
 namespace BLL.Concrete
 {
     public class LikeService : ILikeService
     {
         private ILikeManager likeManager;
+        private IUnitOfWork unitOfWork;
 
-        public LikeService(ILikeManager likeManager)
+        public LikeService(ILikeManager likeManager, IUnitOfWork unitOfWork)
         {
             this.likeManager = likeManager;
+            this.unitOfWork = unitOfWork;
         }
 
         public bool LikeArticle(int articleId, int userId)
         {
-            return likeManager.CreateArticleLike(articleId, userId);
+            bool result = likeManager.CreateArticleLike(articleId, userId);
+            unitOfWork.Commit();
+            return result;
         }
 
         public bool LikeBlog(int blogId, int userId)

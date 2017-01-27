@@ -17,16 +17,18 @@ namespace MvcPL.Controllers
         private IArticleService articleService;
         private IUserService userService;
         private IBlogService blogService;
+        private ILikeService likeService;
 
         private const int PageArticlesCount = 100;
 
         public ArticlesController
             (IArticleService articleService, IUserService userService,
-                IBlogService blogService)
+                IBlogService blogService, ILikeService likeService)
         {
             this.articleService = articleService;
             this.userService = userService;
             this.blogService = blogService;
+            this.likeService = likeService;
         }
 
         // GET: Articles
@@ -62,7 +64,15 @@ namespace MvcPL.Controllers
             ).ToArray());
         }
 
-        // GET: ArticlesEdit/Details/5
+        [Authorize(Roles = "User")]
+        public ActionResult Like(int articleId)
+        {
+            var user = userService.GetUserByPredicate(u => u.Email.Equals(User.Identity.Name));
+            likeService.LikeArticle(articleId, user.Id);
+            return RedirectToAction("Index");
+        }
+
+        // GET: Articles/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -79,7 +89,7 @@ namespace MvcPL.Controllers
             return View(article.ToMvcArticle(blog.Name, user.Login));
         }
 
-        // GET: ArticlesEdit/Create
+        // GET: Articles/Create
         [Authorize(Roles = "User")]
         public ActionResult Create()
         {
@@ -91,7 +101,7 @@ namespace MvcPL.Controllers
             return View();
         }
 
-        // POST: ArticlesEdit/Create
+        // POST: Articles/Create
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -111,7 +121,7 @@ namespace MvcPL.Controllers
             return View(article);
         }
 
-        // GET: ArticlesEdit/Edit/5
+        // GET: Articles/Edit/5
         [Authorize(Roles = "User")]
         public ActionResult Edit(int? id)
         {
@@ -132,7 +142,7 @@ namespace MvcPL.Controllers
             return View(article.ToMvcArticle());
         }
 
-        // POST: ArticlesEdit/Edit/5
+        // POST: Articles/Edit/5
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -153,7 +163,7 @@ namespace MvcPL.Controllers
             return View(article);
         }
 
-        // GET: ArticlesEdit/Delete/5
+        // GET: Articles/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -170,7 +180,7 @@ namespace MvcPL.Controllers
             return View(article.ToMvcArticle(blog.Name, user.Login));
         }
 
-        // POST: ArticlesEdit/Delete/5
+        // POST: Articles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
