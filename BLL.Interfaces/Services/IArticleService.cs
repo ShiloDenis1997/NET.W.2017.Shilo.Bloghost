@@ -26,6 +26,9 @@ namespace BLL.Interfaces.Services
         IEnumerable<ArticleEntity> GetArticlesByCreationDate
             (int takeCount, int skipCount = 0, bool ascending = false);
 
+        IEnumerable<ArticleEntity> GetArticlesByTag
+            (string tag, int takeCount, int skipCount = 0, bool ascending = false);
+            
         ArticleEntity GetByPredicate(Expression<Func<ArticleEntity, bool>> predicate);
 
         void CreateArticle(ArticleEntity article);

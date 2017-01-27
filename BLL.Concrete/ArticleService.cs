@@ -95,5 +95,12 @@ namespace BLL.Concrete
                 (userId, takeCount, skipCount, ascending)
                 .Select(article => article.ToBllArticle());
         }
+
+        public IEnumerable<ArticleEntity> GetArticlesByTag
+            (string tag, int takeCount, int skipCount = 0, bool ascending = false)
+        {
+            return articleRepository.GetArticlesByTag(tag, takeCount, skipCount, ascending)
+                .Select(article => article.ToBllArticle());
+        }
     }
 }

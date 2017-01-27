@@ -14,5 +14,8 @@ namespace DAL.Interfaces.Repository
 
         IEnumerable<DalArticle> GetArticlesByUser
             (int userId, int takeCount, int skipCount = 0, bool ascending = false);
+
+        IEnumerable<DalArticle> GetArticlesByTag
+            (string tag, int takeCount, int skipCount = 0, bool ascending = false);
     }
 }

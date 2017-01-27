@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using DAL.Concrete.Mappers;
 using DAL.Interfaces.DTO;
 using DAL.Interfaces.Repository;
@@ -52,6 +50,27 @@ namespace DAL.Concrete
                 .Include(article => article.Tags)
                 .Skip(skipCount).Take(takeCount).ToArray()
                 .Select(article => article.ToDalArticle());
+        }
+
+        public IEnumerable<DalArticle> GetArticlesByTag
+            (string tag, int takeCount, int skipCount = 0, bool ascending = false)
+        {
+            var ormTag = context.Set<Tag>().FirstOrDefault
+                (t => string.Compare(tag, t.Name, StringComparison.OrdinalIgnoreCase) == 0);
+            if (ormTag == null)
+                return null;
+            if (ascending)
+                return context.Set<Article>().Where(article => article.Tags.Contains(ormTag))
+                    .OrderBy(article => article.DateAdded)
+                    .Skip(skipCount).Take(takeCount).ToArray()
+                    .Select(article => article.ToDalArticle());
+            else
+            {
+                return context.Set<Article>().Where(article => article.Tags.Contains(ormTag))
+                    .OrderByDescending(article => article.DateAdded)
+                    .Skip(skipCount).Take(takeCount).ToArray()
+                    .Select(article => article.ToDalArticle());
+            }
         }
 
         public IEnumerable<DalArticle> GetArticlesByUser
