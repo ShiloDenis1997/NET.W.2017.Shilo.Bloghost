@@ -8,6 +8,7 @@ using BLL.Concrete;
 using BLL.Interfaces.Services;
 using DAL.Concrete;
 using DAL.Interfaces.DTO;
+using DAL.Interfaces.Managers;
 using DAL.Interfaces.Repository;
 using Logger.Concrete;
 using Ninject;
@@ -35,6 +36,7 @@ namespace DependencyResolver
             kernel.Bind<IArticleService>().To<ArticleService>();
             kernel.Bind<ICommentRepository>().To<CommentRepository>();
             kernel.Bind<ICommentService>().To<CommentService>();
+            kernel.Bind<ILikeManager>().To<LikeManager>();
         }
     }
 }

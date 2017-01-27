@@ -46,6 +46,7 @@
     <Compile Include="DTO\DalRole.cs" />
     <Compile Include="DTO\DalUser.cs" />
     <Compile Include="DTO\IEntity.cs" />
+    <Compile Include="Managers\ILikeManager.cs" />
     <Compile Include="Repository\IArticleRepository.cs" />
     <Compile Include="Repository\IBlogRepository.cs" />
     <Compile Include="Repository\ICommentRepository.cs" />
