@@ -88,7 +88,8 @@ namespace DAL.Concrete.Mappers
                 Rating = article.Rating,
                 UserId = article.Blog.UserId,
                 DateAdded = article.DateAdded,
-                Content = article.Content
+                Content = article.Content,
+                Tags = article.Tags.Select(tag => tag.Name).ToArray(),
             };
         }
 

@@ -38,12 +38,14 @@ namespace DAL.Concrete
         {
             if (ascending)
                 return context.Set<Article>().OrderBy(article => article.DateAdded)
+                    .Include(article => article.Tags)
                     .Skip(skipCount).Take(takeCount).ToArray()
                     .Select(article => article.ToDalArticle());
             return context.Set<Article>().OrderByDescending
                 (article => article.DateAdded)
-                    .Skip(skipCount).Take(takeCount).ToArray()
-                    .Select(article => article.ToDalArticle());
+                .Include(article => article.Tags)
+                .Skip(skipCount).Take(takeCount).ToArray()
+                .Select(article => article.ToDalArticle());
         }
 
         public IEnumerable<DalArticle> GetArticlesByUser
@@ -53,11 +55,13 @@ namespace DAL.Concrete
                 return context.Set<Article>()
                     .Where(article => article.Blog.UserId == userId)
                     .OrderBy(article => article.DateAdded)
+                    .Include(article => article.Tags)
                     .Skip(skipCount).Take(takeCount).ToArray()
                     .Select(article => article.ToDalArticle());
             return context.Set<Article>()
                     .Where(article => article.Blog.UserId == userId)
                     .OrderByDescending(article => article.DateAdded)
+                    .Include(article => article.Tags)
                     .Skip(skipCount).Take(takeCount).ToArray()
                     .Select(article => article.ToDalArticle());
         }
@@ -84,6 +88,7 @@ namespace DAL.Concrete
             var ormOrderSelector = expressionModifier.Modify<Article>(orderSelector);
             return context.Set<Article>().OrderBy(
                 (Expression<Func<Article, int>>)ormOrderSelector)
+                .Include(article => article.Tags)
                 .Skip(skipCount).Take(takeCount)
                 .ToArray().Select(article => article.ToDalArticle());
         }
@@ -100,6 +105,7 @@ namespace DAL.Concrete
             return context.Set<Article>().Where
                 ((Expression<Func<Article, bool>>)ormExpression).OrderBy
                 ((Expression<Func<Article, int>>)ormOrderSelector)
+                .Include(article => article.Tags)
                 .Skip(skipCount).Take(takeCount).ToArray()
                 .Select(article => article.ToDalArticle());
         }

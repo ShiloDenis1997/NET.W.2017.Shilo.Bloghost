@@ -15,5 +15,7 @@ namespace DAL.Interfaces.DTO
         public DateTime DateAdded { get; set; }
         public int BlogId { get; set; }
         public int UserId { get; set; }
+
+        public IEnumerable<string> Tags { get; set; }
     }
 }
