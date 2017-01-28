@@ -29,27 +29,37 @@ namespace BLL.Concrete
 
         public bool LikeBlog(int blogId, int userId)
         {
-            throw new NotImplementedException();
+            bool result = likeManager.CreateBlogLike(blogId, userId);
+            unitOfWork.Commit();
+            return result;
         }
 
         public bool LikeComment(int commentId, int userId)
         {
-            throw new NotImplementedException();
+            bool result = likeManager.CreateCommentLike(commentId, userId);
+            unitOfWork.Commit();
+            return result;
         }
 
         public bool RemoveLikeArticle(int articleId, int userId)
         {
-            throw new NotImplementedException();
+            bool result = likeManager.DeleteArticleLike(articleId, userId);
+            unitOfWork.Commit();
+            return result;
         }
 
         public bool RemoveLikeBlog(int blogId, int userId)
         {
-            throw new NotImplementedException();
+            bool result = likeManager.DeleteBlogLike(blogId, userId);
+            unitOfWork.Commit();
+            return result;
         }
 
         public bool RemoveLikeComment(int commentId, int userId)
         {
-            throw new NotImplementedException();
+            bool result = likeManager.DeleteCommentLike(commentId, userId);
+            unitOfWork.Commit();
+            return result;
         }
     }
 }
