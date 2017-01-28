@@ -102,5 +102,13 @@ namespace BLL.Concrete
             return articleRepository.GetArticlesByTag(tag, takeCount, skipCount, ascending)
                 .Select(article => article.ToBllArticle());
         }
+
+        public IEnumerable<ArticleEntity> GetArticlesWithText
+            (string text, int takeCount, int skipCount = 0, bool ascending = false)
+        {
+            return articleRepository.GetArticlesWithText
+                (text, takeCount, skipCount, ascending)
+                .Select(article => article.ToBllArticle());
+        }
     }
 }

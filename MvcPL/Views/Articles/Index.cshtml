@@ -18,6 +18,15 @@
     </div>
 </div>
 }
+@using (Html.BeginForm("Index", "Articles"))
+{
+    @Html.Editor("text", new { type = "text" })
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Search articles" class="btn btn-default" />
+        </div>
+    </div>
+}
 <ul class="list-unstyled">
 @foreach (var article in Model)
 {

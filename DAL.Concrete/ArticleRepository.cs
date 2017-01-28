@@ -93,6 +93,22 @@ namespace DAL.Concrete
                     .Select(article => article.ToDalArticle());
         }
 
+        public IEnumerable<DalArticle> GetArticlesWithText
+            (string text, int takeCount, int skipCount = 0, bool ascending = false)
+        {
+            if (ascending)
+                return context.Set<Article>()
+                    .Where(article => article.Content.Contains(text))
+                    .OrderBy(article => article.DateAdded)
+                    .Skip(skipCount).Take(takeCount).ToList()
+                    .Select(article => article.ToDalArticle());
+            return context.Set<Article>()
+                    .Where(article => article.Content.Contains(text))
+                    .OrderByDescending(article => article.DateAdded)
+                    .Skip(skipCount).Take(takeCount).ToList()
+                    .Select(article => article.ToDalArticle());
+        }
+
         public DalArticle GetById(int id)
             => context.Set<Article>()
                 .FirstOrDefault(article => article.Id == id)?.ToDalArticle();

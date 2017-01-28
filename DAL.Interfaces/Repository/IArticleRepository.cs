@@ -17,5 +17,8 @@ namespace DAL.Interfaces.Repository
 
         IEnumerable<DalArticle> GetArticlesByTag
             (string tag, int takeCount, int skipCount = 0, bool ascending = false);
+
+        IEnumerable<DalArticle> GetArticlesWithText
+            (string text, int takeCount, int skipCount = 0, bool ascending = false);
     }
 }
