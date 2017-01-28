@@ -47,7 +47,9 @@ namespace MvcPL.Controllers
             commentService.CreateComment(comment.ToBllComment());
             if (Request.IsAjaxRequest())
             {
-                return PartialView("_CommentPartial", comment);
+                var mvcComment = commentService.GetLastUserComment
+                    (comment.ArticleId, comment.UserId)?.ToMvcComment(user.Login);
+                return PartialView("_CommentPartial", mvcComment);
             }
             return RedirectToAction("Details", "Articles", new {id = comment.ArticleId});
         }

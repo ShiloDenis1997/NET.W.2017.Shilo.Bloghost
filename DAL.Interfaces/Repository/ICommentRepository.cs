@@ -13,5 +13,7 @@ namespace DAL.Interfaces.Repository
         IEnumerable<DalComment> GetCommentsByCreationDate
             (int articleId, int takeCount, 
             int skipCount = 0, bool ascending = false);
+
+        DalComment GetLastUserComment(int articleId, int userId);
     }
 }

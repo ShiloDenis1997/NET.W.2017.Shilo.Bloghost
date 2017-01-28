@@ -16,6 +16,9 @@ namespace BLL.Interfaces.Services
         (int articleId, int takeCount,
             int skipCount = 0, bool ascending = false);
 
+        CommentEntity GetCommentByPredicate(Expression<Func<CommentEntity, bool>> predicate);
+        CommentEntity GetLastUserComment(int articleId, int userId);
+
         void CreateComment(CommentEntity comment);
         void DeleteComment(CommentEntity comment);
         void UpdateComment(CommentEntity comment);

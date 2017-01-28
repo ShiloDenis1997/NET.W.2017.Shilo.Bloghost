@@ -26,7 +26,7 @@ namespace BLL.Concrete.Mappers
             };
         }
 
-        public static UserEntity ToUserEntity(this DalUser user)
+        public static UserEntity ToBllUser(this DalUser user)
         {
             return new UserEntity
             {

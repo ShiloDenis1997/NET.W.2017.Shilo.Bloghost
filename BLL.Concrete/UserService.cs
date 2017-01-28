@@ -16,23 +16,23 @@ namespace BLL.Concrete
     public class UserService : IUserService
     {
         private IUnitOfWork unitOfWork;
-        private IRepository<DalUser> repository;
+        private IRepository<DalUser> userRepository;
 
         public UserService(IUnitOfWork uow, IRepository<DalUser> repo)
         {
             unitOfWork = uow;
-            repository = repo;
+            userRepository = repo;
         }
 
         public void CreateUser(UserEntity user)
         {
-            repository.Create(user.ToDalUser());
+            userRepository.Create(user.ToDalUser());
             unitOfWork.Commit();
         }
 
         public void DeleteUser(UserEntity user)
         {
-            repository.Delete(user.ToDalUser());
+            userRepository.Delete(user.ToDalUser());
             unitOfWork.Commit();
         }
 
@@ -45,18 +45,18 @@ namespace BLL.Concrete
                 ? null
                 :(Expression<Func<DalUser, int>>)
                 expressionModifier.Modify<DalUser>(orderSelector);
-            return repository.GetEntities(takeCount, skipCount, dalSelector)
-                .Select(user => user.ToUserEntity());
+            return userRepository.GetEntities(takeCount, skipCount, dalSelector)
+                .Select(user => user.ToBllUser());
         }
 
         public UserEntity GetUserEntity(int id)
-            => repository.GetById(id)?.ToUserEntity();
+            => userRepository.GetById(id)?.ToBllUser();
 
         public void UpdateUser(UserEntity user)
         {
             try
             {
-                repository.Update(user.ToDalUser());
+                userRepository.Update(user.ToDalUser());
             }
             catch (Exception ex)
             {
@@ -76,8 +76,8 @@ namespace BLL.Concrete
                 expressionModifier.Modify<DalUser>(predicate);
             var dalOrderSelector = (Expression<Func<DalUser, int>>)
                 expressionModifier.Modify<DalUser>(orderSelector);
-            return repository.GetEntitiesByPredicate(dalPredicate, takeCount, skipCount)
-                .Select(user => user.ToUserEntity());
+            return userRepository.GetEntitiesByPredicate(dalPredicate, takeCount, skipCount)
+                .Select(user => user.ToBllUser());
         }
 
         public UserEntity GetUserByPredicate
@@ -86,7 +86,7 @@ namespace BLL.Concrete
             var predicateModifier = new ExpressionModifier();
             var dalPredicate = (Expression<Func<DalUser, bool>>)
                     predicateModifier.Modify<DalUser>(predicate);
-            return repository.GetByPredicate(dalPredicate)?.ToUserEntity();
+            return userRepository.GetByPredicate(dalPredicate)?.ToBllUser();
         }
     }
 }

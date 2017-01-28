@@ -48,8 +48,8 @@ namespace DAL.Concrete
             var expressionModifier = new ExpressionModifier();
             var ormPredicate = (Expression<Func<Comment, bool>>) 
                 expressionModifier.Modify<Comment>(predicate);
-            return context.Set<Comment>().FirstOrDefault(ormPredicate)
-                ?.ToDalComment();
+            var ormComment = context.Set<Comment>().FirstOrDefault(ormPredicate);
+            return ormComment?.ToDalComment();
         }
 
         public IEnumerable<DalComment> GetCommentsByCreationDate
@@ -91,6 +91,14 @@ namespace DAL.Concrete
                 ((Expression<Func<Comment, bool>>)ormExpression).OrderBy
                 ((Expression<Func<Comment, int>>)ormOrderSelector)
                 .Skip(skipCount).Take(takeCount).ToArray().Select(c => c.ToDalComment());
+        }
+
+        public DalComment GetLastUserComment(int articleId, int userId)
+        {
+            return context.Set<Comment>()
+                .Where(comment => (comment.ArticleId == articleId) && (comment.UserId == userId))
+                .OrderByDescending(comment => comment.DateAdded)
+                .FirstOrDefault()?.ToDalComment();
         }
 
         public void Update(DalComment dalComment)
