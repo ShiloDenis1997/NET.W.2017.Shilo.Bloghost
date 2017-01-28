@@ -68,7 +68,8 @@ namespace MvcPL.Controllers
         public ActionResult Like(int articleId)
         {
             var user = userService.GetUserByPredicate(u => u.Email.Equals(User.Identity.Name));
-            likeService.LikeArticle(articleId, user.Id);
+            if (!likeService.LikeArticle(articleId, user.Id))
+                likeService.RemoveLikeArticle(articleId, user.Id);
             return RedirectToAction("Index");
         }
 

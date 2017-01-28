@@ -8,6 +8,7 @@
             userId = Model.UserId
         }, null) </div>
     <div>Rating: @Model.Rating 
+        @Html.ActionLink("Like", "Like", "Blogs", new { blogId = Model.Id }, null) |
         @Html.ActionLink("Edit", "Edit", "Blogs", new { id = Model.Id }, new {}) |
         @Html.ActionLink("Articles", "Index", "Articles", new { blogId = Model.Id }, new {}) |
         @Html.ActionLink("Delete", "Delete", "Blogs", new { id = Model.Id }, new {})

@@ -12,6 +12,8 @@
         <div class="comment_text">
             @Model.Content
         </div>
+        <div>Rating: @Model.Rating 
+        @Html.ActionLink("Like", "Like", "Comments", new { commentId = Model.Id }, null)</div>
     </div>
 </div>
 <hr />

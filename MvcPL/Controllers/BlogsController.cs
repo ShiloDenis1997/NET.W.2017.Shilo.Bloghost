@@ -17,14 +17,17 @@ namespace MvcPL.Controllers
     {
         private IBlogService blogService;
         private IUserService userService;
+        private ILikeService likeService;
 
         private const int PageBlogsCount = 100;
 
         public BlogsController
-            (IBlogService blogService, IUserService userService)
+            (IBlogService blogService, IUserService userService,
+            ILikeService likeService)
         {
             this.blogService = blogService;
             this.userService = userService;
+            this.likeService = likeService;
         }
 
         // GET: Blogs
@@ -52,6 +55,15 @@ namespace MvcPL.Controllers
                 UserName = userService.GetUserEntity(blog.UserId).Login,
                 Rating = blog.Rating,
             }).ToList());
+        }
+
+        [Authorize(Roles = "User")]
+        public ActionResult Like(int blogId)
+        {
+            var user = userService.GetUserByPredicate(u => u.Email.Equals(User.Identity.Name));
+            if (!likeService.LikeBlog(blogId, user.Id))
+                likeService.RemoveLikeBlog(blogId, user.Id);
+            return RedirectToAction("Index");
         }
 
         // GET: Blogs/Details/5

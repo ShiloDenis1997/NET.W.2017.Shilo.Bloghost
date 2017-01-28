@@ -13,14 +13,17 @@ namespace MvcPL.Controllers
     {
         private ICommentService commentService;
         private IUserService userService;
+        private ILikeService likeService;
 
         private const int CommentPackSize = 100;
 
-        public CommentsController(ICommentService commentService,
-            IUserService userService)
+        public CommentsController
+            (ICommentService commentService, IUserService userService,
+            ILikeService likeService)
         {
             this.commentService = commentService;
             this.userService = userService;
+            this.likeService = likeService;
         }
 
         // GET: Comments
@@ -46,6 +49,16 @@ namespace MvcPL.Controllers
             {
                 return PartialView("_CommentPartial", comment);
             }
+            return RedirectToAction("Details", "Articles", new {id = comment.ArticleId});
+        }
+
+        [Authorize(Roles = "User")]
+        public ActionResult Like(int commentId)
+        {
+            var user = userService.GetUserByPredicate(u => u.Email.Equals(User.Identity.Name));
+            if (!likeService.LikeComment(commentId, user.Id))
+                likeService.RemoveLikeComment(commentId, user.Id);
+            var comment = commentService.GetCommentEntity(commentId);
             return RedirectToAction("Details", "Articles", new {id = comment.ArticleId});
         }
     }
