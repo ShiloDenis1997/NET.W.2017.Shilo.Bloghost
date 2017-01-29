@@ -9,14 +9,14 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<ul class="list-unstyled">
+@*<ul class="list-unstyled">*@
     @foreach (var blog in Model.Blogs)
     {
-        <li>
+        <div>
             @{ Html.RenderPartial("_BlogPartial", blog); }
-        </li>
+        </div>
     }
-</ul>
+@*</ul>*@
 <div>
     @Html.PagingLinks(Model.PagingInfo, p => Url.Action("Index", new { page = p }))
 </div>
