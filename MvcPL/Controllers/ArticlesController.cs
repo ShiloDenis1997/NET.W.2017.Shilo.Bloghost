@@ -9,6 +9,8 @@ using BLL.Interfaces.Entities;
 using BLL.Interfaces.Services;
 using MvcPL.Infrastructure.Mappers;
 using MvcPL.Models;
+using MvcPL.Models.Entities;
+using MvcPL.Models.Lists;
 
 namespace MvcPL.Controllers
 {
@@ -19,7 +21,7 @@ namespace MvcPL.Controllers
         private IBlogService blogService;
         private ILikeService likeService;
 
-        private const int PageArticlesCount = 100;
+        private const int PageArticlesCount = 4;
 
         public ArticlesController
             (IArticleService articleService, IUserService userService,
@@ -33,40 +35,53 @@ namespace MvcPL.Controllers
 
         // GET: Articles
         public ActionResult Index
-            (int? userId, int? blogId, string tag, string text)
+            (int page = 1, int? userId = null, int? blogId = null, 
+                string tag = null, string text = null)
         {
             IEnumerable<ArticleEntity> articles;
             if (blogId != null)
             {
                 articles = articleService.GetArticlesByPredicate(
-                    article => article.BlogId == blogId.Value, PageArticlesCount);
+                    article => article.BlogId == blogId.Value, PageArticlesCount,
+                    PageArticlesCount * (page - 1));
             }
             else if (userId != null)
             {
                 articles = articleService.GetArticlesByUser
-                    (userId.Value, PageArticlesCount);
+                    (userId.Value, PageArticlesCount, PageArticlesCount * (page - 1));
             }
             else if (tag != null)
             {
                 articles = articleService.GetArticlesByTag
-                    (tag, PageArticlesCount);
+                    (tag, PageArticlesCount, PageArticlesCount * (page - 1));
             }
             else if (text != null)
             {
-                articles = articleService.GetArticlesWithText(text, PageArticlesCount);
+                articles = articleService.GetArticlesWithText
+                    (text, PageArticlesCount, PageArticlesCount * (page - 1));
             }
             else
             {
-                articles = articleService.GetArticlesByCreationDate(PageArticlesCount);
+                articles = articleService.GetArticlesByCreationDate
+                    (PageArticlesCount, PageArticlesCount * (page - 1));
             }
 
-            return View(articles.Select(
-                article =>
+            return View(new ArticlesListViewModel
+            {
+                PagingInfo = new PagingInfo
                 {
-                    var user = userService.GetUserEntity(article.UserId);
-                    return article.ToMvcArticle(null, user.Login);
-                }
-            ).ToArray());
+                    CurrentItemsCount = articles.Count(),
+                    ItemsPerPage = PageArticlesCount,
+                    CurrentPage = page,
+                },
+                Articles = articles.Select(
+                    article =>
+                    {
+                        var user = userService.GetUserEntity(article.UserId);
+                        return article.ToMvcArticle(null, user.Login);
+                    }
+                ).ToArray(),
+            });
         }
 
         [Authorize(Roles = "User")]

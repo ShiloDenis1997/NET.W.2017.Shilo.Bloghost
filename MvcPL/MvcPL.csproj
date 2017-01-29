@@ -157,13 +157,17 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HtmlHelpers\PagingHelpers.cs" />
     <Compile Include="Infrastructure\CaptchaImage.cs" />
     <Compile Include="Infrastructure\Mappers\MvcMapper.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
-    <Compile Include="Models\ArticleViewModel.cs" />
-    <Compile Include="Models\BlogViewModel.cs" />
-    <Compile Include="Models\CommentViewModel.cs" />
+    <Compile Include="Models\Entities\ArticleViewModel.cs" />
+    <Compile Include="Models\Entities\BlogViewModel.cs" />
+    <Compile Include="Models\Entities\CommentViewModel.cs" />
+    <Compile Include="Models\Lists\ArticlesListViewModel.cs" />
+    <Compile Include="Models\Lists\BlogsListViewModel.cs" />
     <Compile Include="Models\LogInViewModel.cs" />
+    <Compile Include="Models\PagingInfo.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Infrastructure\Modules\LoggingModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

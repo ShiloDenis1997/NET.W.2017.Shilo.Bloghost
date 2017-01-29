@@ -1,4 +1,5 @@
-﻿@model IEnumerable<MvcPL.Models.ArticleViewModel>
+﻿@using MvcPL.HtmlHelpers
+@model MvcPL.Models.Lists.ArticlesListViewModel
 
 @{
     ViewBag.Title = "Articles";
@@ -28,10 +29,13 @@
     </div>
 }
 <ul class="list-unstyled">
-@foreach (var article in Model)
-{
-    <li>
-        @{Html.RenderPartial("_ArticlePartial", article);}
-    </li>
-}
- </ul>
+    @foreach (var article in Model.Articles)
+    {
+        <li>
+            @{Html.RenderPartial("_ArticlePartial", article);}
+        </li>
+    }
+</ul>
+<div>
+    @Html.PagingLinks(Model.PagingInfo, p => Url.Action("Index", new { page = p }))
+</div>

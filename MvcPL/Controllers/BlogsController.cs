@@ -10,6 +10,8 @@ using BLL.Interfaces.Entities;
 using BLL.Interfaces.Services;
 using MvcPL.Infrastructure.Mappers;
 using MvcPL.Models;
+using MvcPL.Models.Entities;
+using MvcPL.Models.Lists;
 
 namespace MvcPL.Controllers
 {
@@ -19,7 +21,7 @@ namespace MvcPL.Controllers
         private IUserService userService;
         private ILikeService likeService;
 
-        private const int PageBlogsCount = 100;
+        private const int PageBlogsCount = 4;
 
         public BlogsController
             (IBlogService blogService, IUserService userService,
@@ -31,30 +33,34 @@ namespace MvcPL.Controllers
         }
 
         // GET: Blogs
-        public ActionResult Index(int? userId)
+        public ActionResult Index(int page = 1, int? userId = null)
         {
             IEnumerable<BlogEntity> blogs;
 
             if (userId != null)
             {
                 blogs = blogService.GetBlogsByPredicate
-                            (blog => blog.UserId == userId, PageBlogsCount)
+                            (blog => blog.UserId == userId, PageBlogsCount, 
+                                PageBlogsCount * (page - 1))
                             .OrderByDescending(blog => blog.DateStarted);
             }
             else
             {
-                blogs = blogService.GetBlogsByCreationDate(PageBlogsCount);
+                blogs = blogService.GetBlogsByCreationDate(PageBlogsCount,
+                                PageBlogsCount * (page - 1));
             }
 
-            return View(blogs.Select(blog => new BlogViewModel
+            return View(new BlogsListViewModel
             {
-                Id = blog.Id,
-                DateStarted = blog.DateStarted,
-                Name = blog.Name,
-                UserId = blog.UserId,
-                UserName = userService.GetUserEntity(blog.UserId).Login,
-                Rating = blog.Rating,
-            }).ToList());
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = page,
+                    ItemsPerPage = PageBlogsCount,
+                    CurrentItemsCount = blogs.Count(),
+                },
+                Blogs = blogs.Select(blog => blog.ToMvcBlog
+                    (userService.GetUserEntity(blog.UserId).Login)),
+            });
         }
 
         [Authorize(Roles = "User")]

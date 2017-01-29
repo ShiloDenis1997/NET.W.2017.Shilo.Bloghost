@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using BLL.Interfaces.Services;
 using MvcPL.Infrastructure.Mappers;
-using MvcPL.Models;
+using MvcPL.Models.Entities;
 
 namespace MvcPL.Controllers
 {

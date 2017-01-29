@@ -1,4 +1,5 @@
-﻿@model IEnumerable<MvcPL.Models.BlogViewModel>
+﻿@using MvcPL.HtmlHelpers
+@model MvcPL.Models.Lists.BlogsListViewModel
 
 @{
     ViewBag.Title = "Blogs";
@@ -9,10 +10,13 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 <ul class="list-unstyled">
-    @foreach (var blog in Model)
+    @foreach (var blog in Model.Blogs)
     {
         <li>
             @{ Html.RenderPartial("_BlogPartial", blog); }
         </li>
     }
 </ul>
+<div>
+    @Html.PagingLinks(Model.PagingInfo, p => Url.Action("Index", new { page = p }))
+</div>
