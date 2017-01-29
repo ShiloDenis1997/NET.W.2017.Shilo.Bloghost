@@ -15,9 +15,10 @@
             <span class="label label-warning">@Html.ActionLink(tag, "Index", "Articles",
                                              new { tag }, new {@class = "nodecor link-white"})</span>
         }</h5>
-    <p>@Model.Content</p>
+    <p class="text-break">@Model.Content</p>
     <div>@Html.GlyphLink("glyphicon glyphicon-star-empty", Model.Rating.ToString(),
-             () => Url.Action("Like", "Articles", new {articleId = Model.Id}))
+             () => Url.Action("Like", "Articles", new {articleId = Model.Id,
+                 likeUrl = (string)ViewBag.LikeUrl}))
         @Html.GlyphLink("glyphicon glyphicon-pencil", "",
             () => Url.Action("Edit", "Articles", new {id = Model.Id}))
         @Html.GlyphLink("glyphicon glyphicon-trash", "",

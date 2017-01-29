@@ -11,7 +11,7 @@
 <div>
     @Html.GlyphLink("glyphicon glyphicon-star-empty", Model.Rating.ToString(), 
             ()=>Url.Action("Like", "Blogs", 
-                new {blogId = Model.Id, userId = (int?)ViewBag.UserId, page = ((int?)ViewBag.Page) ?? 1}))
+                new {blogId = Model.Id, likeUrl = (string)ViewBag.LikeUrl}))
     @Html.GlyphLink("glyphicon glyphicon-pencil", "",
             () => Url.Action("Edit", "Blogs", new { id = Model.Id }))
     @Html.GlyphLink("glyphicon glyphicon-trash", "",

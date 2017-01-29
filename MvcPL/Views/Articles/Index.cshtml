@@ -3,6 +3,7 @@
 
 @{
     ViewBag.Title = "Articles";
+    ViewBag.LikeUrl = Request.RawUrl;
 }
 
 <h1>@ViewBag.Title</h1>
@@ -28,5 +29,13 @@
     }
 </ul>
 <div class="btn-group pull-right">
-    @Html.PagingLinks(Model.PagingInfo, p => Url.Action("Index", new { page = p }))
+    @Html.PagingLinks(Model.PagingInfo, p => Url.Action("Index",
+            new
+            {
+                page = p,
+                tag = Model.Tag,
+                userId = Model.UserId,
+                text = Model.Text,
+                blogId = Model.BlogId,
+            }))
 </div>

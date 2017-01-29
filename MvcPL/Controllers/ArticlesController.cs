@@ -81,15 +81,21 @@ namespace MvcPL.Controllers
                         return article.ToMvcArticle(null, user.Login);
                     }
                 ).ToArray(),
+                UserId = userId,
+                BlogId = blogId,
+                Tag = tag,
+                Text = text,
             });
         }
 
         [Authorize(Roles = "User")]
-        public ActionResult Like(int articleId)
+        public ActionResult Like(int articleId, string likeUrl)
         {
             var user = userService.GetUserByPredicate(u => u.Email.Equals(User.Identity.Name));
             if (!likeService.LikeArticle(articleId, user.Id))
                 likeService.RemoveLikeArticle(articleId, user.Id);
+            if (Url.IsLocalUrl(likeUrl))
+                return Redirect(likeUrl);
             return RedirectToAction("Index");
         }
 

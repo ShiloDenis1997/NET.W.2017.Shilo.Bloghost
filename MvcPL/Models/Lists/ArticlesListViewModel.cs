@@ -10,5 +10,9 @@ namespace MvcPL.Models.Lists
     {
         public PagingInfo PagingInfo { get; set; }
         public IEnumerable<ArticleViewModel> Articles { get; set; }
+        public int? UserId { get; set; }
+        public int? BlogId { get; set; }
+        public string Tag { get; set; }
+        public string Text { get; set; }
     }
 }

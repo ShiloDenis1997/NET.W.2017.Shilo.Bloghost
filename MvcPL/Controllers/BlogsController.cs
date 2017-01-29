@@ -64,12 +64,14 @@ namespace MvcPL.Controllers
         }
 
         [Authorize(Roles = "User")]
-        public ActionResult Like(int blogId, int? userId, int page = 1)
+        public ActionResult Like(int blogId, string likeUrl)
         {
             var user = userService.GetUserByPredicate(u => u.Email.Equals(User.Identity.Name));
             if (!likeService.LikeBlog(blogId, user.Id))
                 likeService.RemoveLikeBlog(blogId, user.Id);
-            return RedirectToAction("Index", new {userId, page});
+            if (Url.IsLocalUrl(likeUrl))
+                return Redirect(likeUrl);
+            return RedirectToAction("Index");
         }
 
         // GET: Blogs/Details/5
