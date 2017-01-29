@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using BLL.Interfaces.Services;
 using MvcPL.Infrastructure.Mappers;
 using MvcPL.Models.Entities;
+using MvcPL.Models.Lists;
 
 namespace MvcPL.Controllers
 {
@@ -29,13 +30,16 @@ namespace MvcPL.Controllers
         // GET: Comments
         public ActionResult Comments(int articleId, int commentPackNumber = 1)
         {
-            ViewBag.ArticleId = articleId;
-            ViewBag.CommentPackNumber = commentPackNumber;
             IEnumerable<CommentViewModel> comments = commentService
                 .GetCommentsByCreationDate(articleId, CommentPackSize * commentPackNumber)
                 .Select(comment => comment.ToMvcComment
                     (userService.GetUserEntity(comment.UserId).Login));
-            return PartialView(comments);
+            return PartialView(new CommentsListViewModel
+            {
+                Comments = comments,
+                ArticleId = articleId,
+                CommentPackNumber = commentPackNumber,
+            });
         }
         
         [Authorize(Roles = "User")]
@@ -56,12 +60,14 @@ namespace MvcPL.Controllers
         }
 
         [Authorize(Roles = "User")]
-        public ActionResult Like(int commentId)
+        public ActionResult Like(int commentId, string likeUrl)
         {
             var user = userService.GetUserByPredicate(u => u.Email.Equals(User.Identity.Name));
             if (!likeService.LikeComment(commentId, user.Id))
                 likeService.RemoveLikeComment(commentId, user.Id);
             var comment = commentService.GetCommentEntity(commentId);
+            if (Url.IsLocalUrl(likeUrl))
+                return Redirect(likeUrl);
             return RedirectToAction("Details", "Articles", new {id = comment.ArticleId});
         }
     }

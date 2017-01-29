@@ -167,6 +167,7 @@
     <Compile Include="Models\Entities\CommentViewModel.cs" />
     <Compile Include="Models\Lists\ArticlesListViewModel.cs" />
     <Compile Include="Models\Lists\BlogsListViewModel.cs" />
+    <Compile Include="Models\Lists\CommentsListViewModel.cs" />
     <Compile Include="Models\LogInViewModel.cs" />
     <Compile Include="Models\PagingInfo.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />

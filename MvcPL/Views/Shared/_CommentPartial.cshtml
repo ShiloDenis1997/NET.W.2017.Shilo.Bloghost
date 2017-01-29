@@ -5,6 +5,7 @@
     <h4>@Model.UserName <small>@Model.DateAdded</small></h4>
     <p class="text-break">@Model.Content</p>
     @Html.GlyphLink("glyphicon glyphicon-star-empty", Model.Rating.ToString(),
-             () => Url.Action("Like", "Comments", new { commentId = Model.Id }))
+             () => Url.Action("Like", "Comments", new { commentId = Model.Id,
+                 likeUrl = (string)ViewBag.LikeUrl }))
 </div>
 <hr />

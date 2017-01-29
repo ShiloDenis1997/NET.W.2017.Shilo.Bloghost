@@ -1,7 +1,8 @@
-﻿@model IEnumerable<MvcPL.Models.Entities.CommentViewModel>
+﻿@model MvcPL.Models.Lists.CommentsListViewModel
 
 @{
     Layout = null;
+    ViewBag.LikeUrl = Request.RawUrl;
 }
 
 <h3>Comments</h3>
@@ -14,12 +15,12 @@
     <div class="form-group">
         @Html.TextArea("Content", new { rows = 5, @class = "area-fullwidth" })
     </div>
-    @Html.Hidden("ArticleId", (int)ViewBag.ArticleId)
+    @Html.Hidden("ArticleId", Model.ArticleId)
     <button type="submit" class="btn btn-success">Add comment</button>
     <br><br>
 }
 <div id="comments" class="row">
-    @foreach (var comment in Model)
+    @foreach (var comment in Model.Comments)
     {
         Html.RenderPartial("_CommentPartial", comment);
     }
@@ -27,7 +28,7 @@
 <div>
     @Html.ActionLink("More comments", "Details", "Articles", new
     {
-        id = ViewBag.ArticleId,
-        commentPackNumber = (int)ViewBag.CommentPackNumber + 1,
+        id = Model.ArticleId,
+        commentPackNumber = Model.CommentPackNumber + 1,
     }, new {@class="btn btn-warning"})
 </div>

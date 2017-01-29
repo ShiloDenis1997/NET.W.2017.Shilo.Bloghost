@@ -126,7 +126,7 @@ namespace MvcPL.Controllers
                 user => user.Email.Equals(User.Identity.Name));
             ViewBag.BlogId = new SelectList
                 (blogService.GetBlogsByPredicate
-                    (blog => blog.UserId == currentUser.Id, PageArticlesCount), "Id", "Name");
+                    (blog => blog.UserId == currentUser.Id, int.MaxValue), "Id", "Name");
             return View();
         }
 
@@ -144,9 +144,11 @@ namespace MvcPL.Controllers
                 articleService.CreateArticle(article.ToBllArticle());
                 return RedirectToAction("Index");
             }
-
+            UserEntity currentUser = userService.GetUserByPredicate(
+                user => user.Email.Equals(User.Identity.Name));
             ViewBag.BlogId = new SelectList
-                (blogService.GetBlogEntities(PageArticlesCount), "Id", "Name", article.BlogId);
+                (blogService.GetBlogsByPredicate
+                    (blog => blog.UserId == currentUser.Id, int.MaxValue), "Id", "Name");
             return View(article);
         }
 
@@ -167,7 +169,7 @@ namespace MvcPL.Controllers
                 user => user.Email.Equals(User.Identity.Name));
             ViewBag.BlogId = new SelectList
                 (blogService.GetBlogsByPredicate
-                    (blog => blog.UserId == currentUser.Id, PageArticlesCount), "Id", "Name");
+                    (blog => blog.UserId == currentUser.Id, int.MaxValue), "Id", "Name");
             return View(article.ToMvcArticle());
         }
 
@@ -188,7 +190,7 @@ namespace MvcPL.Controllers
                 user => user.Email.Equals(User.Identity.Name));
             ViewBag.BlogId = new SelectList
                 (blogService.GetBlogsByPredicate
-                    (blog => blog.UserId == currentUser.Id, PageArticlesCount), "Id", "Name");
+                    (blog => blog.UserId == currentUser.Id, int.MaxValue), "Id", "Name");
             return View(article);
         }
 
