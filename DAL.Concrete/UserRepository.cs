@@ -51,31 +51,23 @@ namespace DAL.Concrete
                 ((Expression<Func<User, bool>>) ormPredicate)?.ToDalUser();
         }
 
-        public IEnumerable<DalUser> GetEntities(int takeCount, int skipCount = 0,
-            Expression<Func<DalUser, int>> orderSelector = null)
+        public IEnumerable<DalUser> GetEntities(int takeCount, int skipCount = 0)
         {
-            if (orderSelector == null)
-                orderSelector = user => user.Id;
             var expressionModifier = new ExpressionModifier();
-            var ormOrderSelector = expressionModifier.Modify<User>(orderSelector);
-            return context.Set<User>().OrderBy(
-                (Expression<Func<User, int>>)ormOrderSelector)
+            return context.Set<User>()
+                .OrderByDescending(user => user.DateRegistered)
                 .Skip(skipCount).Take(takeCount)
                 .ToArray().Select(user => user.ToDalUser());
         }
 
         public IEnumerable<DalUser> GetEntitiesByPredicate
-            (Expression<Func<DalUser, bool>> f, int takeCount, int skipCount = 0,
-            Expression<Func<DalUser, int>> orderSelector = null )
+            (Expression<Func<DalUser, bool>> f, int takeCount, int skipCount = 0)
         {
-            if (orderSelector == null)
-                orderSelector = user => user.Id;
             var expressionModifier = new ExpressionModifier();
             var ormPredicate = expressionModifier.Modify<User>(f);
-            var ormOrderSelector = expressionModifier.Modify<User>(orderSelector);
-            IEnumerable<User> users = context.Set<User>().Where
-                ((Expression<Func<User, bool>>)ormPredicate).OrderBy
-                ((Expression<Func<User, int>>)ormOrderSelector)
+            IEnumerable<User> users = context.Set<User>()
+                .Where((Expression<Func<User, bool>>)ormPredicate)
+                .OrderByDescending(user => user.DateRegistered)
                 .Skip(skipCount).Take(takeCount);
             return users.Select(user => user.ToDalUser());
         }

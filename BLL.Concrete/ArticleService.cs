@@ -38,15 +38,9 @@ namespace BLL.Concrete
         }
 
         public IEnumerable<ArticleEntity> GetArticleEntities
-            (int takeCount, int skipCount = 0, 
-            Expression<Func<ArticleEntity, int>> orderSelector = null)
+            (int takeCount, int skipCount = 0)
         {
-            var expressionModifier = new ExpressionModifier();
-            var dalOrderSelector = orderSelector == null
-                    ? null
-                    :(Expression<Func<DalArticle, int>>) expressionModifier
-                            .Modify<DalArticle>(orderSelector);
-            return articleRepository.GetEntities(takeCount, skipCount, dalOrderSelector)
+            return articleRepository.GetEntities(takeCount, skipCount)
                     .Select(article => article.ToBllArticle());
         }
 
@@ -60,17 +54,13 @@ namespace BLL.Concrete
 
         public IEnumerable<ArticleEntity> GetArticlesByPredicate
             (Expression<Func<ArticleEntity, bool>> predicate, int takeCount, 
-            int skipCount = 0, Expression<Func<ArticleEntity, int>> orderSelector = null)
+            int skipCount = 0)
         {
             var expressionModifier = new ExpressionModifier();
             var dalPredicate = (Expression<Func<DalArticle, bool>>) 
                 expressionModifier.Modify<DalArticle>(predicate);
-            var dalOrderSelector = orderSelector == null
-                ? null
-                : (Expression<Func<DalArticle, int>>)expressionModifier
-                            .Modify<DalArticle>(orderSelector);
             return articleRepository.GetEntitiesByPredicate(dalPredicate,
-                    takeCount, skipCount, dalOrderSelector)
+                    takeCount, skipCount)
                 .Select(article => article.ToBllArticle());
         }
 

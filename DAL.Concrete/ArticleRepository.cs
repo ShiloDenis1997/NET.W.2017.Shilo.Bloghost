@@ -122,32 +122,24 @@ namespace DAL.Concrete
         }
 
         public IEnumerable<DalArticle> GetEntities
-            (int takeCount, int skipCount = 0, 
-            Expression<Func<DalArticle, int>> orderSelector = null)
+            (int takeCount, int skipCount = 0)
         {
-            if (orderSelector == null)
-                orderSelector = article => article.Id;
             var expressionModifier = new ExpressionModifier();
-            var ormOrderSelector = expressionModifier.Modify<Article>(orderSelector);
-            return context.Set<Article>().OrderBy(
-                (Expression<Func<Article, int>>)ormOrderSelector)
+            return context.Set<Article>()
+                .OrderByDescending(article => article.DateAdded)
                 .Include(article => article.Tags)
                 .Skip(skipCount).Take(takeCount)
                 .ToArray().Select(article => article.ToDalArticle());
         }
 
         public IEnumerable<DalArticle> GetEntitiesByPredicate
-            (Expression<Func<DalArticle, bool>> f, int takeCount, int skipCount = 0, 
-            Expression<Func<DalArticle, int>> orderSelector = null)
+            (Expression<Func<DalArticle, bool>> f, int takeCount, int skipCount = 0)
         {
-            if (orderSelector == null)
-                orderSelector = article => article.Id;
             var expressionModifier = new ExpressionModifier();
             var ormExpression = expressionModifier.Modify<Article>(f);
-            var ormOrderSelector = expressionModifier.Modify<Article>(orderSelector);
             return context.Set<Article>().Where
-                ((Expression<Func<Article, bool>>)ormExpression).OrderBy
-                ((Expression<Func<Article, int>>)ormOrderSelector)
+                ((Expression<Func<Article, bool>>)ormExpression)
+                .OrderByDescending(article => article.DateAdded)
                 .Include(article => article.Tags)
                 .Skip(skipCount).Take(takeCount).ToArray()
                 .Select(article => article.ToDalArticle());

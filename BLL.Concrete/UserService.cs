@@ -37,15 +37,9 @@ namespace BLL.Concrete
         }
 
         public IEnumerable<UserEntity> GetUserEntities
-        (int takeCount, int skipCount = 0,
-            Expression<Func<UserEntity, int>> orderSelector = null)
+        (int takeCount, int skipCount = 0)
         {
-            var expressionModifier = new ExpressionModifier();
-            var dalSelector = orderSelector == null
-                ? null
-                :(Expression<Func<DalUser, int>>)
-                expressionModifier.Modify<DalUser>(orderSelector);
-            return userRepository.GetEntities(takeCount, skipCount, dalSelector)
+            return userRepository.GetEntities(takeCount, skipCount)
                 .Select(user => user.ToBllUser());
         }
 
@@ -68,14 +62,11 @@ namespace BLL.Concrete
         
         public IEnumerable<UserEntity> GetUsersByPredicate
             (Expression<Func<UserEntity, bool>> predicate, 
-                    int takeCount, int skipCount = 0,
-                    Expression<Func<UserEntity, int>> orderSelector = null)
+                    int takeCount, int skipCount = 0)
         {
             var expressionModifier = new ExpressionModifier();
             var dalPredicate = (Expression<Func<DalUser, bool>>)
                 expressionModifier.Modify<DalUser>(predicate);
-            var dalOrderSelector = (Expression<Func<DalUser, int>>)
-                expressionModifier.Modify<DalUser>(orderSelector);
             return userRepository.GetEntitiesByPredicate(dalPredicate, takeCount, skipCount)
                 .Select(user => user.ToBllUser());
         }

@@ -59,31 +59,23 @@ namespace DAL.Concrete
                 ((Expression<Func<Blog, bool>>)ormExpression)?.ToDalBlog();
         }
 
-        public IEnumerable<DalBlog> GetEntities(int takeCount, int skipCount = 0,
-            Expression<Func<DalBlog, int>> orderSelector = null)
+        public IEnumerable<DalBlog> GetEntities(int takeCount, int skipCount = 0)
         {
-            if (orderSelector == null)
-                orderSelector = blog => blog.Id;
             var expressionModifier = new ExpressionModifier();
-            var ormOrderSelector = expressionModifier.Modify<Blog>(orderSelector);
-            return context.Set<Blog>().OrderBy(
-                (Expression<Func<Blog, int>>)ormOrderSelector)
+            return context.Set<Blog>()
+                .OrderByDescending(blog => blog.DateStarted)
                 .Skip(skipCount).Take(takeCount)
                 .ToArray().Select(blog => blog.ToDalBlog());
         }
 
         public IEnumerable<DalBlog> GetEntitiesByPredicate
-            (Expression<Func<DalBlog, bool>> f, int takeCount, int skipCount = 0,
-            Expression<Func<DalBlog, int>> orderSelector = null)
+            (Expression<Func<DalBlog, bool>> f, int takeCount, int skipCount = 0)
         {
-            if (orderSelector == null)
-                orderSelector = blog => blog.Id;
             var expressionModifier = new ExpressionModifier();
             var ormExpression = expressionModifier.Modify<Blog>(f);
-            var ormOrderSelector = expressionModifier.Modify<Blog>(orderSelector);
-            return context.Set<Blog>().Where
-                ((Expression<Func<Blog, bool>>)ormExpression).OrderBy
-                ((Expression<Func<Blog, int>>)ormOrderSelector)
+            return context.Set<Blog>()
+                .Where((Expression<Func<Blog, bool>>)ormExpression)
+                .OrderByDescending(blog => blog.DateStarted)
                 .Skip(skipCount).Take(takeCount).ToArray().Select(b => b.ToDalBlog());
         }
 

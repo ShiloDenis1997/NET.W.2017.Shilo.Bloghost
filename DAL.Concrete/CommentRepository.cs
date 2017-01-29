@@ -71,26 +71,22 @@ namespace DAL.Concrete
         }
 
         public IEnumerable<DalComment> GetEntities
-            (int takeCount, int skipCount = 0, 
-            Expression<Func<DalComment, int>> orderSelector = null)
+            (int takeCount, int skipCount = 0)
         {
             throw new NotImplementedException();
         }
 
         public IEnumerable<DalComment> GetEntitiesByPredicate
             (Expression<Func<DalComment, bool>> predicate, 
-            int takeCount, int skipCount = 0, 
-            Expression<Func<DalComment, int>> orderSelector = null)
+            int takeCount, int skipCount = 0)
         {
-            if (orderSelector == null)
-                orderSelector = comment => comment.Id;
             var expressionModifier = new ExpressionModifier();
             var ormExpression = expressionModifier.Modify<Comment>(predicate);
-            var ormOrderSelector = expressionModifier.Modify<Comment>(orderSelector);
-            return context.Set<Comment>().Where
-                ((Expression<Func<Comment, bool>>)ormExpression).OrderBy
-                ((Expression<Func<Comment, int>>)ormOrderSelector)
-                .Skip(skipCount).Take(takeCount).ToArray().Select(c => c.ToDalComment());
+            return context.Set<Comment>()
+                .Where((Expression<Func<Comment, bool>>)ormExpression)
+                .OrderByDescending(comment => comment.DateAdded)
+                .Skip(skipCount).Take(takeCount)
+                .ToArray().Select(c => c.ToDalComment());
         }
 
         public DalComment GetLastUserComment(int articleId, int userId)

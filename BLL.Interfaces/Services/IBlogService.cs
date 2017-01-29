@@ -12,13 +12,11 @@ namespace BLL.Interfaces.Services
     {
         BlogEntity GetBlogEntity(int id);
 
-        IEnumerable<BlogEntity> GetBlogEntities(int takeCount, int skipCount = 0,
-            Expression<Func<BlogEntity, int>> orderSelector = null);
+        IEnumerable<BlogEntity> GetBlogEntities(int takeCount, int skipCount = 0);
 
         IEnumerable<BlogEntity> GetBlogsByPredicate
         (Expression<Func<BlogEntity, bool>> predicate,
-            int takeCount, int skipCount = 0, 
-            Expression<Func<BlogEntity, int>> orderSelector = null);
+            int takeCount, int skipCount = 0);
 
         IEnumerable<BlogEntity> GetBlogsByCreationDate
             (int takeCount, int skipCount = 0, bool ascending = false);

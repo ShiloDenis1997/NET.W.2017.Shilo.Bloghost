@@ -47,31 +47,22 @@ namespace BLL.Concrete
         }
 
         public IEnumerable<BlogEntity> GetBlogEntities
-            (int takeCount, int skipCount = 0, 
-            Expression<Func<BlogEntity, int>> orderSelector = null)
+            (int takeCount, int skipCount = 0)
         {
             var expressionModifier = new ExpressionModifier();
-            var ormOrderSelector = orderSelector == null
-                ? null
-                : expressionModifier.Modify<DalBlog>(orderSelector);
-            return blogRepository.GetEntities(takeCount, skipCount,
-                (Expression<Func<DalBlog, int>>)ormOrderSelector)
+            return blogRepository.GetEntities(takeCount, skipCount)
                 .Select(blog => blog.ToBlogEntity());
         }
 
         public IEnumerable<BlogEntity> GetBlogsByPredicate
             (Expression<Func<BlogEntity, bool>> predicate, int takeCount,
-            int skipCount = 0, Expression<Func<BlogEntity, int>> orderSelector = null)
+            int skipCount = 0)
         {
             var expressionModifier = new ExpressionModifier();
             var dalPredicate = expressionModifier
                 .Modify<DalBlog>(predicate);
-            var ormOrderSelector = orderSelector == null 
-                ? null 
-                : expressionModifier.Modify<DalBlog>(orderSelector);
             return blogRepository.GetEntitiesByPredicate
-                ((Expression<Func<DalBlog, bool>>)dalPredicate,
-                takeCount, skipCount, (Expression<Func<DalBlog, int>>)ormOrderSelector)
+                ((Expression<Func<DalBlog, bool>>)dalPredicate, takeCount, skipCount)
                 .Select(blog => blog.ToBlogEntity());
         }
 

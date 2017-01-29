@@ -12,13 +12,11 @@ namespace BLL.Interfaces.Services
     {
         ArticleEntity GetArticleEntity(int id);
 
-        IEnumerable<ArticleEntity> GetArticleEntities(int takeCount, int skipCount = 0,
-            Expression<Func<ArticleEntity, int>> orderSelector = null);
+        IEnumerable<ArticleEntity> GetArticleEntities(int takeCount, int skipCount = 0);
 
         IEnumerable<ArticleEntity> GetArticlesByPredicate
         (Expression<Func<ArticleEntity, bool>> predicate,
-            int takeCount, int skipCount = 0,
-            Expression<Func<ArticleEntity, int>> orderSelector = null);
+            int takeCount, int skipCount = 0);
 
         IEnumerable<ArticleEntity> GetArticlesByUser(
             int userId, int takeCount, int skipCount = 0, bool ascending = false);
