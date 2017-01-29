@@ -1,19 +1,10 @@
-﻿@model MvcPL.Models.Entities.CommentViewModel
+﻿@using MvcPL.HtmlHelpers
+@model MvcPL.Models.Entities.CommentViewModel
 
-<div class="comment_wrap">
-    @*<div class="comment_image">
-        <img src="~/Content/anonymous.png" class="comment_img">
-    </div>*@
-    <div class="comment_content">
-
-        <div class="comment_author">
-            By @Model.UserName at @Model.DateAdded
-        </div>
-        <div class="comment_text">
-            @Model.Content
-        </div>
-        <div>Rating: @Model.Rating 
-        @Html.ActionLink("Like", "Like", "Comments", new { commentId = Model.Id }, null)</div>
-    </div>
+<div class="col-sm-12">
+    <h4>@Model.UserName <small>@Model.DateAdded</small></h4>
+    <p>@Model.Content</p>
+    @Html.GlyphLink("glyphicon glyphicon-star-empty", Model.Rating.ToString(),
+             () => Url.Action("Like", "Comments", new { commentId = Model.Id }))
 </div>
 <hr />

@@ -11,12 +11,14 @@
     InsertionMode = InsertionMode.InsertBefore
 }))
 {
-    @Html.TextArea("Content", new { rows = 5, cols = 50, @class = "comment_area" })
+    <div class="form-group">
+        @Html.TextArea("Content", new { rows = 5, @class = "area-fullwidth" })
+    </div>
     @Html.Hidden("ArticleId", (int)ViewBag.ArticleId)
-    <br />
-    <input class="btn_border pull-right" type="submit" value="Add Comment" />
+    <button type="submit" class="btn btn-success">Add comment</button>
+    <br><br>
 }
-<div id="comments" class="container">
+<div id="comments" class="row">
     @foreach (var comment in Model)
     {
         Html.RenderPartial("_CommentPartial", comment);
@@ -27,5 +29,5 @@
     {
         id = ViewBag.ArticleId,
         commentPackNumber = (int)ViewBag.CommentPackNumber + 1,
-    }, null)
+    }, new {@class="btn btn-warning"})
 </div>
