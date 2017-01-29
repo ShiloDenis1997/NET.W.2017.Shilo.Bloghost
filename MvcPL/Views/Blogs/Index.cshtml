@@ -6,14 +6,14 @@
 }
 
 <h2>Blogs</h2>
-@*<ul class="list-unstyled">*@
     @foreach (var blog in Model.Blogs)
     {
+        ViewBag.UserId = Model.UserId;
+        ViewBag.Page = Model.PagingInfo.CurrentPage;
         <div>
             @{ Html.RenderPartial("_BlogPartial", blog); }
         </div>
     }
-@*</ul>*@
 <div class="btn-group pull-right">
-    @Html.PagingLinks(Model.PagingInfo, p => Url.Action("Index", new { page = p }))
+    @Html.PagingLinks(Model.PagingInfo, p => Url.Action("Index", new { page = p, userId = Model.UserId }))
 </div>

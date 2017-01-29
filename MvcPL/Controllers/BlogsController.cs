@@ -41,8 +41,7 @@ namespace MvcPL.Controllers
             {
                 blogs = blogService.GetBlogsByPredicate
                             (blog => blog.UserId == userId, PageBlogsCount, 
-                                PageBlogsCount * (page - 1))
-                            .OrderByDescending(blog => blog.DateStarted);
+                                PageBlogsCount * (page - 1));
             }
             else
             {
@@ -60,16 +59,17 @@ namespace MvcPL.Controllers
                 },
                 Blogs = blogs.Select(blog => blog.ToMvcBlog
                     (userService.GetUserEntity(blog.UserId).Login)),
+                UserId = userId,
             });
         }
 
         [Authorize(Roles = "User")]
-        public ActionResult Like(int blogId)
+        public ActionResult Like(int blogId, int? userId, int page = 1)
         {
             var user = userService.GetUserByPredicate(u => u.Email.Equals(User.Identity.Name));
             if (!likeService.LikeBlog(blogId, user.Id))
                 likeService.RemoveLikeBlog(blogId, user.Id);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new {userId, page});
         }
 
         // GET: Blogs/Details/5

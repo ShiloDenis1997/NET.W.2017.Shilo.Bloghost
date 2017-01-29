@@ -10,7 +10,8 @@
                }, null), @Model.DateStarted.</h5>
 <div>
     @Html.GlyphLink("glyphicon glyphicon-star-empty", Model.Rating.ToString(), 
-            ()=>Url.Action("Like", "Blogs", new {blogId = Model.Id}))
+            ()=>Url.Action("Like", "Blogs", 
+                new {blogId = Model.Id, userId = (int?)ViewBag.UserId, page = ((int?)ViewBag.CurrentPage) ?? 1}))
     @Html.GlyphLink("glyphicon glyphicon-pencil", "",
             () => Url.Action("Edit", "Blogs", new { id = Model.Id }))
     @Html.GlyphLink("glyphicon glyphicon-trash", "",

@@ -10,5 +10,6 @@ namespace MvcPL.Models.Lists
     {
         public PagingInfo PagingInfo { get; set; }
         public IEnumerable<BlogViewModel> Blogs { get; set; }
+        public int? UserId { get; set; }
     }
 }
