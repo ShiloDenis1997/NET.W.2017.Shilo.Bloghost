@@ -52,6 +52,21 @@ namespace DAL.Concrete
                 .Select(article => article.ToDalArticle());
         }
 
+        public IEnumerable<DalArticle> GetArticlesByPopularity
+            (int takeCount, int skipCount = 0, bool ascending = false)
+        {
+            if (ascending)
+                return context.Set<Article>()
+                    .OrderBy(article => article.Rating)
+                    .Skip(skipCount).Take(takeCount).ToArray()
+                    .Select(article => article.ToDalArticle());
+            else
+                return context.Set<Article>()
+                    .OrderByDescending(article => article.Rating)
+                    .Skip(skipCount).Take(takeCount).ToArray()
+                    .Select(article => article.ToDalArticle());
+        }
+
         public IEnumerable<DalArticle> GetArticlesByTag
             (string tag, int takeCount, int skipCount = 0, bool ascending = false)
         {

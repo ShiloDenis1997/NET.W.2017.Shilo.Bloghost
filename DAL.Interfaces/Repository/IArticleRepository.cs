@@ -20,5 +20,8 @@ namespace DAL.Interfaces.Repository
 
         IEnumerable<DalArticle> GetArticlesWithText
             (string text, int takeCount, int skipCount = 0, bool ascending = false);
+
+        IEnumerable<DalArticle> GetArticlesByPopularity
+            (int takeCount, int skipCount = 0, bool ascending = false);
     }
 }

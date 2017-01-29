@@ -30,6 +30,9 @@ namespace BLL.Interfaces.Services
         IEnumerable<ArticleEntity> GetArticlesWithText
             (string text, int takeCount, int skipCount = 0, bool ascending = false);
 
+        IEnumerable<ArticleEntity> GetArticlesByPopularity
+            (int takeCount, int skipCount = 0, bool ascending = false);
+
         ArticleEntity GetByPredicate(Expression<Func<ArticleEntity, bool>> predicate);
 
         void CreateArticle(ArticleEntity article);

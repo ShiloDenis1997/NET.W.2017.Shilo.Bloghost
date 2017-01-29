@@ -45,6 +45,8 @@ namespace MvcPL.Controllers
         [Authorize(Roles = "User")]
         public ActionResult AddComment(CommentViewModel comment)
         {
+            if (!ModelState.IsValid)
+                return Content("");
             comment.DateAdded = DateTime.Now;
             var user = userService.GetUserByPredicate(
                 u => u.Email.Equals(User.Identity.Name));

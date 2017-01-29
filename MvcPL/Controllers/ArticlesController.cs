@@ -88,6 +88,27 @@ namespace MvcPL.Controllers
             });
         }
 
+        public ActionResult Popular(int page = 1)
+        {
+            var articles = articleService.GetArticlesByPopularity(
+                PageArticlesCount, PageArticlesCount*(page - 1));
+            return View(new ArticlesListViewModel
+            {
+                Articles = articles.Select(
+                    article =>
+                    {
+                        var user = userService.GetUserEntity(article.UserId);
+                        return article.ToMvcArticle(null, user.Login);
+                    }),
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = page,
+                    CurrentItemsCount = articles.Count(),
+                    ItemsPerPage = PageArticlesCount,
+                },
+            });
+        }
+
         [Authorize(Roles = "User")]
         public ActionResult Like(int articleId, string likeUrl)
         {

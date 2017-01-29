@@ -1,0 +1,38 @@
+﻿@using MvcPL.HtmlHelpers
+@model MvcPL.Models.Lists.ArticlesListViewModel
+
+@{
+    ViewBag.Title = "Popular articles";
+    ViewBag.LikeUrl = Request.RawUrl;
+}
+
+<h1>@ViewBag.Title</h1>
+
+@using (Html.BeginForm("Index", "Articles"))
+{
+    <div class="input-group">
+        <input type="text" class="form-control pull-right"
+               name="tag" placeholder="Search by tag..">
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="submit">
+                <span class="glyphicon glyphicon-search"></span>
+            </button>
+        </span>
+    </div>
+}
+<ul class="list-unstyled">
+    @foreach (var article in Model.Articles)
+    {
+        <li>
+            @{Html.RenderPartial("_ArticlePartial", article);}
+        </li>
+                }
+</ul>
+<div class="btn-group pull-right">
+    @Html.PagingLinks(Model.PagingInfo, p => Url.Action("Popular",
+            new
+            {
+                page = p,
+            }))
+</div>
+

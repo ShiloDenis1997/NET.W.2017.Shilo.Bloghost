@@ -89,7 +89,8 @@ namespace BLL.Concrete
         public IEnumerable<ArticleEntity> GetArticlesByTag
             (string tag, int takeCount, int skipCount = 0, bool ascending = false)
         {
-            return articleRepository.GetArticlesByTag(tag, takeCount, skipCount, ascending)
+            return articleRepository.GetArticlesByTag
+                (tag, takeCount, skipCount, ascending)
                 .Select(article => article.ToBllArticle());
         }
 
@@ -98,6 +99,14 @@ namespace BLL.Concrete
         {
             return articleRepository.GetArticlesWithText
                 (text, takeCount, skipCount, ascending)
+                .Select(article => article.ToBllArticle());
+        }
+
+        public IEnumerable<ArticleEntity> GetArticlesByPopularity
+            (int takeCount, int skipCount = 0, bool ascending = false)
+        {
+            return articleRepository.GetArticlesByPopularity
+                (takeCount, skipCount, ascending)
                 .Select(article => article.ToBllArticle());
         }
     }
