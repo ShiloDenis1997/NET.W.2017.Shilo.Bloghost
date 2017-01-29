@@ -15,7 +15,7 @@ namespace MvcPL.Controllers
         private IUserService userService;
         private ILikeService likeService;
 
-        private const int CommentPackSize = 100;
+        private const int CommentPackSize = 10;
 
         public CommentsController
             (ICommentService commentService, IUserService userService,
@@ -27,11 +27,12 @@ namespace MvcPL.Controllers
         }
 
         // GET: Comments
-        public ActionResult Comments(int articleId)
+        public ActionResult Comments(int articleId, int commentPackNumber = 1)
         {
             ViewBag.ArticleId = articleId;
+            ViewBag.CommentPackNumber = commentPackNumber;
             IEnumerable<CommentViewModel> comments = commentService
-                .GetCommentsByCreationDate(articleId, CommentPackSize)
+                .GetCommentsByCreationDate(articleId, CommentPackSize * commentPackNumber)
                 .Select(comment => comment.ToMvcComment
                     (userService.GetUserEntity(comment.UserId).Login));
             return View(comments);

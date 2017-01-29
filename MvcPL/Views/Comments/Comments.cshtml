@@ -22,3 +22,10 @@
         Html.RenderPartial("_CommentPartial", comment);
     }
 </div>
+<div>
+    @Html.ActionLink("More comments", "Details", "Articles", new
+    {
+        id = ViewBag.ArticleId,
+        commentPackNumber = (int)ViewBag.CommentPackNumber + 1,
+    }, null)
+</div>

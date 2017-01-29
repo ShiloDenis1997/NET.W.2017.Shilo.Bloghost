@@ -95,7 +95,7 @@ namespace MvcPL.Controllers
 
         
         // GET: Articles/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id, int commentPackNumber = 1)
         {
             if (id == null)
             {
@@ -108,6 +108,7 @@ namespace MvcPL.Controllers
             }
             BlogEntity blog = blogService.GetBlogEntity(article.BlogId);
             UserEntity user = userService.GetUserEntity(article.UserId);
+            ViewBag.CommentPackNumber = commentPackNumber;
             return View(article.ToMvcArticle(blog.Name, user.Login));
         }
 
