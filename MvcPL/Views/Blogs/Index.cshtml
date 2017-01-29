@@ -3,13 +3,13 @@
 
 @{
     ViewBag.Title = "Blogs";
+    ViewBag.UserId = Model.UserId;
+    ViewBag.Page = Model.PagingInfo.CurrentPage;
 }
 
 <h2>Blogs</h2>
     @foreach (var blog in Model.Blogs)
     {
-        ViewBag.UserId = Model.UserId;
-        ViewBag.Page = Model.PagingInfo.CurrentPage;
         <div>
             @{ Html.RenderPartial("_BlogPartial", blog); }
         </div>
