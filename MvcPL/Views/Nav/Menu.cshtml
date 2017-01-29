@@ -1,0 +1,37 @@
+﻿@model int?
+
+<br/>
+@Html.ActionLink("Blogs", "Index", "Blogs", null, new
+    {@class = "btn btn-block btn-default btn-lg"})
+@Html.ActionLink("Articles", "Index", "Articles", null, new
+    { @class = "btn btn-block btn-default btn-lg" })
+@Html.ActionLink("Popular", "Index", "Home", null, new
+    { @class = "btn btn-block btn-default btn-lg" })
+@if (User.Identity.IsAuthenticated)
+{
+    @Html.ActionLink("My blogs", "Index", "Blogs", new { userId = Model }, new
+        { @class = "btn btn-block btn-default btn-lg" })
+    @Html.ActionLink("My articles", "Index", "Articles", new { userId = Model }, new
+        { @class = "btn btn-block btn-default btn-lg" })
+}
+
+@Html.ActionLink("Start blog", "Create", "Blogs", null, new
+        { @class = "btn btn-block btn-default btn-lg" })
+
+@Html.ActionLink("Write article", "Create", "Articles", null, new
+        { @class = "btn btn-block btn-default btn-lg" })
+
+<br>
+@using (Html.BeginForm("Index", "Articles"))
+{
+    <div class="input-group">
+        <input type="text" class="form-control pull-right"
+               name="text" placeholder="Search article..">
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="submit">
+                <span class="glyphicon glyphicon-search"></span>
+            </button>
+        </span>
+    </div>
+}
+<br/>

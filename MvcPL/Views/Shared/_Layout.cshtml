@@ -9,11 +9,14 @@
     @Scripts.Render("~/bundles/modernizr")
     <style>
     /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
-    .row.content {height: auto}
+    .row.content {
+        height: auto;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
 
     /* Set gray background color and 100% height */
     .sidenav {
-      background-color: #f1f1f1;
       height: 100%;
     }
 
@@ -30,7 +33,9 @@
         height: auto;
         padding: 15px;
       }
-      .row.content {height: auto;}
+      .row.content {height: auto;
+          margin-top: auto;
+      }
     }
 
     /*action links style*/
@@ -41,9 +46,13 @@
     a.link-white:link{color:#FFFFFF}
     a.link-white:visited{color:#FFFFFF}
     a.link-white:hover{color:#708090}
+
+    body.gray {
+        background-color: #F7F3F3;
+    }
     </style>
 </head>
-<body>
+<body class="gray">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -65,23 +74,11 @@
         </div>
     </div>
 
-    <div class="container-fluid">
+    <div class="container">
         <div class="row content">
             <div class="col-sm-3 sidenav">
-                <h4>John's Blog</h4>
-                <ul class="nav nav-pills nav-stacked">
-                    <li>@Html.ActionLink("Popular", "Index", "Home")</li>
-                    <li class="active">@Html.ActionLink("Blogs", "Index", "Blogs")</li>
-                    <li>@Html.ActionLink("Articles", "Index", "Articles")</li>
-                </ul><br>
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search Article..">
-                    <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">
-                                    <span class="glyphicon glyphicon-search"></span>
-                                </button>
-                            </span>
-                </div>
+                @Html.Action("Menu", "Nav")
+                @*@RenderSection("LeftPanel", false)*@
             </div>
             <div class="col-sm-9">
                 @RenderBody()

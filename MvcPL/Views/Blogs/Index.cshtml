@@ -6,9 +6,6 @@
 }
 
 <h2>Blogs</h2>
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 @*<ul class="list-unstyled">*@
     @foreach (var blog in Model.Blogs)
     {
@@ -17,6 +14,6 @@
         </div>
     }
 @*</ul>*@
-<div>
+<div class="btn-group pull-right">
     @Html.PagingLinks(Model.PagingInfo, p => Url.Action("Index", new { page = p }))
 </div>

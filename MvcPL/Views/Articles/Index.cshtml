@@ -7,25 +7,16 @@
 
 <h1>@ViewBag.Title</h1>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 @using (Html.BeginForm("Index", "Articles"))
 {
-    @Html.Editor("tag", new { type = "text" })
-    <div class="form-group">
-    <div class="col-md-offset-2 col-md-10">
-        <input type="submit" value="Search by tag" class="btn btn-default" />
-    </div>
-</div>
-}
-@using (Html.BeginForm("Index", "Articles"))
-{
-    @Html.Editor("text", new { type = "text" })
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Search articles" class="btn btn-default" />
-        </div>
+    <div class="input-group">
+        <input type="text" class="form-control pull-right" 
+               name="tag" placeholder="Search by tag..">
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="submit">
+                <span class="glyphicon glyphicon-search"></span>
+            </button>
+        </span>
     </div>
 }
 <ul class="list-unstyled">
@@ -36,6 +27,6 @@
         </li>
     }
 </ul>
-<div>
+<div class="btn-group pull-right">
     @Html.PagingLinks(Model.PagingInfo, p => Url.Action("Index", new { page = p }))
 </div>

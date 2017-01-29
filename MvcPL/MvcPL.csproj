@@ -153,6 +153,7 @@
     <Compile Include="Controllers\BlogsController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\NavController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -252,6 +253,7 @@
     <Content Include="Views\Articles\Edit.cshtml" />
     <Content Include="Views\Comments\Comments.cshtml" />
     <Content Include="Views\Shared\_CommentPartial.cshtml" />
+    <None Include="Views\Nav\Menu.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

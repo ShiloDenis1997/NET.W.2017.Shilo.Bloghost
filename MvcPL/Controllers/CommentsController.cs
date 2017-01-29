@@ -35,7 +35,7 @@ namespace MvcPL.Controllers
                 .GetCommentsByCreationDate(articleId, CommentPackSize * commentPackNumber)
                 .Select(comment => comment.ToMvcComment
                     (userService.GetUserEntity(comment.UserId).Login));
-            return View(comments);
+            return PartialView(comments);
         }
         
         [Authorize(Roles = "User")]
