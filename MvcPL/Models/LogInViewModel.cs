@@ -17,8 +17,5 @@ namespace MvcPL.Models
         [DataType(DataType.Password)]
         [Display(Name = "Enter your password")]
         public string Password { get; set; }
-
-        [Display(Name = "Remember password?")]
-        public bool RememberMe { get; set; }
     }
 }

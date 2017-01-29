@@ -1,0 +1,16 @@
+﻿/*action links style*/
+.nodecor:hover {
+    text-decoration: none;
+}
+
+a.link-white:link{color:#FFFFFF}
+a.link-white:visited{color:#FFFFFF}
+a.link-white:hover{color:#708090}
+
+.area-fullwidth {
+    min-width: 100%;
+}
+
+.text-break {
+    word-wrap: break-word;
+}

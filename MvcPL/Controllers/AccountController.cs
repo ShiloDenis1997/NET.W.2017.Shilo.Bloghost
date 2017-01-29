@@ -41,7 +41,7 @@ namespace MvcPL.Controllers
                 if (Membership.ValidateUser(viewModel.Email, viewModel.Password))
                 {
                     FormsAuthentication.SetAuthCookie
-                        (viewModel.Email, viewModel.RememberMe);
+                        (viewModel.Email, false);
                     if (Url.IsLocalUrl(returnUrl))
                     {
                         return Redirect(returnUrl);

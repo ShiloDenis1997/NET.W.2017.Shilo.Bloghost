@@ -7,58 +7,6 @@
     <title>@ViewBag.Title – приложение ASP.NET</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    <style>
-    /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
-    .row.content {
-        height: auto;
-        margin-top: 15px;
-        margin-bottom: 15px;
-    }
-
-    /* Set gray background color and 100% height */
-    .sidenav {
-      height: 100%;
-    }
-
-    /* Set black background color, white text and some padding */
-    footer {
-      background-color: #555;
-      color: white;
-      padding: 15px;
-    }
-
-    /* On small screens, set height to 'auto' for sidenav and grid */
-    @@media screen and (max-width: 767px) {
-      .sidenav {
-        height: auto;
-        padding: 15px;
-      }
-      .row.content {height: auto;
-          margin-top: auto;
-      }
-    }
-
-    /*action links style*/
-    .nodecor:hover {
-        text-decoration: none;
-    }
-
-    a.link-white:link{color:#FFFFFF}
-    a.link-white:visited{color:#FFFFFF}
-    a.link-white:hover{color:#708090}
-
-    body.gray {
-        background-color: #F7F3F3;
-    }
-
-    .area-fullwidth {
-        min-width: 100%;
-    }
-
-    .text-break {
-        word-wrap: break-word;
-    }
-    </style>
 </head>
 <body class="gray">
     <div class="navbar navbar-inverse navbar-fixed-top">
