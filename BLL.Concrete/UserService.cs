@@ -40,7 +40,7 @@ namespace BLL.Concrete
         (int takeCount, int skipCount = 0)
         {
             return userRepository.GetEntities(takeCount, skipCount)
-                .Select(user => user.ToBllUser());
+                ?.Select(user => user.ToBllUser());
         }
 
         public UserEntity GetUserEntity(int id)
@@ -68,7 +68,7 @@ namespace BLL.Concrete
             var dalPredicate = (Expression<Func<DalUser, bool>>)
                 expressionModifier.Modify<DalUser>(predicate);
             return userRepository.GetEntitiesByPredicate(dalPredicate, takeCount, skipCount)
-                .Select(user => user.ToBllUser());
+                ?.Select(user => user.ToBllUser());
         }
 
         public UserEntity GetUserByPredicate

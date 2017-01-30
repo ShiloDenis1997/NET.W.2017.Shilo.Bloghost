@@ -50,12 +50,12 @@ namespace MvcPL.Controllers
                 articles = articleService.GetArticlesByUser
                     (userId.Value, PageArticlesCount, PageArticlesCount * (page - 1));
             }
-            else if (tag != null)
+            else if (!string.IsNullOrWhiteSpace(tag))
             {
                 articles = articleService.GetArticlesByTag
                     (tag, PageArticlesCount, PageArticlesCount * (page - 1));
             }
-            else if (text != null)
+            else if (!string.IsNullOrWhiteSpace(text))
             {
                 articles = articleService.GetArticlesWithText
                     (text, PageArticlesCount, PageArticlesCount * (page - 1));
@@ -70,17 +70,17 @@ namespace MvcPL.Controllers
             {
                 PagingInfo = new PagingInfo
                 {
-                    CurrentItemsCount = articles.Count(),
+                    CurrentItemsCount = articles?.Count() ?? 0,
                     ItemsPerPage = PageArticlesCount,
                     CurrentPage = page,
                 },
-                Articles = articles.Select(
+                Articles = articles?.Select(
                     article =>
                     {
                         var user = userService.GetUserEntity(article.UserId);
                         return article.ToMvcArticle(null, user.Login);
                     }
-                ).ToArray(),
+                ).ToArray() ?? new ArticleViewModel[] {},
                 UserId = userId,
                 BlogId = blogId,
                 Tag = tag,

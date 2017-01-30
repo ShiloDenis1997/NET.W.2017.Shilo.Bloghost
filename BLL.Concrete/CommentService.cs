@@ -55,7 +55,7 @@ namespace BLL.Concrete
         {
             return commentRepository.GetCommentsByCreationDate(
                     articleId, takeCount, skipCount, ascending)
-                .Select(comment => comment.ToBllComment());
+                ?.Select(comment => comment.ToBllComment());
         }
 
         public CommentEntity GetLastUserComment(int articleId, int userId)

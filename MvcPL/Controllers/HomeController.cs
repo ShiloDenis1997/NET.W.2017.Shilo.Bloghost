@@ -24,23 +24,5 @@ namespace MvcPL.Controllers
             logger.Trace("Index action of Home controller started");
             return View();
         }
-
-        [AllowAnonymous]
-        public ActionResult About()
-        {
-            logger.Debug("About action of Home controller started");
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        [AllowAnonymous]
-        public ActionResult Contact()
-        {
-            logger.Warn("Contact action of Home controller started");
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
     }
 }

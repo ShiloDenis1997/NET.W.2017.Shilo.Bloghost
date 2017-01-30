@@ -38,7 +38,7 @@ namespace BLL.Concrete
         
 
         public BlogEntity GetBlogEntity(int id)
-            => blogRepository.GetById(id).ToBlogEntity();
+            => blogRepository.GetById(id)?.ToBlogEntity();
 
         public void UpdateBlog(BlogEntity blog)
         {
@@ -51,7 +51,7 @@ namespace BLL.Concrete
         {
             var expressionModifier = new ExpressionModifier();
             return blogRepository.GetEntities(takeCount, skipCount)
-                .Select(blog => blog.ToBlogEntity());
+                ?.Select(blog => blog.ToBlogEntity());
         }
 
         public IEnumerable<BlogEntity> GetBlogsByPredicate
@@ -63,14 +63,14 @@ namespace BLL.Concrete
                 .Modify<DalBlog>(predicate);
             return blogRepository.GetEntitiesByPredicate
                 ((Expression<Func<DalBlog, bool>>)dalPredicate, takeCount, skipCount)
-                .Select(blog => blog.ToBlogEntity());
+                ?.Select(blog => blog.ToBlogEntity());
         }
 
         public IEnumerable<BlogEntity> GetBlogsByCreationDate
             (int takeCount, int skipCount = 0, bool ascending = false)
         {
             return blogRepository.GetBlogsByCreationDate(takeCount, skipCount, ascending)
-                .Select(blog => blog.ToBlogEntity());
+                ?.Select(blog => blog.ToBlogEntity());
         }
 
         public BlogEntity GetByPredicate(Expression<Func<BlogEntity, bool>> predicate)
@@ -79,7 +79,7 @@ namespace BLL.Concrete
             var dalPredicate = expressionModifier
                 .Modify<DalBlog>(predicate);
             return blogRepository.GetByPredicate(
-                (Expression<Func<DalBlog, bool>>)dalPredicate).ToBlogEntity();
+                (Expression<Func<DalBlog, bool>>)dalPredicate)?.ToBlogEntity();
         }
     }
 }

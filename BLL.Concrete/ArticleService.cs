@@ -83,7 +83,7 @@ namespace BLL.Concrete
         {
             return articleRepository.GetArticlesByUser
                 (userId, takeCount, skipCount, ascending)
-                .Select(article => article.ToBllArticle());
+                ?.Select(article => article.ToBllArticle());
         }
 
         public IEnumerable<ArticleEntity> GetArticlesByTag
@@ -91,7 +91,7 @@ namespace BLL.Concrete
         {
             return articleRepository.GetArticlesByTag
                 (tag, takeCount, skipCount, ascending)
-                .Select(article => article.ToBllArticle());
+                ?.Select(article => article.ToBllArticle());
         }
 
         public IEnumerable<ArticleEntity> GetArticlesWithText
@@ -99,7 +99,7 @@ namespace BLL.Concrete
         {
             return articleRepository.GetArticlesWithText
                 (text, takeCount, skipCount, ascending)
-                .Select(article => article.ToBllArticle());
+                ?.Select(article => article.ToBllArticle());
         }
 
         public IEnumerable<ArticleEntity> GetArticlesByPopularity
@@ -107,7 +107,7 @@ namespace BLL.Concrete
         {
             return articleRepository.GetArticlesByPopularity
                 (takeCount, skipCount, ascending)
-                .Select(article => article.ToBllArticle());
+                ?.Select(article => article.ToBllArticle());
         }
     }
 }
