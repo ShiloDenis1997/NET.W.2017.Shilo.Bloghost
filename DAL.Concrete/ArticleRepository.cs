@@ -173,15 +173,16 @@ namespace DAL.Concrete
             ormArticle.Name = dalArticle.Name;
             ormArticle.Rating = dalArticle.Rating;
             IEnumerable<Tag> tags =
-                dalArticle.Tags.Where(tag => !string.IsNullOrWhiteSpace(tag))
+                dalArticle.Tags?.Where(tag => !string.IsNullOrWhiteSpace(tag))
                 .Select(tag => context.Set<Tag>().FirstOrDefault(t => t.Name.Equals(tag))
                                 ?? context.Set<Tag>().Add(new Tag { Name = tag }));
             ormArticle.Tags.Clear();
-            foreach (var tag in tags)
-            {
-                if (ormArticle.Tags.All(t => t.Id != tag.Id))
-                    ormArticle.Tags.Add(tag);
-            }
+            if (tags != null)
+                foreach (var tag in tags)
+                {
+                    if (ormArticle.Tags.All(t => t.Id != tag.Id))
+                        ormArticle.Tags.Add(tag);
+                }
             context.Entry(ormArticle).State = EntityState.Modified;
         }
     }

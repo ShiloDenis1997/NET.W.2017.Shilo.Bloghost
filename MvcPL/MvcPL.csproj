@@ -152,6 +152,7 @@
     <Compile Include="Controllers\ArticlesController.cs" />
     <Compile Include="Controllers\BlogsController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NavController.cs" />
     <Compile Include="Global.asax.cs">
@@ -232,7 +233,6 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
@@ -255,6 +255,7 @@
     <Content Include="Views\Comments\Comments.cshtml" />
     <Content Include="Views\Shared\_CommentPartial.cshtml" />
     <None Include="Views\Articles\Popular.cshtml" />
+    <None Include="Views\Error\Error.cshtml" />
     <None Include="Views\Nav\Menu.cshtml" />
   </ItemGroup>
   <ItemGroup />

@@ -17,10 +17,18 @@ namespace MvcPL.Models.Entities
         [Required(ErrorMessage = "Content can't be empty")]
         public string Content { get; set; }
         public int? Rating { get; set; }
+
+        [Display(Name = "Date added")]
         public DateTime DateAdded { get; set; }
+
+        [Display(Name = "Blog")]
         public int BlogId { get; set; }
         public int? UserId { get; set; }
+
+        [Display(Name = "Blog name")]
         public string BlogName { get; set; }
+
+        [Display(Name = "Username")]
         public string UserName { get; set; }
         
         public string[] Tags { get; set; }
