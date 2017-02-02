@@ -78,7 +78,7 @@ namespace MvcPL.Controllers
                     article =>
                     {
                         var user = userService.GetUserEntity(article.UserId);
-                        return article.ToMvcArticle(null, user.Login);
+                        return article.ToMvcArticle(null, user.Email, user.Login);
                     }
                 ).ToArray() ?? new ArticleViewModel[] {},
                 UserId = userId,
@@ -98,7 +98,7 @@ namespace MvcPL.Controllers
                     article =>
                     {
                         var user = userService.GetUserEntity(article.UserId);
-                        return article.ToMvcArticle(null, user.Login);
+                        return article.ToMvcArticle(null, user.Email, user.Login);
                     }),
                 PagingInfo = new PagingInfo
                 {
@@ -136,7 +136,7 @@ namespace MvcPL.Controllers
             BlogEntity blog = blogService.GetBlogEntity(article.BlogId);
             UserEntity user = userService.GetUserEntity(article.UserId);
             ViewBag.CommentPackNumber = commentPackNumber;
-            return View(article.ToMvcArticle(blog.Name, user.Login));
+            return View(article.ToMvcArticle(blog.Name, user.Email, user.Login));
         }
 
         // GET: Articles/Create
@@ -188,10 +188,14 @@ namespace MvcPL.Controllers
             }
             UserEntity currentUser = userService.GetUserByPredicate(
                 user => user.Email.Equals(User.Identity.Name));
+            if ((currentUser.Id != article.UserId) && !User.IsInRole("Moderator"))
+            {
+                return HttpNotFound();
+            }
             ViewBag.BlogId = new SelectList
                 (blogService.GetBlogsByPredicate
                     (blog => blog.UserId == currentUser.Id, int.MaxValue), "Id", "Name");
-            return View(article.ToMvcArticle());
+            return View(article.ToMvcArticle(null, currentUser.Email, null));
         }
 
         // POST: Articles/Edit/5
@@ -216,6 +220,7 @@ namespace MvcPL.Controllers
         }
 
         // GET: Articles/Delete/5
+        [Authorize(Roles = "User")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -227,9 +232,14 @@ namespace MvcPL.Controllers
             {
                 return HttpNotFound();
             }
+            if ((article.UserId != userService.GetUserByPredicate(
+                u => u.Email.Equals(User.Identity.Name)).Id) && !User.IsInRole("Moderator"))
+            {
+                return HttpNotFound();
+            }
             BlogEntity blog = blogService.GetBlogEntity(article.BlogId);
             UserEntity user = userService.GetUserEntity(article.UserId);
-            return View(article.ToMvcArticle(blog.Name, user.Login));
+            return View(article.ToMvcArticle(blog.Name, user.Email, user.Login));
         }
 
         // POST: Articles/Delete/5

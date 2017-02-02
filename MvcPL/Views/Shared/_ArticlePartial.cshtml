@@ -19,9 +19,15 @@
     <div>@Html.GlyphLink("glyphicon glyphicon-star-empty", Model.Rating.ToString(),
              () => Url.Action("Like", "Articles", new {articleId = Model.Id,
                  likeUrl = (string)ViewBag.LikeUrl}))
-        @Html.GlyphLink("glyphicon glyphicon-pencil", "",
-            () => Url.Action("Edit", "Articles", new {id = Model.Id}))
-        @Html.GlyphLink("glyphicon glyphicon-trash", "",
-            () => Url.Action("Delete", "Articles", new {id = Model.Id}))
+    @if (User.Identity.IsAuthenticated)
+    {
+        if (User.Identity.Name.Equals(Model.UserEmail) || User.IsInRole("Moderator"))
+        {
+             @Html.GlyphLink("glyphicon glyphicon-pencil", "",
+                 () => Url.Action("Edit", "Articles", new {id = Model.Id}))
+             @Html.GlyphLink("glyphicon glyphicon-trash", "",
+                 () => Url.Action("Delete", "Articles", new {id = Model.Id}))
+         }
+    }
     </div>
 </div>

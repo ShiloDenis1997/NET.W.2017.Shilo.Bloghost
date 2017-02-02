@@ -86,7 +86,6 @@ namespace DAL.Concrete
             if (ormBlog == null)
                 throw new ArgumentException
                     ($"Blog with Id = {dalBlog.Id} does not exists");
-            ormBlog.DateStarted = dalBlog.DateStarted;
             ormBlog.Name = dalBlog.Name;
             ormBlog.Rating = dalBlog.Rating;
             ormBlog.UserId = dalBlog.UserId;

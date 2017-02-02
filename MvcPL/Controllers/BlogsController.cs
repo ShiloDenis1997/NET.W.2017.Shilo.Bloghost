@@ -57,8 +57,12 @@ namespace MvcPL.Controllers
                     ItemsPerPage = PageBlogsCount,
                     CurrentItemsCount = blogs.Count(),
                 },
-                Blogs = blogs.Select(blog => blog.ToMvcBlog
-                    (userService.GetUserEntity(blog.UserId).Login)),
+                Blogs = blogs.Select(blog =>
+                {
+                    var user = userService.GetUserEntity(blog.UserId);
+                    return blog.ToMvcBlog
+                        (user.Login, user.Email);
+                }),
                 UserId = userId,
             });
         }
@@ -66,7 +70,8 @@ namespace MvcPL.Controllers
         [Authorize(Roles = "User")]
         public ActionResult Like(int blogId, string likeUrl)
         {
-            var user = userService.GetUserByPredicate(u => u.Email.Equals(User.Identity.Name));
+            var user = userService.GetUserByPredicate
+                (u => u.Email.Equals(User.Identity.Name));
             if (!likeService.LikeBlog(blogId, user.Id))
                 likeService.RemoveLikeBlog(blogId, user.Id);
             if (Url.IsLocalUrl(likeUrl))
@@ -88,7 +93,7 @@ namespace MvcPL.Controllers
                 return HttpNotFound();
             }
             var user = userService.GetUserEntity(blog.UserId);
-            var viewBlog = blog.ToMvcBlog(user.Login);
+            var viewBlog = blog.ToMvcBlog(user.Login, user.Email);
             return View(viewBlog);
         }
 
@@ -122,6 +127,7 @@ namespace MvcPL.Controllers
         }
 
         // GET: Blogs/Edit/5
+        [Authorize(Roles = "User")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -133,7 +139,14 @@ namespace MvcPL.Controllers
             {
                 return HttpNotFound();
             }
-            var viewBlog = blog.ToMvcBlog(null);
+            if ((userService.GetUserByPredicate(
+                u => u.Email.Equals(User.Identity.Name)).Id != blog.UserId) 
+                && !User.IsInRole("Moderator"))
+            {
+                return HttpNotFound();
+            }
+            var user = userService.GetUserEntity(blog.UserId);
+            var viewBlog = blog.ToMvcBlog(user.Login, user.Email);
             return View(viewBlog);
         }
 
@@ -153,6 +166,7 @@ namespace MvcPL.Controllers
         }
 
         // GET: Blogs/Delete/5
+        [Authorize(Roles = "User")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -164,7 +178,12 @@ namespace MvcPL.Controllers
             {
                 return HttpNotFound();
             }
-            return View(blog.ToMvcBlog(null));
+            var user = userService.GetUserEntity(blog.UserId);
+            if (!user.Email.Equals(User.Identity.Name) && !User.IsInRole("Moderator"))
+            {
+                return HttpNotFound();
+            }
+            return View(blog.ToMvcBlog(user.Login, user.Email));
         }
 
         // POST: Blogs/Delete/5

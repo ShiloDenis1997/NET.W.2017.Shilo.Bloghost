@@ -21,7 +21,8 @@ namespace MvcPL.Infrastructure.Mappers
             };
         }
 
-        public static BlogViewModel ToMvcBlog(this BlogEntity blog, string userName)
+        public static BlogViewModel ToMvcBlog
+            (this BlogEntity blog, string userName, string userEmail)
         {
             return new BlogViewModel
             {
@@ -31,11 +32,13 @@ namespace MvcPL.Infrastructure.Mappers
                 UserId = blog.UserId,
                 DateStarted = blog.DateStarted,
                 UserName = userName,
+                UserEmail = userEmail,
             };
         }
 
         public static ArticleViewModel ToMvcArticle
-            (this ArticleEntity article, string blogName = null, string authorName = null)
+            (this ArticleEntity article, string blogName, 
+                string userEmail, string userName)
         {
             return new ArticleViewModel
             {
@@ -46,8 +49,9 @@ namespace MvcPL.Infrastructure.Mappers
                 BlogId = article.BlogId,
                 Content = article.Content,
                 UserId = article.UserId,
-                UserName = authorName,
+                UserName = userName,
                 BlogName = blogName,
+                UserEmail = userEmail,
                 Tags = article.Tags.ToArray(),
             };
         }

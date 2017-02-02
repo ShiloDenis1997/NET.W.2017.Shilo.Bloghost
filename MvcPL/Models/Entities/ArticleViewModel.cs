@@ -23,6 +23,7 @@ namespace MvcPL.Models.Entities
 
         [Display(Name = "Blog")]
         public int BlogId { get; set; }
+
         public int? UserId { get; set; }
 
         [Display(Name = "Blog name")]
@@ -31,6 +32,8 @@ namespace MvcPL.Models.Entities
         [Display(Name = "Username")]
         public string UserName { get; set; }
         
+        public string UserEmail { get; set; }
+
         public string[] Tags { get; set; }
     }
 }

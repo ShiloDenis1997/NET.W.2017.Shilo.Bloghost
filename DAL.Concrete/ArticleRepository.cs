@@ -169,7 +169,6 @@ namespace DAL.Concrete
                     ($"Blog with Id = {dalArticle.Id} does not exists");
             ormArticle.BlogId = dalArticle.BlogId;
             ormArticle.Content = dalArticle.Content;
-            ormArticle.DateAdded = dalArticle.DateAdded;
             ormArticle.Name = dalArticle.Name;
             ormArticle.Rating = dalArticle.Rating;
             IEnumerable<Tag> tags =
