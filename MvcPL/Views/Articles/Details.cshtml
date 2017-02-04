@@ -14,3 +14,9 @@
        commentPackNumber = ViewBag.CommentPackNumber,
    }); 
 }
+
+@section scripts
+{
+    @Html.Partial("CommentJsTemplate")
+    @Scripts.Render("~/Scripts/AjaxComments/Comments.js")   
+}

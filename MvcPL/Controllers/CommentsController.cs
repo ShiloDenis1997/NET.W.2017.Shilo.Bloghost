@@ -56,7 +56,15 @@ namespace MvcPL.Controllers
             {
                 var mvcComment = commentService.GetLastUserComment
                     (comment.ArticleId, comment.UserId)?.ToMvcComment(user.Login);
-                return PartialView("_CommentPartial", mvcComment);
+
+                return Json(new
+                {
+                    Id = mvcComment.Id, UserName = mvcComment.UserName,
+                    DateAdded = mvcComment.DateAdded.ToString(),
+                    Content = mvcComment.Content,
+                    Rating = mvcComment.Rating,
+                    ArticleId = mvcComment.ArticleId,
+                }, JsonRequestBehavior.AllowGet);
             }
             return RedirectToAction("Details", "Articles", new {id = comment.ArticleId});
         }

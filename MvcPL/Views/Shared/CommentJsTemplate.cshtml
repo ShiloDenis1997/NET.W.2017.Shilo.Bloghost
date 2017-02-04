@@ -1,0 +1,12 @@
+﻿<script id="commentTemplate" type="text/x-jquery-tmpl">
+    <div class="col-sm-12">
+        <h4>${UserName} <small>${DateAdded}</small></h4>
+        <p class="text-break">${Content}</p>
+        <a href="/Comments/Like?commentId=${Id}&amp;likeUrl=%2FArticles%2FDetails%2F${ArticleId}">
+            <button class="nodecor btn btn-link btn-lg" type="button">
+                <span class="glyphicon glyphicon-star-empty"></span>${Rating}
+            </button>
+        </a>
+    </div>
+    <hr />
+</script>
