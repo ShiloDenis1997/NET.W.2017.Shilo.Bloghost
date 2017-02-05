@@ -1,0 +1,9 @@
+﻿<script type="text/javascript">
+    $(function () {
+        var autocompleteUrl = '@Url.Action("Find", "Tags")';
+        $("input#tag").autocomplete({
+            source: autocompleteUrl,
+            minLength: 2
+        });
+    });
+</script>

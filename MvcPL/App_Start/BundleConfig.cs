@@ -11,7 +11,8 @@ namespace MvcPL
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js").Include(
                         "~/Scripts/jquery.unobtrusive-ajax.js").Include(
-                        "~/Scripts/jquery.tmpl.js"));
+                        "~/Scripts/jquery.tmpl.js").Include(
+                        "~/Scripts/jquery-ui-1.12.1.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -29,7 +30,8 @@ namespace MvcPL
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
                       "~/Content/Layout.css",
-                      "~/Content/Elements.css"));
+                      "~/Content/Elements.css",
+                      "~/Content/themes/base/jquery-ui.css"));
         }
     }
 }

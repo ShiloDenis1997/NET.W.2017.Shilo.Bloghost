@@ -8,18 +8,8 @@
 
 <h1>@ViewBag.Title</h1>
 
-@using (Html.BeginForm("Index", "Articles"))
-{
-    <div class="input-group">
-        <input type="text" class="form-control pull-right"
-               name="tag" placeholder="Search by tag..">
-        <span class="input-group-btn">
-            <button class="btn btn-default" type="submit">
-                <span class="glyphicon glyphicon-search"></span>
-            </button>
-        </span>
-    </div>
-}
+@{Html.RenderPartial("_SearchByTag");}
+
 <ul class="list-unstyled">
     @foreach (var article in Model.Articles)
     {
@@ -36,3 +26,7 @@
             }))
 </div>
 
+@section Scripts
+{
+    @{ Html.RenderPartial("AutocompleteScript"); }
+}

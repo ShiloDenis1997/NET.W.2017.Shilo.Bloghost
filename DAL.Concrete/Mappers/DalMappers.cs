@@ -118,5 +118,23 @@ namespace DAL.Concrete.Mappers
                 ArticleId = comment.ArticleId,
             };
         }
+
+        public static DalTag ToDalTag(this Tag tag)
+        {
+            return new DalTag
+            {
+                Id = tag.Id,
+                Name = tag.Name,
+            };
+        }
+
+        public static Tag ToOrmTag(this DalTag tag)
+        {
+            return new Tag
+            {
+                Id = tag.Id,
+                Name = tag.Name,
+            };
+        }
     }
 }

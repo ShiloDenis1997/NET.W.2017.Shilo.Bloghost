@@ -38,6 +38,8 @@ namespace DependencyResolver
             kernel.Bind<ICommentService>().To<CommentService>();
             kernel.Bind<ILikeManager>().To<LikeManager>();
             kernel.Bind<ILikeService>().To<LikeService>();
+            kernel.Bind<ITagRepository>().To<TagRepository>();
+            kernel.Bind<ITagService>().To<TagService>();
         }
     }
 }

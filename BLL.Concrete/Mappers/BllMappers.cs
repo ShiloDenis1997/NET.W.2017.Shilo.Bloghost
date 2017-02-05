@@ -139,5 +139,23 @@ namespace BLL.Concrete.Mappers
                 ArticleId = comment.ArticleId,
             };
         }
+
+        public static TagEntity ToBllTag(this DalTag tag)
+        {
+            return new TagEntity
+            {
+                Id = tag.Id,
+                Name = tag.Name,
+            };
+        }
+
+        public static DalTag ToDalTag(this TagEntity tag)
+        {
+            return new DalTag
+            {
+                Id = tag.Id,
+                Name = tag.Name,
+            };
+        }
     }
 }
