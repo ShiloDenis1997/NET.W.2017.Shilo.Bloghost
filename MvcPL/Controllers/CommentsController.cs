@@ -41,10 +41,8 @@ namespace MvcPL.Controllers
                 CommentPackNumber = commentPackNumber,
             });
         }
-        
+
         [Authorize(Roles = "User")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult AddComment(CommentViewModel comment)
         {
             if (!ModelState.IsValid)

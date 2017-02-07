@@ -12,14 +12,15 @@
     <form method="post" id="commentForm" action="@Url.Action("AddComment")">
         @Html.AntiForgeryToken()
         <div class="form-group">
-            @Html.TextArea("Content", new {rows = 5, @class = "area-fullwidth"})
+            @Html.TextArea("Content", new { rows = 5, @class = "area-fullwidth" })
         </div>
         @Html.Hidden("ArticleId", Model.ArticleId)
         <button type="submit" class="btn btn-success">Add comment</button>
-        <br/>
-        <br/>
+        <br />
+        <br />
     </form>
 }
+
 <div id="comments" class="row">
     @foreach (var comment in Model.Comments)
     {

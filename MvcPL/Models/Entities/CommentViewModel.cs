@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace MvcPL.Models.Entities
 {
+    [Bind(Include = "Content,ArticleId")]
     public class CommentViewModel
     {
         public int Id { get; set; }

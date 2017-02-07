@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace MvcPL.Models.Entities
 {
+    [Bind(Include = "Name,Content,BlogId,Tags")]
     public class ArticleViewModel
     {
         public int Id { get; set; }
