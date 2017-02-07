@@ -43,6 +43,8 @@ namespace MvcPL.Controllers
         }
         
         [Authorize(Roles = "User")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddComment(CommentViewModel comment)
         {
             if (!ModelState.IsValid)
